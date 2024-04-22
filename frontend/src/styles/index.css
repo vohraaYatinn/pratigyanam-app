@@ -1,0 +1,7 @@
+.sign-background{
+    display:flex;
+    background-image: url("../assets/images/leaves.png");
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+}
