@@ -14,6 +14,10 @@ import Profile from "./pages/Profile.jsx";
 import EditProfile from "./pages/EditProfile.jsx";
 import OtpEnter from "./pages/Otp.jsx";
 import FavComponent from "./pages/Fav.jsx";
+import EditAddress from "./pages/EditAddress.jsx";
+import EditLanguage from './pages/EditLanguage.jsx'
+import EditSubscriptions from "./pages/EditSubscriptions.jsx";
+
 
 const router = createBrowserRouter([
 	{
@@ -54,6 +58,18 @@ const router = createBrowserRouter([
 			{
 				path: "fav",
 				element: <FavComponent />,
+			},
+			{
+				path: "edit-address",
+				element: <EditAddress />,
+			},
+			{
+				path: "manage-subscriptions",
+				element: <EditSubscriptions />,
+			},
+			{
+				path: "edit-language",
+				element: <EditLanguage />,
 			},
 		],
 	},
