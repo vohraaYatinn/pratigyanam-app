@@ -81,6 +81,16 @@ const EditProfile = () => {
 						className="border-2 border-blue-600 py-2 rounded-full px-5"
 					/>
 				</div>
+				<div className="flex mx-5 text-2xl flex-col mt-5 mb-8">
+				<button
+									type="submit"
+									className="  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-sm px-12 mx-5  py-2.5 text-center send-otp-button"
+								
+									>
+									Save
+								</button>
+				</div>
+
 			</div>
 		</div>
 		

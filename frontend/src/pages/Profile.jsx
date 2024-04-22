@@ -5,6 +5,7 @@ import {
 	MdLogout,
 	MdOutlinePayment,
 	MdOutlineSecurity,
+	MdSupportAgent,
 } from "react-icons/md";
 import {
 	IoLockOpenOutline,
@@ -70,14 +71,18 @@ const Profile = () => {
 							<FaChevronRight />
 						</div>
 						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
-							<div className="flex gap-4">
+							<div className="flex gap-4" onClick={()=>{
+								router.push('/edit-address')
+							}}>
 								<FaLocationDot />
 								<p>My Address</p>
 							</div>
 							<FaChevronRight />
 						</div>
 						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
-							<div className="flex gap-4">
+							<div className="flex gap-4"  onClick={()=>{
+								router.push('/manage-subscriptions')
+							}}>
 								<MdOutlinePayment />
 								<p>Manage Subscription</p>
 							</div>
@@ -90,7 +95,9 @@ const Profile = () => {
 					<p className="text-lg ml-4 mt-3">General </p>
 					<div>
 						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
-							<div className="flex gap-4">
+							<div className="flex gap-4" onClick={()=>{
+								router.push('/edit-language')
+							}}>
 								<IoLanguage />
 								<p>Audio Language</p>
 							</div>
@@ -98,8 +105,8 @@ const Profile = () => {
 						</div>
 						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
 							<div className="flex gap-4">
-								<MdDeleteOutline />
-								<p>Help & Support</p>
+								<MdSupportAgent /> 
+								<a href="http://wa.me/+917042414212" target="_blank" className="text-black">Help & Support</a>
 							</div>
 							<FaChevronRight />
 						</div>
