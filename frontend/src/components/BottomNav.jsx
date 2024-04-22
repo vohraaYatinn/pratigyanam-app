@@ -15,7 +15,7 @@ const BottomNav = ({path}) => {
     alignItems:"center",
     justifyContent:"space-around",
     position:"fixed",
-    bottom:"4rem",
+    bottom:"1.4rem",
     width:"90%",
     boxShadow: "4px 4px 4px 4px rgba(0, 0, 0, 0.1)"
 
