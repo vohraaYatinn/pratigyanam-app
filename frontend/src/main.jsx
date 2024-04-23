@@ -18,6 +18,7 @@ import EditAddress from "./pages/EditAddress.jsx";
 import EditLanguage from './pages/EditLanguage.jsx'
 import EditSubscriptions from "./pages/EditSubscriptions.jsx";
 import SearchComponent from "./pages/Search.jsx";
+import SingleTrack from "./pages/SingleTrack.jsx";
 
 
 const router = createBrowserRouter([
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
 			{
 				path: "search",
 				element: <SearchComponent />,
+			},
+			{
+				path: "single-track",
+				element: <SingleTrack />,
 			},
 		],
 	},

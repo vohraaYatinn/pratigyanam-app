@@ -23,6 +23,17 @@ body {
 	cursor: pointer;
 	color: black;
 }
+.tracker::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: black;
+	cursor: pointer;
+	color: white;
+  }
+
 .fix-osahan-footer a{
 display: flex;
 flex-direction: column;

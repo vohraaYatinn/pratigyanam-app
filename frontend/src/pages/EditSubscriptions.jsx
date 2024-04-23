@@ -28,6 +28,15 @@ const EditSubscriptions = () => {
 				fontSize:"1.5rem"
 			}}>30 April, 2024</span></h4>
 			</div>
+			<div className="text-center">
+			<button
+									type="submit"
+									className="  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-xl px-12 mx-5  py-2.5 text-center send-otp-button"
+								
+									>
+									Upgrade Now
+								</button>
+			</div>
 			<div>
 				<div className="border-2 border-black mx-8 my-8 py-5 px-5 rounded-xl"
 				style={{display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column"}}
@@ -46,10 +55,10 @@ const EditSubscriptions = () => {
 					<div className="text-center">
                 <button
 									type="submit"
-									className="  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-sm px-12 mx-5  py-2.5 text-center send-otp-button"
+									className="  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-xl px-12 mx-5  py-2.5 text-center send-otp-button"
 								
 									>
-									Buy Now
+									Subscribe Now
 								</button>
                 </div>
 				</div>
@@ -72,10 +81,10 @@ const EditSubscriptions = () => {
 					<div className="text-center">
                 <button
 									type="submit"
-									className="  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-sm px-12 mx-5  py-2.5 text-center send-otp-button"
+									className="  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-xl px-12 mx-5  py-2.5 text-center send-otp-button"
 								
 									>
-									Buy Now
+									Subscribe Now
 								</button>
                 </div>
 				</div>

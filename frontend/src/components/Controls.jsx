@@ -10,7 +10,7 @@ import {
 	IoPauseSharp,
 	IoRepeatSharp,
 } from "react-icons/io5";
-import { MdOutlineShuffle, MdShuffleOn } from "react-icons/md";
+import { MdOutlineShuffle, MdRepeat, MdRepeatOn, MdShuffleOn } from "react-icons/md";
 import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 
 const Controls = ({
@@ -27,6 +27,7 @@ const Controls = ({
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [muteVolume, setMuteVolume] = useState(false);
 	const [shuffleMode, setShuffleMode] = useState(false);
+	const [repeatMode, setRepeatMode] = useState(false);
 
 	const togglePlayPause = () => {
 		setIsPlaying((prev) => !prev);
@@ -103,6 +104,19 @@ const Controls = ({
 		}
 	}, [volume, audioRef, muteVolume]);
 
+	useEffect(() => {
+		if (isPlaying) {
+			audioRef.current.play();
+			if (repeatMode) {
+				audioRef.current.currentTime = 0;
+			}
+		} else {
+			audioRef.current.pause();
+		}
+		playAnimationRef.current = requestAnimationFrame(repeat);
+	}, [isPlaying, audioRef, repeat, repeatMode]);
+	
+
 	return (
 		<div className="controls-wrapper">
 			<div className="controls w-full flex flex-col sm:flex-row justify-center sm:gap-5 ">
@@ -125,6 +139,9 @@ const Controls = ({
 					</button>
 					<button onClick={() => setShuffleMode((prev) => !prev)}>
 						{shuffleMode ? <MdShuffleOn /> : <MdOutlineShuffle />}
+					</button>
+					<button onClick={() => setRepeatMode((prev) => !prev)}>
+						{repeatMode ? <MdRepeatOn /> : <MdRepeat />}
 					</button>
 				</div>
 				{/* <div className="volume flex items-center  gap-3 justify-center text-3xl">

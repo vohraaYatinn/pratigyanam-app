@@ -85,6 +85,8 @@ const Home = () => {
 <Alert style={{marginTop:"1.6rem"}}
       message={<div style={{fontWeight:600, fontSize:"1.5rem"}}>Get Premium</div>}
       description={<div><p>You Got a 7 day free trail - get premium for take control of your listerning</p>
+	  <Link to={'/manage-subscriptions'}>
+
 	  <button style={{
 		background:"black",
 		color:"white",
@@ -92,6 +94,8 @@ const Home = () => {
 		padding:"0.8rem 2rem",
 		borderRadius:"40px"
 	  }}>Buy Now</button>
+	  </Link>
+
 	  </div>}
       type="success"
       closable

@@ -88,6 +88,21 @@ const Signup = () => {
 										required=""
 									/>
 								</div>
+								<div className="flex text-sm flex-col">
+					<label className="mb-3" htmlFor="gender">
+						Gender
+					</label>
+					<div className="flex gap-6">
+						<div className="text-sm flex items-center gap-2">
+							<input type="radio" className="rounded-md" />
+							<p>Male</p>
+						</div>
+						<div className="text-sm flex items-center gap-2">
+							<input type="radio" className="rounded-md" />
+							<p>Female</p>
+						</div>
+					</div>
+				</div>
 								{error && <div className="text-red-600">{error}</div>}
 								<button
 									onClick={handleSignUp}

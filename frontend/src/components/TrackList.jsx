@@ -47,6 +47,9 @@ const TrackList = () => {
 						</button>
 					</div>
 				</section>
+				<div className="text-center my-4 text-xl font-semibold">
+					<h5>Use headphones for better experience</h5>
+				</div>
 				<section className="mx-3 h-full mb-[140px] overflow-scroll">
 					{tracks.map((item) => {
 						return (
