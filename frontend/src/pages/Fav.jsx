@@ -31,7 +31,9 @@ const FavComponent = () => {
 	const ref = useRef(null)
 
 	return (
-		<div className="bg-white text-black pb-10 sm:pb-24">
+		<div className="bg-white text-black pb-10 sm:pb-24 sign3-background" style={{
+			fontFamily: "emoji"
+		}}>
 
 			<div>
 			<TopNav path={"Favourite Audio"}/>
@@ -43,6 +45,7 @@ const FavComponent = () => {
 						return (
 							<SwipeAction
 							ref={ref}
+							className="seared-components"
 							closeOnAction={false}
 							closeOnTouchOutside={false}
 							rightActions={[
@@ -51,9 +54,7 @@ const FavComponent = () => {
 								text: 'Remove',
 								color: 'danger',
 								onClick: async () => {
-								  await Dialog.confirm({
-									content: 'Are you sure?',
-								  })
+								  
 								  ref.current?.close()
 								},
 							  },
@@ -61,9 +62,7 @@ const FavComponent = () => {
 						  >
 							<div
 								key={item.id}
-								className={`flex gap-5 my-3 items-center rounded-xl px-3 py-2  w-full ${
-									selectedTrack.id === item.id ? "bg-white" : ""
-								}`}>
+								className={`flex gap-5 my-3 items-center rounded-xl px-3 py-2  w-full`}>
 								
 								<img src={item.img} alt="" className="h-12 rounded-lg  w-12" 
 								style={{

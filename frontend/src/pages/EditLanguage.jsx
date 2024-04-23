@@ -1,25 +1,45 @@
 import React from "react";
-import { FaArrowLeft } from "react-icons/fa";
-import vector from "../data/vector.jpeg";
-import { FaPen } from "react-icons/fa6";
 import TopNav from "../components/TopNav";
+import { Flex, Radio } from 'antd';
+import { FaArrowLeft, FaFemale, FaMale } from "react-icons/fa";
+
 
 const EditAddress = () => {
 	return (
-		<div className="bg-white text-black pb-10">
+		<div className="bg-white text-black pb-10 sign3-background" >
 									<TopNav path={"Audio Language"}/>
 
 			<div>
-				<div className="flex mx-5 text-2xl flex-col mt-10">
-					<label className="mb-3" htmlFor="first-name">
-						Switch Audio Language
-					</label>
-									
-					<button className="  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-sm px-12 mx-5  py-2.5 text-center send-otp-button">English</button>
-									
-					<button className="  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-sm px-12 mx-5  py-2.5 text-center send-otp-button">Hindi</button>
+			<div className="mt-20" style={{
+					display:"flex",
+					fontSize:"7rem",
+					justifyContent:"space-around",
+					flexDirection:"row-reverse",
+					marginBottom:"1rem"
+				}}>
+<FaFemale />
+<FaMale />
+					</div>
+				<div className="flex mx-5 text-xl flex-col ">
+		
+					
+		
+					<Radio.Group defaultValue="a" buttonStyle="solid" size="large" style={{textAlign:"center"}}>
+      <Radio.Button value="a" style={{
+		width:"50%"
+	  }}>Male</Radio.Button>
+      <Radio.Button value="b"
+	  style={{
+		width:"50%",
+		textAlign:"centers"
+	  }}
+	  >Female</Radio.Button>
+	  </Radio.Group>
+				
 				</div>
+
 			</div>
+			<p className="flex mx-5 text-xl flex-col" style={{marginTop:"1rem"}}>* Please select your default gender preference.</p>
 		</div>
 		
 	);

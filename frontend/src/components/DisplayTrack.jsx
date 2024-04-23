@@ -24,7 +24,7 @@ const DisplayTrack = ({
 			<div className="audio-info">
 				<div className="text">
 					<p className="title text-center font-bold text-xl">
-						{currentTrack.title} by {currentTrack.author}{" "}
+						{currentTrack.title}{" "}
 					</p>
 				</div>
 			</div>

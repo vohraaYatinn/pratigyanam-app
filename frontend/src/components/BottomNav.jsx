@@ -8,7 +8,7 @@ const BottomNav = ({path}) => {
 <div className="footer mt-auto p-3 fix-osahan-footer" style={{
     height:"5rem",
     margin:"1.4rem",
-    background:"white",
+    background: "#fffffd",
     border:"2px solid transparent",
     borderRadius:"30px",
     display:"flex",
@@ -24,9 +24,9 @@ const BottomNav = ({path}) => {
             <RiHome2Line className="footer-icon" />
               <span className={path=="home" && "border-radius-bottom"}>Home</span>
             </Link>
-            <Link to="/search-doctor" className={`col footer-bottom-nav ${path=="search" && "active"}`}>
+            <Link to="/search" className={`col footer-bottom-nav ${path=="search" && "active"}`}>
             <RiSearchLine className="footer-icon" />
-              <span>Search</span>
+            <span className={path=="search" && "border-radius-bottom"}>Search</span>
             </Link>
             <Link to="/fav" className={`col footer-bottom-nav ${path=="fav" && "active"}`}>
             <RiHeartLine className="footer-icon" />

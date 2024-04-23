@@ -17,6 +17,7 @@ import FavComponent from "./pages/Fav.jsx";
 import EditAddress from "./pages/EditAddress.jsx";
 import EditLanguage from './pages/EditLanguage.jsx'
 import EditSubscriptions from "./pages/EditSubscriptions.jsx";
+import SearchComponent from "./pages/Search.jsx";
 
 
 const router = createBrowserRouter([
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
 			{
 				path: "edit-language",
 				element: <EditLanguage />,
+			},
+			{
+				path: "search",
+				element: <SearchComponent />,
 			},
 		],
 	},

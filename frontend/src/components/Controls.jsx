@@ -106,7 +106,7 @@ const Controls = ({
 	return (
 		<div className="controls-wrapper">
 			<div className="controls w-full flex flex-col sm:flex-row justify-center sm:gap-5 ">
-				<div className="flex justify-center text-2xl gap-5 sm:my-5 my-2">
+				<div className="flex justify-center text-2xl gap-5 sm:my-5 my-4">
 					<button onClick={handlePrevious}>
 						<IoPlaySkipBackSharp />
 					</button>
@@ -127,7 +127,7 @@ const Controls = ({
 						{shuffleMode ? <MdShuffleOn /> : <MdOutlineShuffle />}
 					</button>
 				</div>
-				<div className="volume flex items-center  gap-3 justify-center text-3xl">
+				{/* <div className="volume flex items-center  gap-3 justify-center text-3xl">
 					<button onClick={() => setMuteVolume((prev) => !prev)}>
 						{muteVolume || volume < 5 ? (
 							<IoMdVolumeOff />
@@ -145,7 +145,7 @@ const Controls = ({
 						value={volume}
 						onChange={(e) => setVolume(e.target.value)}
 					/>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

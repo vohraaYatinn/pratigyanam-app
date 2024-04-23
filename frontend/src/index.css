@@ -3,7 +3,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+*{
+	margin: 0;
+	padding: 0;
+}
 body {
 	font-family: "Poppins", sans-serif;
 	background-image: linear-gradient(to right, #ffffff, #ffffff);
@@ -24,9 +27,9 @@ body {
 display: flex;
 flex-direction: column;
 align-items: center;
-font-size: 1rem;
+font-size: 0.8rem;
 color: black;
-opacity: 50%;
+opacity: 70%;
 
 }
 .footer-icon{
@@ -65,4 +68,11 @@ opacity: 50%;
 .border-radius-bottom{
 	border-bottom:4px solid black;
 	padding-bottom:4px
+}
+.adm-nav-bar{
+	margin-top: 0rem !important;
+	padding-top: 2rem !important;
+	margin-bottom: 1rem !important;
+
+	
 }

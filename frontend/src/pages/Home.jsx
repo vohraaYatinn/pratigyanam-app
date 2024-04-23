@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import vector from "../data/vector.jpeg";
 import image1 from "../data/thumbnails/image1.jpeg";
 import image2 from "../data/thumbnails/image2.jpeg";
@@ -17,9 +17,35 @@ import { Alert } from "antd";
 
 const Home = () => {
 	const navigate = useNavigate();
+	const [slideSize1, setSlideSize1] = useState(85)
+	const [slideSize2, setSlideSize2] = useState(85)
 	const navigateTo = () => {
 		navigate("/music");
 	};
+	useEffect(() => {
+		const updateSlideSize = () => {
+		  const screenWidth = window.innerWidth;
+		  if (screenWidth >= 400) {
+			setSlideSize1(85);
+			setSlideSize2(75)
+		  } else {
+			setSlideSize1(100);
+			setSlideSize2(90)
+
+		  }
+		};
+	
+		// Call the function initially
+		updateSlideSize();
+	
+		// Add event listener for window resize
+		window.addEventListener('resize', updateSlideSize);
+	
+		// Cleanup the event listener on component unmount
+		return () => {
+		  window.removeEventListener('resize', updateSlideSize);
+		};
+	  }, []);
 	const onClose = () => {
 		console.log('I was closed.');
 	  };
@@ -37,6 +63,7 @@ const Home = () => {
 					src={color}
 					alt=""
 					className=" rounded-xl h-48 ml-2"
+					
 				/>
         </Swiper.Item>
       ))
@@ -52,7 +79,7 @@ const Home = () => {
       ))
 
 	return (
-		<>
+		<div className="sign2-background">
 	
 <TopNav path={"home"}/>
 <Alert style={{marginTop:"1.6rem"}}
@@ -66,12 +93,12 @@ const Home = () => {
 		borderRadius:"40px"
 	  }}>Buy Now</button>
 	  </div>}
-      type="error"
+      type="success"
       closable
       onClose={onClose}
     />
 			<div style={{marginTop:"1.6rem"}}>
-			<Swiper slideSize={84} trackOffset={15} loop stuckAtBoundary={false}
+			<Swiper slideSize={slideSize1} trackOffset={15} loop stuckAtBoundary={false}
             indicator={() => null}
             >
           {topDoctors}
@@ -79,7 +106,7 @@ const Home = () => {
 				
 			</div>
 			<div className="mt-5 flex items-center justify-between mx-3 mt-3">
-			<p className="text-2xl font-bold ">INNER BALANCE</p>
+			<p className="text-xl font-bold ">INNER BALANCE</p>
 			</div>
 	
 			<div className="mt-3 flex overflow-x-scroll gap-4 ">
@@ -134,10 +161,10 @@ const Home = () => {
 				/>
 			</div>
 			<div className="mt-5 flex items-center justify-between mx-3 mt-3" >
-				<p className="text-2xl font-bold ">INNER BALANCE</p>
+				<p className="text-xl font-bold ">INNER BALANCE</p>
 			</div>
 			<div style={{marginTop:"1rem", paddingBottom:"1rem"}} >
-			<Swiper slideSize={73} trackOffset={15} loop stuckAtBoundary={false}
+			<Swiper slideSize={slideSize2} trackOffset={15} loop stuckAtBoundary={false}
             indicator={() => null}
             >
           {topDoctors2}
@@ -145,10 +172,10 @@ const Home = () => {
 				
 			</div>
 			<div className="mt-5 flex items-center justify-between mx-3 mt-3" >
-			<p className="text-2xl font-bold ">INNER BALANCE</p>
+			<p className="text-xl font-bold ">INNER BALANCE</p>
 			</div>
 			<div style={{marginTop:"1rem", paddingBottom:"10rem"}} >
-			<Swiper slideSize={73} trackOffset={15} loop stuckAtBoundary={false}
+			<Swiper slideSize={slideSize2} trackOffset={15} loop stuckAtBoundary={false}
             indicator={() => null}
             >
           {topDoctors2}
@@ -156,7 +183,7 @@ const Home = () => {
 				
 			</div>
 			<BottomNav path="home"/>
-		</>
+		</div>
 	);
 };
 

@@ -7,14 +7,33 @@ import TopNav from "../components/TopNav";
 
 const EditSubscriptions = () => {
 	return (
-		<div className="bg-white text-black pb-10">
+		<div className="bg-white text-black pb-10 sign3-background" style={{
+			fontFamily: "emoji"
+		}}>
 									<TopNav path={"Manage Subscriptions"}/>
-
+			<div style={{
+				    display: "flex",
+					alignItems: "center",
+					flexDirection: "column",
+					marginTop: '3rem',
+					fontSize:"1rem"
+			}}>
+			<p>Your Current Subscription plan</p>
+			<h4>Type: <span style={{
+				fontWeight:"700",
+				fontSize:"1.5rem"
+			}}>Monthly</span></h4>
+			<h4>Valid Through: <span style={{
+				fontWeight:"700",
+				fontSize:"1.5rem"
+			}}>30 April, 2024</span></h4>
+			</div>
 			<div>
-				<div className="border-2 border-black mx-8 my-8 py-5 px-5 rounded-xl">
-					<h2 className="text-3xl font-semibold">Monthly</h2>
-					<div>
-						<p className="text-5xl font-bold my-4">$ 120</p>
+				<div className="border-2 border-black mx-8 my-8 py-5 px-5 rounded-xl"
+				style={{display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column"}}
+				>
+						<p className="text-6xl font-bold my-4">₹ 99/-</p>
+						<h4 className="text-2xl font-semibold">Monthly</h4>
 						<ul className="text-xl">
 							<li className="my-3 flex items-center gap-3"><GoDot /> <p>Lorem ipsum dolor sit amet.</p>
  </li>
@@ -24,7 +43,6 @@ const EditSubscriptions = () => {
  </li>
 							
 						</ul>
-					</div>
 					<div className="text-center">
                 <button
 									type="submit"
@@ -35,10 +53,13 @@ const EditSubscriptions = () => {
 								</button>
                 </div>
 				</div>
-				<div className="border-2 border-black mx-8 my-8 py-5 px-5 rounded-xl">
-					<h2 className="text-3xl font-semibold">Yearly</h2>
-					<div>
-						<p className="text-5xl font-bold my-4">$ 1200</p>
+				<div className="border-2 border-black mx-8 my-8 py-5 px-5 rounded-xl"
+				style={{display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column"}}
+				>
+					
+						<p className="text-6xl font-bold my-4">₹ 599/-</p>
+						<h4 className="text-2xl font-semibold">Yearly</h4>
+
 						<ul className="text-xl">
 							<li className="my-3 flex items-center gap-3"><GoDot /> <p>Lorem ipsum dolor sit amet.</p>
  </li>
@@ -48,7 +69,6 @@ const EditSubscriptions = () => {
  </li>
 							
 						</ul>
-					</div>
 					<div className="text-center">
                 <button
 									type="submit"
@@ -59,6 +79,7 @@ const EditSubscriptions = () => {
 								</button>
                 </div>
 				</div>
+			
 			</div>
 		</div>
 		

@@ -5,3 +5,45 @@
     align-items: center;
     justify-content: center;
 }
+
+.sign2-background{
+    background-image: url("../assets/images/color-background.png");
+    background-size:cover;
+    align-items: center;
+    justify-content: center;
+}
+.sign3-background{
+    background-image: url("../assets/images/bg-no-leave.png");
+    background-size:cover;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.seared-components{
+    background-color: transparent !important;
+}
+.seared-components-track > input > button{
+    padding: 0.5rem;
+}
+
+
+
+.search-bar-antd .adm-search-bar-input-box{
+    padding: 0.5rem;
+
+}
+@keyframes swipeAnimation {
+    0% {
+      transform: translate3d(0px, 0px, 0px);
+    }
+    50% {
+      transform: translate3d(-97px, 0px, 0px);
+    }
+    99.9% {
+        transform: translate3d(0px, 0px, 0px);
+      }
+  }
+  
+  .adm-swipe-action-track {
+    animation: swipeAnimation 1s ease forwards;
+  }

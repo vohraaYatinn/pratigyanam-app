@@ -76,6 +76,32 @@ export const tracks = [
 		time: "04:07",
 	},
 ];
+export const tracksFav3 = [
+	{
+		title: "Sound 1",
+		src: m4,
+		img: i1,
+		id: "01",
+		author: "Pratigyanam",
+		time: "04:07",
+	},
+	{
+		title: "Sound 2",
+		src: m4,
+		img: i1,
+		id: "02",
+		author: "Pratigyanam",
+		time: "04:07",
+	},
+	{
+		title: "Sound 3",
+		src: m4,
+		img: i1,
+		id: "03",
+		time: "04:07",
+		author: "Pratigyanam",
+	}
+];
 export const tracksFav = [
 	{
 		title: "Sound 1",

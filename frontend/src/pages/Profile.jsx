@@ -24,7 +24,7 @@ const Profile = () => {
 	const router = useRouter();
 
 	return (
-		<div className="bg-white text-black pb-10 sm:pb-24">
+		<div className="bg-white text-black pb-10 sm:pb-24 sign3-background" style={{height:"100vh"}}>
 
 			<div>
 				
@@ -34,7 +34,7 @@ const Profile = () => {
 			
 					<img src={vector} alt="" className="h-16 w-16 rounded-full" />
 					<div>
-						<p className="font-semibold">Virat Kohli</p>
+						<p className="font-semibold">Yatin Vohra</p>
 						<div className="text-lg flex items-center gap-2">
 
 							<FaLocationDot />
@@ -115,7 +115,11 @@ const Profile = () => {
 				<div className="mt-5">
 					<p className="text-lg ml-4 mt-3">Authentication</p>
 					<div>
-						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
+						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
+						onClick={()=>{
+							router.push('/')
+						}}
+						>
 							<div className="flex gap-4">
 								<MdLogout />
 								<p>Logout</p>
