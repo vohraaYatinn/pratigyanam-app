@@ -10,6 +10,7 @@ import { Swiper } from 'antd-mobile'
 import { IoMdSearch } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import BottomNav from "../components/BottomNav";
+import { Flex, Radio } from 'antd';
 import TopNav from "../components/TopNav";
 import OkayModal from "../common-components/OkayModal";
 import { Modal } from 'antd-mobile'
@@ -19,9 +20,16 @@ const Home = () => {
 	const navigate = useNavigate();
 	const [slideSize1, setSlideSize1] = useState(85)
 	const [slideSize2, setSlideSize2] = useState(85)
+	const [showModal, setShowModal] = useState(false)
+
 	const navigateTo = () => {
 		navigate("/music");
 	};
+
+	useEffect(()=>{
+		setShowModal(true)
+	},[])
+
 	useEffect(() => {
 		const updateSlideSize = () => {
 		  const screenWidth = window.innerWidth;
@@ -79,23 +87,76 @@ const Home = () => {
       ))
 
 	return (
+		<>
+		{showModal ? (
+        <>
+          <div
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+          >
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div className="relative p-6 flex-auto">
+                  <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
+                    * Please select your default gender & language preference.
+                  </p>
+                </div>
+				<div>
+				<div className="flex mx-5 text-xl flex-col pb-10">
+		
+					
+		
+		<Radio.Group defaultValue="a" buttonStyle="solid" size="large" style={{textAlign:"center"}}>
+<Radio.Button value="a" style={{
+width:"50%"
+}}>Male</Radio.Button>
+<Radio.Button value="b"
+style={{
+width:"50%",
+textAlign:"centers"
+}}
+>Female</Radio.Button>
+</Radio.Group>
+		<Radio.Group defaultValue="a" buttonStyle="solid" size="large" style={{textAlign:"center", marginTop: "10px"}}>
+<Radio.Button value="a" style={{
+width:"50%"
+}}>Hindi</Radio.Button>
+<Radio.Button value="b"
+style={{
+width:"50%",
+textAlign:"centers"
+}}
+>English</Radio.Button>
+</Radio.Group>
+	
+	</div>
+				</div>
+				<div className=" flex items-center justify-end gap-4 text-2xl mr-5 mb-5">
+				<button onClick={()=> setShowModal(false)} className="text-red-500 ">close</button>
+				<button className=" text-white bg-gradient-to-r from-orange-500 to-yellow-500 px-4 rounded-xl py-1">save</button>
+				</div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
+
 		<div className="sign2-background">
 	
 <TopNav path={"home"}/>
 <Alert style={{marginTop:"1.6rem"}}
       message={<div style={{fontWeight:600, fontSize:"1.5rem"}}>Get Premium</div>}
       description={<div><p>You Got a 7 day free trail - get premium for take control of your listerning</p>
-	  <Link to={'/manage-subscriptions'}>
-
-	  <button style={{
+	  <button 
+	 	onClick={()=> {navigate('/manage-subscriptions')}} 
+	  style={{
 		background:"black",
 		color:"white",
 		marginTop:"1.2rem",
 		padding:"0.8rem 2rem",
 		borderRadius:"40px"
-	  }}>Buy Now</button>
-	  </Link>
-
+	  }}>Upgrade Now</button>
 	  </div>}
       type="success"
       closable
@@ -188,6 +249,7 @@ const Home = () => {
 			</div>
 			<BottomNav path="home"/>
 		</div>
+		</>
 	);
 };
 

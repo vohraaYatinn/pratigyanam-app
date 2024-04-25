@@ -48,13 +48,14 @@ const TrackList = () => {
 					</div>
 				</section>
 				<div className="text-center my-4 text-xl font-semibold">
-					<h5>Use headphones for better experience</h5>
+					<h5>(Use headphones for better experience)</h5>
 				</div>
 				<section className="mx-3 h-full mb-[140px] overflow-scroll">
 					{tracks.map((item) => {
 						return (
+							<Link key={item.id} to={`/single-track/${item.id}`} className="text-black">
 							<div
-								key={item.id}
+								
 								className={`flex gap-5 my-5 items-center rounded-xl px-3 py-2  w-full ${
 									selectedTrack.id === item.id ? "bg-white" : ""
 								}`}
@@ -73,6 +74,7 @@ const TrackList = () => {
 									<BsThreeDotsVertical />
 								</p>
 							</div>
+							</Link>
 						);
 					})}
 				</section>

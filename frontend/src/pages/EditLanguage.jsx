@@ -35,11 +35,22 @@ const EditAddress = () => {
 	  }}
 	  >Female</Radio.Button>
 	  </Radio.Group>
+					<Radio.Group defaultValue="a" buttonStyle="solid" size="large" style={{textAlign:"center", marginTop: "10px"}}>
+      <Radio.Button value="a" style={{
+		width:"50%"
+	  }}>Hindi</Radio.Button>
+      <Radio.Button value="b"
+	  style={{
+		width:"50%",
+		textAlign:"centers"
+	  }}
+	  >English</Radio.Button>
+	  </Radio.Group>
 				
 				</div>
 
 			</div>
-			<p className="flex mx-5 text-xl flex-col" style={{marginTop:"1rem"}}>* Please select your default gender preference.</p>
+			<p className="flex mx-5 text-xl flex-col" style={{marginTop:"1rem"}}>* Please select your default gender & language preference.</p>
 		</div>
 		
 	);

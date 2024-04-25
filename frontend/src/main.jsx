@@ -78,7 +78,7 @@ const router = createBrowserRouter([
 				element: <SearchComponent />,
 			},
 			{
-				path: "single-track",
+				path: "single-track/:id",
 				element: <SingleTrack />,
 			},
 		],
