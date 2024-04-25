@@ -2,12 +2,17 @@ import React from "react";
 
 import refer from "../data/thumbnails/refer.png";
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa6";
+import TopNav from "../components/TopNav";
 
 const Refer = () => {
 	return (
+		<>
+		<div className="bg-white text-black " >
+									<TopNav path={"Refer and Earn"}/>
+					</div>
 		<div>
 			<div className=" mt-10 w-full text-center font-semibold">
-				<h2 className="text-4xl">Refer your friends and Earn</h2>
+				<h2 className="text-2xl">Refer your friends and Earn</h2>
 			</div>
 			<div className="">
 				<img src={refer} alt="" className="h-40 mx-auto" />
@@ -59,6 +64,7 @@ const Refer = () => {
 				</div>
 			</div>
 		</div>
+		</>
 	);
 };
 

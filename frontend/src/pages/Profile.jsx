@@ -1,5 +1,6 @@
 import React from "react";
 import { FaArrowLeft, FaChevronRight, FaLocationDot, FaUserCheck } from "react-icons/fa6";
+import { VscReferences } from "react-icons/vsc";
 import {
 	MdDeleteOutline,
 	MdLogout,
@@ -100,6 +101,15 @@ const Profile = () => {
 							}}>
 								<IoLanguage />
 								<p>Audio Language</p>
+							</div>
+							<FaChevronRight />
+						</div>
+						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
+							<div className="flex gap-4" onClick={()=>{
+								router.push('/refer-and-earn')
+							}}>
+								<VscReferences />
+								<p>Refer & Earn</p>
 							</div>
 							<FaChevronRight />
 						</div>

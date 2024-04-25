@@ -39,9 +39,9 @@ const FavComponent = () => {
 
 			<div>
 			<TopNav path={"Favourite Audio"}/>
-				<div className="flex items-center justify-evenly text-xl my-3  text-white bg-gradient-to-r from-orange-500 to-yellow-500">
-					<button onClick={()=>setToggleCategory("audio")}  className=" w-[50%] border-r-2 border-black  font-medium   py-2.5 text-center">Audio</button>
-				<button onClick={()=>setToggleCategory("categories")} className="   font-medium  w-[50%]  py-2.5 text-center">Categories</button>
+				<div className="flex  items-center justify-evenly text-xl my-3  text-white bg-gradient-to-r from-orange-500 to-yellow-500">
+				<button onClick={()=>setToggleCategory("categories")} className="  border-r-2 border-black font-medium  w-[50%]  py-2.5 text-center">Categories</button>
+					<button onClick={()=>setToggleCategory("audio")}  className=" w-[50%]   font-medium   py-2.5 text-center">Audio</button>
 				</div>
 				{toggleCategory === "audio" ? <div className="mt-5">
 					<p className="text-lg ml-4 mt-3">Saved Audios</p>
@@ -65,8 +65,8 @@ const FavComponent = () => {
 							  },
 							]}
 						  >
+							<Link to={`/single-track/${item.id}`} key={item.id} className="text-black">
 							<div
-								key={item.id}
 								className={`flex gap-5 my-3 items-center rounded-xl px-3 py-2  w-full`}>
 								
 								<img src={item.img} alt="" className="h-12 rounded-lg  w-12" 
@@ -79,7 +79,7 @@ const FavComponent = () => {
 									<p>{item.time}</p>
 								</div>
 							</div>
-							  
+							</Link>
 						  </SwipeAction>
 							
 						);

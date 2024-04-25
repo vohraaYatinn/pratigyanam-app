@@ -19,6 +19,7 @@ import EditLanguage from './pages/EditLanguage.jsx'
 import EditSubscriptions from "./pages/EditSubscriptions.jsx";
 import SearchComponent from "./pages/Search.jsx";
 import SingleTrack from "./pages/SingleTrack.jsx";
+import AudioPreferences from "./pages/AudioPreferences.jsx";
 
 
 const router = createBrowserRouter([
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
 			{
 				path: "single-track/:id",
 				element: <SingleTrack />,
+			},
+			{
+				path: "audio-preferences",
+				element: <AudioPreferences />,
 			},
 		],
 	},

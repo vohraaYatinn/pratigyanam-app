@@ -22,7 +22,9 @@ const SingleTrack = () => {
 
     useEffect(() => {
         const selectedTrack = tracks.find(track => track.id === id);
+        const initialIndex = id ? tracks.findIndex(track => track.id === id) : 0;
         setTrack(selectedTrack);
+        setTrackIndex(initialIndex);
     }, [id]);
 
     useEffect(() => {
