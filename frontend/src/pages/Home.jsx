@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import vector from "../data/vector.jpeg";
-import image1 from "../data/thumbnails/image1.jpeg";
-import image2 from "../data/thumbnails/image2.jpeg";
-import image3 from "../data/thumbnails/image3.jpeg";
-import image4 from "../data/thumbnails/image4.jpeg";
-import image5 from "../data/thumbnails/image5.jpeg";
-import image6 from "../data/thumbnails/image6.png";
+import image1 from "../assets/images/morning.png";
+import image2 from "../assets/images/night.png";
+import image3 from "../assets/images/wealth.png";
+import image4 from "../assets/images/health.png";
+import image5 from "../assets/images/sleep.png";
+import image6 from "../assets/images/stress.png";
 import { Swiper } from 'antd-mobile'
 import { IoMdSearch } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
@@ -67,7 +67,7 @@ const Home = () => {
 					onClick={navigateTo}
 					src={color}
 					alt=""
-					className=" rounded-xl h-48 ml-2"
+					className=" rounded-xl h-52 w-[90%] ml-2"
 					
 				/>
         </Swiper.Item>
@@ -78,7 +78,7 @@ const Home = () => {
 					onClick={navigateTo}
 					src={color}
 					alt=""
-					className=" rounded-xl h-25 ml-2"
+					className=" rounded-xl h-52 px-3 w-full ml-2"
 				/>
         </Swiper.Item>
       ))
@@ -120,7 +120,7 @@ const Home = () => {
 			<div className="mt-3 flex overflow-x-scroll gap-4 ">
 			<img
 					onClick={navigateTo}
-					src={image5}
+					src={image1}
 					style={{
 						width:"45%",
 						height:"12rem",
@@ -132,7 +132,32 @@ const Home = () => {
 				/>
 				<img
 					onClick={navigateTo}
-					src={image5}
+					src={image2}
+					style={{
+						width:"45%",
+						height:"12rem",
+						objectFit:"cover"
+
+					}}
+					alt=""
+					className=" rounded-xl  ml-2"
+				/>
+			</div>
+			<div className="mt-3 flex overflow-x-scroll gap-4 ">
+			<img
+					onClick={navigateTo}
+					src={image3}
+					style={{
+						width:"45%",
+						height:"12rem",
+						objectFit:"cover"
+					}}
+					alt=""
+					className=" rounded-xl  ml-2"
+				/>
+				<img
+					onClick={navigateTo}
+					src={image4}
 					style={{
 						width:"45%",
 						height:"12rem",
@@ -157,7 +182,7 @@ const Home = () => {
 				/>
 				<img
 					onClick={navigateTo}
-					src={image5}
+					src={image6}
 					style={{
 						width:"45%",
 						height:"12rem",
@@ -168,35 +193,32 @@ const Home = () => {
 					className=" rounded-xl  ml-2"
 				/>
 			</div>
-			<div className="mt-3 flex overflow-x-scroll gap-4 ">
-			<img
-					onClick={navigateTo}
-					src={image5}
-					style={{
-						width:"45%",
-						height:"12rem",
-						objectFit:"cover"
-					}}
-					alt=""
-					className=" rounded-xl  ml-2"
-				/>
-				<img
-					onClick={navigateTo}
-					src={image5}
-					style={{
-						width:"45%",
-						height:"12rem",
-						objectFit:"cover"
-
-					}}
-					alt=""
-					className=" rounded-xl  ml-2"
-				/>
+			<div className="mt-8 flex items-center justify-between mx-3 " >
+				<p className="text-xl font-bold ">Morning Affirmations</p>
 			</div>
-			<div className="mt-5 flex items-center justify-between mx-3 mt-3" >
-				<p className="text-xl font-bold ">INNER BALANCE</p>
+			<div style={{marginTop:"1rem",}} >
+			<Swiper slideSize={slideSize2} trackOffset={15} loop stuckAtBoundary={false}
+            indicator={() => null}
+            >
+          {topDoctors2}
+        </Swiper>
+				
 			</div>
-			<div style={{marginTop:"1rem", paddingBottom:"1rem"}} >
+			<div className="flex items-center justify-between mx-3 mt-3" >
+			<p className="text-xl font-bold ">Night Affirmations</p>
+			</div>
+			<div style={{marginTop:"1rem",}} >
+			<Swiper slideSize={slideSize2} trackOffset={15} loop stuckAtBoundary={false}
+            indicator={() => null}
+            >
+          {topDoctors2}
+        </Swiper>
+				
+			</div>
+			<div className=" flex items-center justify-between mx-3 mt-3" >
+			<p className="text-xl font-bold ">Wealth Affirmations</p>
+			</div>
+			<div style={{marginTop:"1rem"}} >
 			<Swiper slideSize={slideSize2} trackOffset={15} loop stuckAtBoundary={false}
             indicator={() => null}
             >
@@ -205,9 +227,31 @@ const Home = () => {
 				
 			</div>
 			<div className="mt-5 flex items-center justify-between mx-3 mt-3" >
-			<p className="text-xl font-bold ">INNER BALANCE</p>
+			<p className="text-xl font-bold ">Health Affirmations</p>
 			</div>
-			<div style={{marginTop:"1rem", paddingBottom:"10rem"}} >
+			<div style={{marginTop:"1rem", }} >
+			<Swiper slideSize={slideSize2} trackOffset={15} loop stuckAtBoundary={false}
+            indicator={() => null}
+            >
+          {topDoctors2}
+        </Swiper>
+				
+			</div>
+			<div className="mt-5 flex items-center justify-between mx-3 mt-3" >
+			<p className="text-xl font-bold ">Deep-Sleep Affirmations</p>
+			</div>
+			<div style={{marginTop:"1rem", }} >
+			<Swiper slideSize={slideSize2} trackOffset={15} loop stuckAtBoundary={false}
+            indicator={() => null}
+            >
+          {topDoctors2}
+        </Swiper>
+				
+			</div>
+			<div className="mt-5 flex items-center justify-between mx-3 mt-3" >
+			<p className="text-xl font-bold ">Stress-Management Affirmations</p>
+			</div>
+			<div style={{marginTop:"1rem", }} >
 			<Swiper slideSize={slideSize2} trackOffset={15} loop stuckAtBoundary={false}
             indicator={() => null}
             >
