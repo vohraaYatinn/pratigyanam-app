@@ -9,7 +9,7 @@ const AudioPreferences = () => {
 
     const navigate = useNavigate();
     const createAccount = () => {   
-        navigate('/')
+        navigate('/home')
     }
 
   return (
@@ -22,7 +22,7 @@ const AudioPreferences = () => {
 					<div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
 						<div className="p-6 space-y-4 md:space-y-6 sm:p-8">
 							<h1 className="text-xl font-bold text-center leading-tight tracking-tight text-gray-900 md:text-2xl "  style={{
-								marginBottom:"3rem"
+								marginBottom:"-1rem"
 							}}>
 								Choose your Audio Preferences
 							</h1>
@@ -63,7 +63,7 @@ textAlign:"centers"
 <img src={english} alt="" className="h-20 w-20" />
 
         </div>
-        <Radio.Group defaultValue="a" buttonStyle="solid" size="large" style={{textAlign:"center", marginTop: "10px"}}>
+        <Radio.Group defaultValue="a" buttonStyle="solid" size="large" style={{textAlign:"center", marginTop: "10px", marginBottom:"40px"}}>
 <Radio.Button value="a" style={{
 width:"50%"
 }}>English</Radio.Button>
@@ -78,6 +78,9 @@ textAlign:"centers"
     </div>
 								<button
 									type="submit"
+									style={{
+										marginBottom:"2rem"
+									}}
 									className="w-full  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center send-otp-button"
                                     onClick={createAccount}
 									>

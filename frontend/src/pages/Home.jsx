@@ -84,8 +84,8 @@ const Home = () => {
       ))
 
 	return (
-		<>
-		<div className="sign2-background">
+		
+		<div className="sign2-background" style={{paddingBottom:"12rem"}}>
 	
 <TopNav path={"home"}/>
 <Alert style={{marginTop:"1.6rem"}}
@@ -261,7 +261,6 @@ const Home = () => {
 			</div>
 			<BottomNav path="home"/>
 		</div>
-		</>
 	);
 };
 

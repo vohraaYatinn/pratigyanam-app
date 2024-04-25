@@ -15,7 +15,7 @@ const Signup = () => {
 			setError("Passwords do not match");
 			navigate('/audio-preferences')
 		} else {
-			navigate("/");
+			navigate("/audio-preferences");
 		}
 	};
 
