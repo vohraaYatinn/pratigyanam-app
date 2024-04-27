@@ -62,28 +62,34 @@ const Profile = () => {
 				<div className="mt-5">
 					<p className="text-lg ml-4 mt-3">Personal Info</p>
 					<div>
-						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
-							<div className="flex gap-4" onClick={()=>{
-								router.push("/edit-profile")
-							}}>
+						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
+						onClick={()=>{
+							router.push("/edit-profile")
+						}}
+						>
+							<div className="flex gap-4" >
 								<FaUserCheck />
 								<p>Edit Profile</p>
 							</div>
 							<FaChevronRight />
 						</div>
-						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
-							<div className="flex gap-4" onClick={()=>{
-								router.push('/edit-address')
-							}}>
+						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
+						onClick={()=>{
+							router.push('/edit-address')
+						}}
+						>
+							<div className="flex gap-4" >
 								<FaLocationDot />
 								<p>My Address</p>
 							</div>
 							<FaChevronRight />
 						</div>
-						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
-							<div className="flex gap-4"  onClick={()=>{
-								router.push('/manage-subscriptions')
-							}}>
+						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
+						 onClick={()=>{
+							router.push('/manage-subscriptions')
+						}}
+						>
+							<div className="flex gap-4" >
 								<MdOutlinePayment />
 								<p>Manage Subscription</p>
 							</div>
@@ -95,19 +101,23 @@ const Profile = () => {
 				<div className="mt-5">
 					<p className="text-lg ml-4 mt-3">General </p>
 					<div>
-						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
-							<div className="flex gap-4" onClick={()=>{
+						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 " onClick={()=>{
 								router.push('/edit-language')
 							}}>
+							<div className="flex gap-4" >
 								<IoLanguage />
 								<p>Audio Language</p>
 							</div>
 							<FaChevronRight />
 						</div>
-						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
-							<div className="flex gap-4" onClick={()=>{
-								router.push('/refer-and-earn')
-							}}>
+						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
+						onClick={()=>{
+							router.push('/refer-and-earn')
+						}}
+						>
+							<div className="flex gap-4" 
+							
+							>
 								<VscReferences />
 								<p>Refer & Earn</p>
 							</div>
@@ -124,11 +134,11 @@ const Profile = () => {
 				</div>
 				<div className="mt-5">
 					<p className="text-lg ml-4 mt-3">Authentication</p>
-					<div>
-						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
-						onClick={()=>{
+					<div onClick={()=>{
 							router.push('/')
-						}}
+						}}>
+						<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
+						
 						>
 							<div className="flex gap-4">
 								<MdLogout />

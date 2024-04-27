@@ -8,6 +8,8 @@
 	padding: 0;
 }
 body {
+	width: 100vw !important;
+	overflow-x: hidden;
 	font-family: "Poppins", sans-serif;
 	background-image: linear-gradient(to right, #ffffff, #ffffff);
 	color: black;

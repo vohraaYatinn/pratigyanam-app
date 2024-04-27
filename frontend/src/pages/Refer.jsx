@@ -1,26 +1,26 @@
 import React from "react";
 
-import refer from "../data/thumbnails/refer.png";
+import refer from "../assets/refer.png";
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa6";
 import TopNav from "../components/TopNav";
+
 
 const Refer = () => {
 	return (
 		<>
-		<div className="bg-white text-black " >
+		<div className="bg-white text-black  sign5-background" >
 									<TopNav path={"Refer and Earn"}/>
-					</div>
-		<div>
-			<div className=" mt-10 w-full text-center font-semibold">
-				<h2 className="text-2xl">Refer your friends and Earn</h2>
+					
+		
+			<div className="mt-20 w-full text-center font-semibold ">
+				<h2 className="text-2xl mb-10">Refer your friends and Earn</h2>
 			</div>
 			<div className="">
 				<img src={refer} alt="" className="h-40 mx-auto" />
 			</div>
 			<div className="text-center text-lg mx-4">
 				<p>
-					Your friend gets 20% off on sign up and, you get 30% off in any
-					purchase.
+				Upon successfully sharing with 10 users, you'll unlock one month of free access.
 				</p>
 			</div>
 			<div className="border-2 border-dashed border-black flex text-lg mx-5 my-7 px-3 py-2 gap-4">
@@ -53,17 +53,9 @@ const Refer = () => {
 					<p>Facebook</p>
 				</div>
 			</div>
-			<div className=" my-8 mx-3">
-				<p className="text-2xl font-semibold capitalize">
-					Frequently asked quetions
-				</p>
-				<div className=" mt-2 text-xl">
-					<p className="my-2">1. What is refer and earn program?</p>
-					<p className="my-2">2. How it works?</p>
-					<p className="my-2">3. Where I can get these discounts?</p>
-				</div>
-			</div>
+			
 		</div>
+		
 		</>
 	);
 };

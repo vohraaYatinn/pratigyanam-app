@@ -1,19 +1,27 @@
 .sign-background{
     display:flex;
-    background-image: url("../assets/images/leaves.png");
+    background-color: rgb(232,236,235);
     background-size: cover;
     align-items: center;
     justify-content: center;
 }
 
 .sign2-background{
-    background-image: url("../assets/images/color-background.png");
+    background-image: url("../assets/images/cc.png");
     background-size:contain;
     align-items: center;
     justify-content: center;
 }
+.sign4-background{
+    background-image: url("../assets/images/pop.png");
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    
+}
 .sign3-background{
-    background-image: url("../assets/images/bg-no-leave.png");
+    background-image: url("../assets/images/cc.png");
     background-size:cover;
     align-items: center;
     justify-content: center;
@@ -25,7 +33,16 @@
 .seared-components-track > input > button{
     padding: 0.5rem;
 }
-
+.sign5-background{
+    background-image: url("../assets/images/pop.png");
+    /* display: flex;
+    flex-direction: column; */
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    
+}
 
 
 .search-bar-antd .adm-search-bar-input-box{

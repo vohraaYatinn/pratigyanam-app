@@ -107,11 +107,15 @@ const SingleTrack = () => {
     
 
     return (
-        <div className="w-screen">
-            <TopNav path={"audio"} />
+        <div className="w-screen sign4-background">
+            <TopNav path={"audio"}  />
             <section>
                 <div>
-                    <img src={track?.img} className='h-64 w-64 mx-auto mt-16 rounded-xl' alt="" />
+                    <img src={track?.img} className='h-64 w-64 mx-auto mt-16 rounded-xl' alt="" 
+                    style={{
+                        objectFit:"cover"
+                    }}
+                    />
                 </div>
                 <div className='flex items-center text-3xl justify-between mx-5 gap-3 mt-20 p-5 rounded-xl'>
                     <div>
@@ -132,7 +136,7 @@ const SingleTrack = () => {
                     />
                     <span className="time">{formatTime(duration)}</span>
                 </div>
-                <div className="controls w-full flex flex-col sm:flex-row justify-center mt-20 sm:gap-5 ">
+                <div className="controls w-full flex flex-col sm:flex-row justify-center mt-10 sm:gap-5 ">
                     <div className="">
                         <div className='flex justify-center text-4xl gap-3  sm:my-5 my-4'>
                             <button onClick={handlePrevious} className='bg-black text-white rounded-2xl text-center   p-3'>

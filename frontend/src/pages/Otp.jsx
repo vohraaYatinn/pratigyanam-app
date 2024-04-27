@@ -24,7 +24,7 @@ const OtpEnter = () => {
   
 
 	return (
-		<div className="h-screen bg-white sign-background" >
+		<div className="h-screen sign-background" >
 			<section style={{
 				    width: "100%"
 			}}>

@@ -16,7 +16,7 @@ const TrackList = () => {
 
 	return (
 		<>
-			<div className=" w-screen">
+			<div className=" w-screen sign3-background">
 			<TopNav path={"audio"}/>
 				<section className="mt-8 flex justify-around gap-4 mx-3">
 					<div>

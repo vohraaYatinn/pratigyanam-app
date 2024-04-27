@@ -6,11 +6,7 @@ const App = () => {
 	const navigate = useNavigate();
 	useEffect(() => {
 		const user = localStorage.getItem("loggedin");
-		if (user) {
-			console.log("User is logged in");
-		} else {
-			navigate("/signup");
-		}
+		
 	}, []);
 
 	return (

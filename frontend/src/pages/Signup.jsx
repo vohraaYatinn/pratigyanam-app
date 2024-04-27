@@ -24,7 +24,7 @@ const Signup = () => {
 	};
 
 	return (
-		<div className="h-screen bg-white sign-background">
+		<div className="h-screen sign-background">
 			<section style={{
 				    width: "100%"
 			}}>
@@ -94,13 +94,13 @@ const Signup = () => {
 						Gender
 					</label>
 					<div className="flex gap-6">
-						<div className="text-sm flex items-center gap-2">
+						<div className="text-sm flex items-center gap-2" style={{alignItems:"center"}}>
 							<input type="radio" className="rounded-md" />
-							<p>Male</p>
+							<p className="m-0">Male</p>
 						</div>
 						<div className="text-sm flex items-center gap-2">
 							<input type="radio" className="rounded-md" />
-							<p>Female</p>
+							<p className="m-0">Female</p>
 						</div>
 					</div>
 				</div>

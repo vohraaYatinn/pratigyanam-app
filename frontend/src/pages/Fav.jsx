@@ -10,6 +10,7 @@ import {
 	IoLockClosedOutline,
 	IoLanguage,
 } from "react-icons/io5";
+import { Flex, Radio } from 'antd';
 
 import { FiEdit } from "react-icons/fi";
 import vector from "../data/vector.jpeg";
@@ -25,10 +26,13 @@ import { categoriesFav } from "../data/categories";
 
 const FavComponent = () => {
 	const [selectedTrack, setSelectedTrack] = useState(tracksFav[0]);
-	const [toggleCategory, setToggleCategory] = useState("audio");
+	const [toggleCategory, setToggleCategory] = useState("category");
 
 	const handleTrackClick = (track) => {
 		setSelectedTrack(track);
+	};
+	const ChangeRadio = (e) => {
+		setToggleCategory(e.target.value);
 	};
 	const ref = useRef(null)
 
@@ -39,10 +43,22 @@ const FavComponent = () => {
 
 			<div>
 			<TopNav path={"Favourite Audio"}/>
-				<div className="flex  items-center justify-evenly text-xl my-3  text-white bg-gradient-to-r from-orange-500 to-yellow-500">
-				<button onClick={()=>setToggleCategory("categories")} className="  border-r-2 border-black font-medium  w-[50%]  py-2.5 text-center">Categories</button>
-					<button onClick={()=>setToggleCategory("audio")}  className=" w-[50%]   font-medium   py-2.5 text-center">Audio</button>
-				</div>
+			<Radio.Group defaultValue="categories" buttonStyle="solid" size="large" style={{textAlign:"center", width:"100%", marginTop:"1rem", padding:"1rem"}} 
+			onChange={(e)=>{
+				ChangeRadio(e)
+			}}
+			>
+      <Radio.Button value="categories" style={{
+		width:"50%"
+	  }}>Categories</Radio.Button>
+      <Radio.Button value="audio"
+	  style={{
+		width:"50%",
+		textAlign:"centers"
+	  }}
+	  >Audio</Radio.Button>
+	  </Radio.Group>
+
 				{toggleCategory === "audio" ? <div className="mt-5">
 					<p className="text-lg ml-4 mt-3">Saved Audios</p>
 					<section className="mx-3 h-full mb-[140px] overflow-scroll">
