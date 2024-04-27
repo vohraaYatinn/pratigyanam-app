@@ -1,18 +1,6 @@
 import React, { useState, useRef } from "react";
 import { FaArrowLeft, FaChevronRight, FaLocationDot } from "react-icons/fa6";
-import {
-	MdDeleteOutline,
-	MdOutlinePayment,
-	MdOutlineSecurity,
-} from "react-icons/md";
-import {
-	IoLockOpenOutline,
-	IoLockClosedOutline,
-	IoLanguage,
-} from "react-icons/io5";
-
-import { FiEdit } from "react-icons/fi";
-import vector from "../data/vector.jpeg";
+import music from "../assets/music.png";
 import { Link, useNavigate } from "react-router-dom";
 import { NavBar} from 'antd-mobile'
 import BottomNav from "../components/BottomNav";
@@ -60,26 +48,20 @@ const SearchComponent = () => {
 				  <h4>Type Your Search </h4>
 
 				  <div class="input-style  has-borders mb-4">
-<input type="text" class="form-control" id="form1" placeholder="1" />
+<input type="text" class="form-control" id="form1" placeholder="start typing here..." />
 <label for="form1" class="color-highlight">Quantity</label>
 </div>
 
 				  <div className="list-group list-custom-large">
 				
-					<a href="#">
-					  <img src="images/avatars/2s.png" />
-					  <span>Jack</span>
-					  <strong>Group Manager</strong>
-					  <span className="badge bg-red-dark font-11 color-white">Audio</span>
+					
+					<Link data-trigger-switch="switch-1" className="border-0" to="/single-track/2">
+					  <img src={music} />
+					  <span>Morning Affirmation</span>
+					  <strong>Audio 3 - Belive in me</strong>
+					  {/* <span className="badge bg-blue-dark font-11 color-white">Category</span> */}
 					  <i className="fa fa-angle-right" />
-					</a>
-					<a data-trigger-switch="switch-1" className="border-0" href="#">
-					  <img src="images/avatars/5s.png" />
-					  <span>Dave</span>
-					  <strong>Senior Developer</strong>
-					  <span className="badge bg-blue-dark font-11 color-white">Category</span>
-					  <i className="fa fa-angle-right" />
-					</a>
+					</Link>
 				  </div>
 				</div>
 			  </div>

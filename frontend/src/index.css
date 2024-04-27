@@ -89,3 +89,12 @@ opacity: 70%;
 
 	
 }
+.check-it-profile{
+	display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column-reverse;
+}
+.input-for-profile{
+	margin: 0.2rem 1rem;
+}

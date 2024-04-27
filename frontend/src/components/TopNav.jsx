@@ -57,17 +57,17 @@ const TopNav = ({ path }) => {
 		}}
 		>
 
-		  <h2
-		  style={{paddingTop:"1rem"}}
+		  <h3
+		  style={{paddingTop:"1rem", display:"flex", alignItems:"center"}}
 		  
 		  > <span>
-			<img src="" alt="" />
-			</span>Pratigyanam</h2>
+			<img src={logo} alt="" style={{height:"3rem"}}/>
+			</span>Pratigyanam</h3>
 		 <div style={{
 			marginRight:"0rem"
 		 }}>
-		  <a href="#" className="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i className="fa fa-lightbulb color-yellow-dark" /></a>
-		  <a href="#" className="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i className="fa fa-bars" /></a>
+		  <Link href="#" className="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i className="fa fa-lightbulb color-yellow-dark" /></Link>
+		  <Link href="/profile" className="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i className="fa fa-user" /></Link>
 		  </div>
 		</div>
 	)
