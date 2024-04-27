@@ -3,61 +3,45 @@ import React from "react";
 import refer from "../assets/refer.png";
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa6";
 import TopNav from "../components/TopNav";
+import BottomNav from "../components/BottomNav";
 
 
 const Refer = () => {
-	return (
-		<>
-		<div className="bg-white text-black  sign5-background" >
-									<TopNav path={"Refer and Earn"}/>
-					
-		
-			<div className="mt-20 w-full text-center font-semibold ">
-				<h2 className="text-2xl mb-10">Refer your friends and Earn</h2>
-			</div>
-			<div className="">
-				<img src={refer} alt="" className="h-40 mx-auto" />
-			</div>
-			<div className="text-center text-lg mx-4">
-				<p>
-				Upon successfully sharing with 10 users, you'll unlock one month of free access.
-				</p>
-			</div>
-			<div className="border-2 border-dashed border-black flex text-lg mx-5 my-7 px-3 py-2 gap-4">
-				<div className="text-center">
+
+			  return (
+				<>
+					<TopNav/>
+					<BottomNav/>
+
+				<div className="card card-style pt-12">
+				  <h4 className="font-28 text-center color-theme font-800 pt-3 mt-3">Refer & Earn</h4>
+				  <img src={refer} alt="" className="w-40 h-40 mx-auto" />
+				  <p className="boxed-text-l  mt-2">
+					Upon  Successfully sharing with 10 users, you'll unlock one month free access.
+				  </p>
+
+<div className="border-2 border-dashed border-black flex text-sm mx-5 my-4 px-2 justify-center py-2 gap-4">
+				<div className="text-center  pr-2">
 					<p>your refferal code</p>
-					<p className="uppercase font-bold text-3xl">abcgde234</p>
-				</div>
-				<div className="text-xl text-center w-full border-l border-l-black">
-					<p>copy</p>
-					<p>code</p>
+					<p className="uppercase font-bold text-xl">abcgde234</p>
+					<button className="mt-1 bg-gray-500/30 text-sm px-3 py-1 text-black rounded-md">Copy</button>
 				</div>
 			</div>
-			<p
-				className="text-center font-semibold text-2xl
-             my-8">
-				{" "}
-				Share your Refferral code via
-			</p>
-			<div className="flex items-center gap-3 justify-center mx-3">
-				<div className="text-2xl flex items-center justify-center font-semibold gap-2 text-white bg-green-600 rounded-full px-4 py-3">
-					<p>
-						<FaWhatsapp />
-					</p>
-					<p>WhatsApp</p>
+
+				  <div className="text-center mb-4">
+					<p className="mb-3  font-medium">Share your Refferal code via</p>
+					<a href="#" className="icon icon-xs rounded-sm shadow-l mr-1 bg-facebook"><i className="fab fa-facebook-f" /></a>
+					<a href="#" className="icon icon-xs rounded-sm shadow-l mr-1 bg-twitter"><i className="fab fa-twitter" /></a>
+					<a href="#" className="icon icon-xs rounded-sm shadow-l mr-1 bg-phone"><i className=" fa-whatsapp fa-brands" /></a>
+				  </div>
+				  <div className="divider mb-0" />
+				  <div className="row text-center mb-3 pl-3 pr-3">
+					<a className="font-11 col-4 mx-auto" href="http://wa.me/+917042414212" target="_blank">Contact Support</a>
+				  </div>
 				</div>
-				<div className="text-2xl flex items-center justify-center font-semibold gap-2 text-white bg-blue-600 rounded-full px-4 py-3">
-					<p>
-						<FaFacebookF />
-					</p>
-					<p>Facebook</p>
-				</div>
-			</div>
-			
-		</div>
-		
-		</>
-	);
+</>
+
+			  )
 };
 
 export default Refer;

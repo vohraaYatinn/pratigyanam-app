@@ -9,11 +9,12 @@ import hindi from '../assets/images/hindi.png'
 
 const EditAddress = () => {
 	return (
-		<div className="bg-white text-black pb-10 sign3-background" >
+		<>
 									<TopNav path={"Audio Language"}/>
+		<div className="bg-white text-black pb-10 " >
 
 			<div>
-			<div className="mt-20" style={{
+			<div className="pt-24" style={{
 					display:"flex",
 					fontSize:"7rem",
 					justifyContent:"space-around",
@@ -66,7 +67,7 @@ const EditAddress = () => {
 			</div>
 			<p className="flex mx-5 text-xl flex-col" style={{marginTop:"1rem"}}>* Please select your default gender & language preference.</p>
 		</div>
-		
+		</>
 	);
 };
 

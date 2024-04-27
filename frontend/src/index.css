@@ -35,6 +35,10 @@ body {
 	cursor: pointer;
 	color: white;
   }
+.tracker2::-webkit-slider-thumb{
+	font-size: 2px;
+	width: 1px;
+}
 
 .fix-osahan-footer a{
 display: flex;

@@ -107,51 +107,54 @@ const SingleTrack = () => {
     
 
     return (
-        <div className="w-screen sign4-background">
+        <div className="w-screen">
             <TopNav path={"audio"}  />
-            <section>
+            <section className=''>
                 <div>
-                    <img src={track?.img} className='h-64 w-64 mx-auto mt-16 rounded-xl' alt="" 
+                    <img src={track?.img} className='absolute bottom-60 h-[510px]  rounded-xl px-1' alt="" 
                     style={{
                         objectFit:"cover"
                     }}
                     />
                 </div>
-                <div className='flex items-center text-3xl justify-between mx-5 gap-3 mt-20 p-5 rounded-xl'>
+                <div className='flex absolute bottom-20  items-center text-2xl w-full mx-5 gap-3  p-5 rounded-xl'>
                     <div>
-                        <h4 className='font-semibold'>{track?.title}</h4>
-                        <p className='text-lg'>{track?.author}</p>
+                        <div className='flex items-center gap-3 justify-between w-full'>
+                        <span className='font-semibold text-3xl'>{track?.title} </span>
+                        <RiHeartLine size={30}/>
+                        </div>
+                        <span className='text-lg'>{track?.author} </span>
                     </div>
-                    <RiHeartLine size={40} />
                 </div>
-                <div className='flex items-center font-semibold mx-5 gap-3 text-2xl mt-10'>
+                <div className='flex absolute bottom-20 w-[80%] justify-center items-center font-semibold mx-5 gap-3 text-sm '>
                     <span className="time current">{formatTime(currentTime)}</span>
                     <input
                         ref={rangeInputRef}
-                        className="w-full tracker h-2 bg-black rounded-lg appearance-none cursor-pointer range-sm"
+                        className=" bg-black tracker2 h-[1px] rounded-full  cursor-pointer range-sm"
                         type="range"
                         value={currentTime}
                         max={duration || 0}
                         onChange={handleTimeChange}
+                        style={{height: "3px"}}
                     />
                     <span className="time">{formatTime(duration)}</span>
                 </div>
-                <div className="controls w-full flex flex-col sm:flex-row justify-center mt-10 sm:gap-5 ">
-                    <div className="">
-                        <div className='flex justify-center text-4xl gap-3  sm:my-5 my-4'>
-                            <button onClick={handlePrevious} className='bg-black text-white rounded-2xl text-center   p-3'>
+                <div className="controls w-full flex flex-col sm:flex-row justify-center  sm:gap-5 ">
+                    <div className="fixed w-full bottom-0">
+                        <div className='flex justify-center text-2xl   sm:my-5 my-4'>
+                            <button onClick={handlePrevious} className='bg-black mx-2 rounded-sm text-center   p-2'>
                                 <IoPlaySkipBackSharp />
                             </button>
-                            <button onClick={skipBackward} className='bg-black text-white rounded-2xl text-center   p-3'>
+                            <button onClick={skipBackward} className='bg-black mx-2 rounded-sm text-center   p-2'>
                                 <IoPlayBackSharp />
                             </button>
-                            <button className='bg-black text-white rounded-2xl text-center   p-3' onClick={togglePlay}>
+                            <button className='bg-black mx-2 rounded-sm text-center   p-2' onClick={togglePlay}>
                                 {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
                             </button>
-                            <button onClick={skipForward} className='bg-black text-white rounded-2xl text-center   p-3'>
+                            <button onClick={skipForward} className='bg-black mx-2 rounded-sm text-center   p-2'>
                                 <IoPlayForwardSharp />
                             </button>
-                            <button onClick={handleNext} className='bg-black text-white rounded-2xl text-center   p-3'>
+                            <button onClick={handleNext} className='bg-black mx-2 rounded-sm text-center   p-2'>
                                 <IoPlaySkipForwardSharp />
                             </button>
                         </div>
