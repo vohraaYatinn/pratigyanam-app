@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaArrowLeft, FaChevronRight, FaLocationDot } from "react-icons/fa6";
 import music from "../assets/music.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import { tracksFav, tracksFav3 } from "../data/tracks";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Dialog, List, SwipeAction, Toast, Image } from 'antd-mobile'
 import { AudioOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
+import { Input, Skeleton } from 'antd';
 const { Search } = Input;
 import { Button, SearchBar, Space } from 'antd-mobile'
 
@@ -18,6 +18,13 @@ import { Button, SearchBar, Space } from 'antd-mobile'
 
 const AffirmationComponent = () => {
 	const [selectedTrack, setSelectedTrack] = useState(tracksFav[0]);
+	const [skeletontime, setSkeletonTime] = useState(true);
+
+	useEffect(()=>{
+		setTimeout(() => {
+			setSkeletonTime(false)
+		}, 1500);
+	},[])
 	const navigate = useNavigate();
 
 	const handleTrackClick = (track) => {
@@ -65,6 +72,9 @@ const AffirmationComponent = () => {
 					<div className="card-overlay bg-black opacity-80" />
 				  </div>
 
+				  {skeletontime? <Skeleton active={true} title={false} className="px-4 my-4" paragraph={{
+      rows: 6,
+    }}/>:
 
 				  <div class="card card-style morning-affirmation-div">
 <div class="content">
@@ -110,7 +120,10 @@ const AffirmationComponent = () => {
 				  </div></p>
 </div>
 </div>
-
+}
+{skeletontime? <Skeleton active={true} title={false} className="px-4 my-5" paragraph={{
+      rows: 6,
+    }}/>:
 				  <div class="card card-style night-affirmation-div">
 <div class="content">
 <h3 style={{textAlign:"center", fontSize:"1.3rem", marginBottom:"2rem"}}>Night Affirmations
@@ -155,6 +168,7 @@ const AffirmationComponent = () => {
 				  </div></p>
 </div>
 </div>
+}
 
 
 

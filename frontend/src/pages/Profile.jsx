@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowLeft, FaChevronRight, FaLocationDot, FaUserCheck } from "react-icons/fa6";
 import { VscReferences } from "react-icons/vsc";
 import {
@@ -21,9 +21,17 @@ import { NavBar} from 'antd-mobile'
 import BottomNav from "../components/BottomNav";
 import { useRouter } from "../hooks/navigator";
 import TopNav from "../components/TopNav";
+import { Skeleton } from "antd";
 
 const Profile = () => {
 	const router = useRouter();
+	const [skeletontime, setSkeletonTime] = useState(true)
+
+	useEffect(()=>{
+		setTimeout(()=>{
+			setSkeletonTime(false)
+		},1500)
+	})
 
 		  return (
 			<>
@@ -33,6 +41,9 @@ const Profile = () => {
 			<BottomNav path={"profile"}/>
 			<div className="page-content ">
 				  <div className="card card-style" style={{marginTop:"6rem"}}>
+				 { skeletontime ? (
+									  <Skeleton active={true}  className="px-4 my-4" title={false} paragraph={{rows:14}}/>
+									) : (
 					<div className="content mt-0 mb-0" >
 					  <div className="list-group list-custom-large check-visited">
 						
@@ -69,6 +80,7 @@ const Profile = () => {
 						</Link>						
 					  </div>
 					</div>
+)}
 				  </div>
 				  <div data-menu-load="menu-footer.html" />
 				</div>

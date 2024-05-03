@@ -151,17 +151,20 @@ const Home = () => {
 			<div id="menu-main" className="menu menu-box-left rounded-0" data-menu-width={280} data-menu-active="nav-welcome" data-menu-load="menu-main.html" />
 			<div id="menu-share" className="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height={370}> </div>
 			<div id="menu-colors" className="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height={480} />
-			<div className="page-content">
-			  <Swiper slideSize={slideSize1} trackOffset={15} loop stuckAtBoundary={false}
-			  style={{marginBottom:"1.5rem"}}
-			  >
+			<div className="page-content text-center">
+			{skeletontime ? (<Skeleton.Image active={true} style={{"width": "300px", height: "300px"}}/>) : (
+
+				<Swiper slideSize={slideSize1} trackOffset={15} loop stuckAtBoundary={false}
+				style={{marginBottom:"1.5rem"}}
+				>
           {topDoctors}
         </Swiper>
+			)  }
 			
 				
 			
 			  <div className="card card-style shadow-xl">
-{skeletontime? <Skeleton loading={skeletontime} />:
+{skeletontime? <Skeleton active={true} className="px-4 my-4" title={false}/>:
 			 
 				<div className="content">
 				  <p className="color-highlight font-600 mb-n1">Chakras Healing Expert</p>
@@ -176,6 +179,7 @@ const Home = () => {
 
 			  <div className="card card-full-left card-style">
 				<div className="content">
+				{skeletontime? <Skeleton active={true} className="px-4 my-4" title={false}/>:
 				  <div className="d-flex">
 					<div className="me-3">
 					  <img width={120} className="fluid-img rounded-m shadow-xl" src={po1} />
@@ -191,7 +195,10 @@ const Home = () => {
 					  {/* <a href="index-components.html" className="btn btn-sm rounded-s font-13 font-600 gradient-highlight">View All</a> */}
 					</div>
 				  </div>
+}
 				  <div className="divider mt-4" />
+				{skeletontime? <Skeleton active={true} className="px-4 my-4" title={false}/>:
+
 				  <div className="d-flex"  onClick={()=>{
 					navigate('/sub-sound')
 				}}>
@@ -206,7 +213,10 @@ const Home = () => {
 					  </p>
 					</div>
 				  </div>
+}
 				  <div className="divider mt-4" />
+				{skeletontime? <Skeleton active={true} className="px-4 my-4" title={false}/>:
+
 				  <div className="d-flex"  onClick={()=>{
 					navigate('/sub-sound')
 				}}>
@@ -221,8 +231,11 @@ const Home = () => {
 					  </p>
 					</div>
 				  </div>
+}
 				</div>
 			  </div>
+				{skeletontime? <Skeleton active={true} className="px-4 my-4" title={false}/>:
+
 			  <div className="row mb-0">
 				<a href="#" className="col-6 pe-0">
 				  <div className="card mr-0 card-style">
@@ -255,6 +268,7 @@ const Home = () => {
 				  </div>
 				</a>
 			  </div>
+}
 			  <a href="#" data-toggle-theme >
 			  </a>
 			  <div data-menu-load="menu-footer.html" />

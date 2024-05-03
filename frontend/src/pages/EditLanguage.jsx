@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TopNav from "../components/TopNav";
-import { Flex, Radio } from 'antd';
+import { Flex, Radio, Skeleton } from 'antd';
 import { FaArrowLeft, FaFemale, FaMale } from "react-icons/fa";
 
 import english from '../assets/images/english.png'
@@ -10,6 +10,15 @@ import { Link } from "react-router-dom";
 
 
 const EditAddress = () => {
+
+	const [skeletontime, setSkeletonTime] = useState(true)
+
+	useEffect(()=>{
+		setTimeout(()=>{
+			setSkeletonTime(false)
+		},1500)
+	})
+
 	return (
 		<div>
 		  <div id="page">
@@ -29,7 +38,20 @@ const EditAddress = () => {
 				<div className="content mb-2">
 				
 				
-
+				{skeletontime ? <>
+				<div className="text-center ">
+					<Skeleton.Image active={true} style={{width: "120px", height: "130px"}} className=""/>
+					<Skeleton.Image active={true} style={{width: "120px", height: "130px"}} 
+					className="ml-5"/>
+					<Skeleton active={true} title={false} paragraph={{rows: 2}}  className="mt-3 mx-8"/>
+				</div>
+				<div className="text-center mt-4">
+					<Skeleton.Image active={true} style={{width: "120px", height: "130px"}} className=""/>
+					<Skeleton.Image active={true} style={{width: "120px", height: "130px"}} 
+					className="ml-5"/>
+					<Skeleton active={true} title={false} paragraph={{rows: 2}}  className="mt-3 mx-8"/>
+				</div>
+				</>:
 				  <div className="list-group list-custom-large">
 				  <div>
 <div className="pt-2 " style={{
@@ -68,6 +90,7 @@ marginBottom:"1rem"
 <img src={english} alt="" className="h-20 w-20" />
 
 </div>
+
 <Radio.Group defaultValue="a" buttonStyle="solid" size="large" style={{textAlign:"center", marginTop: "10px"}} className="pb-4">
 <Radio.Button value="a" style={{
 width:"50%"
@@ -85,6 +108,7 @@ textAlign:"centers"
 </div>
 					
 				  </div>
+}
 				</div>
 			  </div>
 			<p></p>

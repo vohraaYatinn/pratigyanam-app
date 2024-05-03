@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaArrowLeft, FaChevronRight, FaLocationDot } from "react-icons/fa6";
 import {
 	MdDeleteOutline,
@@ -10,7 +10,7 @@ import {
 	IoLockClosedOutline,
 	IoLanguage,
 } from "react-icons/io5";
-import { Flex, Radio } from 'antd';
+import { Flex, Radio, Skeleton } from 'antd';
 
 import { FiEdit } from "react-icons/fi";
 import vector from "../data/vector.jpeg";
@@ -27,6 +27,13 @@ import { categoriesFav } from "../data/categories";
 const FavComponent = () => {
 	const [selectedTrack, setSelectedTrack] = useState(tracksFav[0]);
 	const [toggleCategory, setToggleCategory] = useState("category");
+	const [skeletontime, setSkeletonTime] = useState(true)
+
+	useEffect(()=>{
+		setTimeout(()=>{
+			setSkeletonTime(false)
+		},1500)
+	})
 
 	const handleTrackClick = (track) => {
 		setSelectedTrack(track);
@@ -71,7 +78,9 @@ const FavComponent = () => {
 						{
 							tracksFav.map((item)=>{
 								return (
-
+									skeletontime ? (
+										<Skeleton active={true} className="px-4 my-4" title={false} paragraph={{row: 1}}/>
+									  ) : (
 					<a href="#">
 					  {/* <img src={item.img} /> */}
 					  <span>{item.title}</span>
@@ -79,7 +88,7 @@ const FavComponent = () => {
 					  <span className="badge bg-red-dark font-11 color-white">Audio</span>
 					  <i className="fa fa-angle-right" />
 					</a>
-								)
+								))
 							})
 						}
 					
@@ -89,15 +98,21 @@ const FavComponent = () => {
 						<>
 						{
 							categoriesFav.map((item)=>{
-								return(
-
-					<a data-trigger-switch="switch-1" className="border-0" href="#">
-					  {/* <img src="images/avatars/5s.png" /> */}
-					  <span>{item.title}</span>
-					  <span className="badge bg-blue-dark font-11 color-white">Category</span>
-					  <i className="fa fa-angle-right" />
-					</a>
-								)
+								return (
+									skeletontime ? (
+									  <Skeleton active={true} className="px-4 my-4" title={false} paragraph={{row: 1}}/>
+									) : (
+									  <a data-trigger-switch="switch-1" className="border-0" href="#">
+										{/* <img src="images/avatars/5s.png" alt="Avatar" /> */}
+								
+										<span>{item.title}</span>
+										<span className="badge bg-blue-dark font-11 color-white">Category</span>
+								
+										<i className="fa fa-angle-right" />
+									  </a>
+									)
+								  );
+								  
 							})
 						}
 

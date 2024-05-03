@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import vector from "../data/vector.jpeg";
 import { GoDot } from "react-icons/go";
 import TopNav from "../components/TopNav";
 import BottomNav from "../components/BottomNav";
+import { Skeleton } from "antd";
 
 
 const EditSubscriptions = () => {
+	const [skeletontime, setSkeletonTime] = useState(true)
+
+	useEffect(()=>{
+		setTimeout(()=>{
+			setSkeletonTime(false)
+		},1500)
+	})
 
 		  return (
 			
@@ -24,6 +32,11 @@ const EditSubscriptions = () => {
 				<BottomNav path={"profile"}/>
 				
 				<div className="page-title-clear" />
+				{skeletontime ? <>
+				<div className="">
+					<Skeleton active={true} title={true} paragraph={{rows: 4}}  className="mt-3 mx-8"/>
+				</div>
+				</>:
 				<div class="card card-style">
 <div class="content mb-0">
 <p class="font-600 mb-n1 color-highlight">Your Current Subscription plan</p>
@@ -39,7 +52,11 @@ const EditSubscriptions = () => {
 </div>
 </div>
 </div>
+}
 <div style={{marginBottom:"8rem"}}>
+{skeletontime? <Skeleton.Image active={true} style={{width: "350px", height: "300px"}}  className="px-4 my-4" paragraph={{
+      rows: 8,
+    }}/>:
 				<div class="card card-style p-4 bg-31" data-card-height="550" style={{minHeight:"20rem"}}>
 <div class="card-center text-center">
 {/* <h6 class="mb-0 color-highlight">Get AppKit Today</h6> */}
@@ -51,6 +68,11 @@ Create your next Mobile Project in a familiar programming language built by the 
 </div>
 <div class="card-overlay bg-black opacity-80"></div>
 </div>
+}
+
+{skeletontime? <Skeleton.Image active={true} style={{width: "350px", height: "300px"}}  className="px-4 my-4" paragraph={{
+      rows: 8,
+    }}/>:
 				<div class="card card-style p-4 bg-31 pb-10" data-card-height="550" style={{minHeight:"20rem"}}>
 <div class="card-center text-center">
 {/* <h6 class="mb-0 color-highlight">Get AppKit Today</h6> */}
@@ -62,6 +84,7 @@ Create your next Mobile Project in a familiar programming language built by the 
 </div>
 <div class="card-overlay bg-black opacity-80"></div>
 </div>
+}
 </div>
 			
 			  </div>

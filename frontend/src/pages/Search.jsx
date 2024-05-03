@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaArrowLeft, FaChevronRight, FaLocationDot } from "react-icons/fa6";
 import music from "../assets/music.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import { tracksFav, tracksFav3 } from "../data/tracks";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Dialog, List, SwipeAction, Toast, Image } from 'antd-mobile'
 import { AudioOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
+import { Input, Skeleton } from 'antd';
 const { Search } = Input;
 import { Button, SearchBar, Space } from 'antd-mobile'
 
@@ -18,6 +18,14 @@ import { Button, SearchBar, Space } from 'antd-mobile'
 
 const SearchComponent = () => {
 	const [selectedTrack, setSelectedTrack] = useState(tracksFav[0]);
+	const [skeletontime, setSkeletonTime] = useState(true)
+
+	useEffect(()=>{
+		setTimeout(()=>{
+			setSkeletonTime(false)
+		},1500)
+	})
+
 	const navigate = useNavigate();
 
 	const handleTrackClick = (track) => {
@@ -41,6 +49,12 @@ const SearchComponent = () => {
 			  <a href="#" className="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i className="fa fa-bars" /></a>
 			</div>
 			<div className="page-title-clear" />
+			{skeletontime ? <>
+				<div className="text-center ">
+					<Skeleton active={true} title={false} paragraph={{rows: 2}}  className="mt-3 mx-8"/>
+					<Skeleton active={true}  title={false} paragraph={{rows: 2}}  className="mt-5 mx-8"/>
+				</div>
+				</>:
 			<div className="page-content">
 
 			  <div className="card card-style">
@@ -69,6 +83,7 @@ const SearchComponent = () => {
 			
 			  <div data-menu-load="menu-footer.html" />
 			</div>
+			}
 			<div id="menu-main" className="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width={280} data-menu-active="nav-components" />
 			<div id="menu-share" className="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height={370} />
 			<div id="menu-colors" className="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height={480} />
