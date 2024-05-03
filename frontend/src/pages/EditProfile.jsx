@@ -5,6 +5,7 @@ import { FaPen } from "react-icons/fa6";
 import TopNav from "../components/TopNav";
 import BottomNav from "../components/BottomNav";
 import { Link } from "react-router-dom";
+import img from "../assets/images/6s.jpg"
 
 const EditProfile = () => {
 
@@ -13,7 +14,7 @@ const EditProfile = () => {
 			<div>
 				<div id="page">
 					<TopNav />
-					<BottomNav />
+					<BottomNav path={"profile"}/>
 					<div className="page-title page-title-fixed">
 						<h1>Profile</h1>
 						<a href="#" className="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-share"><i className="fa fa-share-alt" /></a>
@@ -29,7 +30,7 @@ const EditProfile = () => {
 									<h2 className="mt-3">Kartik Singh</h2>
 
 								</div>
-								<img src="images/pictures/6s.jpg" width={115} height={103} className="rounded-circle mt-3 shadow-xl" />
+								<img src={img} width={115} height={103} className="rounded-circle mt-3 shadow-xl" />
 							</div>
 
 							<div className="content input-for-profile ">

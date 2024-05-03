@@ -21,7 +21,7 @@ const EditSubscriptions = () => {
 				  <a href="#" data-menu="menu-share" className="header-icon header-icon-2"><i className="fas fa-share-alt" /></a>
 				</div>
 				<TopNav />
-				<BottomNav />
+				<BottomNav path={"profile"}/>
 				
 				<div className="page-title-clear" />
 				<div class="card card-style">

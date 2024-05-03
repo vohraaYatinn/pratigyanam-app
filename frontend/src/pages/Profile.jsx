@@ -27,44 +27,12 @@ const Profile = () => {
 
 		  return (
 			<>
-			<div>
-
-				<TopNav/>
-			  <div id="page">
-				<BottomNav/>
-				
-				<div style={{paddingTop: "4rem",
-				flexDirection:"row-reverse"}} className="flex items-center justify-evenly text-3xl py-8 gap-3">
-		
-				<img src={vector} alt="" className="h-16 w-16 rounded-full" />
-				<div>
-					<p className="font-semibold">Yatin Vohra</p>
-					<div className="text-lg flex items-center gap-2">
-
-						<FaLocationDot />
-						<span className="">Uttar Pradesh, India</span>
-					</div>
-				</div>
-				<div style={{
-					gap:"1rem",
-					display:"flex", flexDirection:"column"
-				}}>
-				
-
-				<Link onClick={()=>{
-					history.back()
-				}}>
 					<div>
-					<FaArrowLeft />
-					</div>
-				</Link>
-			
-				</div>
-
-			</div>
-
-				<div className="page-content">
-				  <div className="card card-style">
+		  <div id="page">
+			<TopNav />
+			<BottomNav path={"profile"}/>
+			<div className="page-content ">
+				  <div className="card card-style" style={{marginTop:"6rem"}}>
 					<div className="content mt-0 mb-0" >
 					  <div className="list-group list-custom-large check-visited">
 						
@@ -104,146 +72,15 @@ const Profile = () => {
 				  </div>
 				  <div data-menu-load="menu-footer.html" />
 				</div>
-				<div id="menu-main" className="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width={280} data-menu-active="nav-components" />
-				<div id="menu-share" className="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height={370} />
-				<div id="menu-colors" className="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height={480} />
-			  </div>
-			</div>
+		
+			<div id="menu-main" className="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width={280} data-menu-active="nav-components" />
+			<div id="menu-share" className="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height={370} />
+			<div id="menu-colors" className="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height={480} />
+		  </div>
+		</div>
 			</>
 		  );
 		}
 
 
 export default Profile;
-
-// return (
-// 	<div className="bg-white text-black pb-10 sm:pb-24 sign3-background" style={{height:"100vh"}}>
-
-// 		<div>
-			
-// 			<div className="flex items-center justify-evenly text-3xl py-8 gap-3" style={{
-// 				flexDirection:"row-reverse"
-// 			}}>
-		
-// 				<img src={vector} alt="" className="h-16 w-16 rounded-full" />
-// 				<div>
-// 					<p className="font-semibold">Yatin Vohra</p>
-// 					<div className="text-lg flex items-center gap-2">
-
-// 						<FaLocationDot />
-// 						<span className="">Uttar Pradesh, India</span>
-// 					</div>
-// 				</div>
-// 				<div style={{
-// 					gap:"1rem",
-// 					display:"flex", flexDirection:"column"
-// 				}}>
-				
-
-// 				<Link onClick={()=>{
-// 					history.back()
-// 				}}>
-// 					<div>
-// 					<FaArrowLeft />
-// 					</div>
-// 				</Link>
-			
-// 				</div>
-
-// 			</div>
-// 			<div className="mt-5">
-// 				<p className="text-lg ml-4 mt-3">Personal Info</p>
-// 				<div>
-// 					<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
-// 					onClick={()=>{
-// 						router.push("/edit-profile")
-// 					}}
-// 					>
-// 						<div className="flex gap-4" >
-// 							<FaUserCheck />
-// 							<p>Edit Profile</p>
-// 						</div>
-// 						<FaChevronRight />
-// 					</div>
-// 					<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
-// 					onClick={()=>{
-// 						router.push('/edit-address')
-// 					}}
-// 					>
-// 						<div className="flex gap-4" >
-// 							<FaLocationDot />
-// 							<p>My Address</p>
-// 						</div>
-// 						<FaChevronRight />
-// 					</div>
-// 					<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
-// 					 onClick={()=>{
-// 						router.push('/manage-subscriptions')
-// 					}}
-// 					>
-// 						<div className="flex gap-4" >
-// 							<MdOutlinePayment />
-// 							<p>Manage Subscription</p>
-// 						</div>
-// 						<FaChevronRight />
-// 					</div>
-// 				</div>
-// 			</div>
-		
-// 			<div className="mt-5">
-// 				<p className="text-lg ml-4 mt-3">General </p>
-// 				<div>
-// 					<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 " onClick={()=>{
-// 							router.push('/edit-language')
-// 						}}>
-// 						<div className="flex gap-4" >
-// 							<IoLanguage />
-// 							<p>Audio Language</p>
-// 						</div>
-// 						<FaChevronRight />
-// 					</div>
-// 					<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
-// 					onClick={()=>{
-// 						router.push('/refer-and-earn')
-// 					}}
-// 					>
-// 						<div className="flex gap-4" 
-						
-// 						>
-// 							<VscReferences />
-// 							<p>Refer & Earn</p>
-// 						</div>
-// 						<FaChevronRight />
-// 					</div>
-// 					<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 ">
-// 						<div className="flex gap-4">
-// 							<MdSupportAgent /> 
-// 							<a href="http://wa.me/+917042414212" target="_blank" className="text-black">Help & Support</a>
-// 						</div>
-// 						<FaChevronRight />
-// 					</div>
-// 				</div>
-// 			</div>
-// 			<div className="mt-5">
-// 				<p className="text-lg ml-4 mt-3">Authentication</p>
-// 				<div onClick={()=>{
-// 						router.push('/')
-// 					}}>
-// 					<div className="flex items-center text-xl gap-5 justify-between mx-4 mt-3 my-2 py-2 "
-					
-// 					>
-// 						<div className="flex gap-4">
-// 							<MdLogout />
-// 							<p>Logout</p>
-// 						</div>
-// 						<FaChevronRight />
-// 					</div>
-// 				</div>
-	
-// 			</div>
-// 		</div>
-// 		<BottomNav path="edit"/>
-
-// 	</div>
-	
-// );

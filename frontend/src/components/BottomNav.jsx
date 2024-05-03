@@ -42,13 +42,13 @@ const BottomNav = ({path}) => {
 
 return (
   <div id="footer-bar" className="footer-bar-6">
-      <Link to="/home" className="active-nav"
+      <Link to="/home" className={`${path == "home" && "active-nav-icon"}`}
   ><i className="fa fa-home" /><span>Home</span></Link>
-    <Link to="/search"><i className="fa fa-search" /><span>Search</span></Link>
+    <Link to="/search" className={`${path == "search" && "active-nav-icon"}`}><i className="fa fa-search" /><span>Search</span></Link>
 
-  <Link to="/fav"><i className="fa fa-heart" /><span>Favourites</span></Link>
+  <Link to="/fav" className={`${path == "fav" && "active-nav-icon"}`}><i className="fa fa-heart" /><span>Favourites</span></Link>
 
-  <Link to="/profile" data-menu="menu-main"><i className="fa fa-user" /><span>Profile</span></Link>
+  <Link to="/profile" className={`${path == "profile" && "active-nav-icon"}`} data-menu="menu-main"><i className="fa fa-user" /><span>Profile</span></Link>
 </div>
 )
 }

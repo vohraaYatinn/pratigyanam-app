@@ -39,7 +39,7 @@ const FavComponent = () => {
 	return (
 		<>
 		<TopNav />
-			<BottomNav />
+			<BottomNav path={"fav"}/>
 			<div className="page-title-clear" />
 			<Radio.Group defaultValue="categories" buttonStyle="solid" size="large" style={{textAlign:"center", width:"100%",  padding:"1rem"}} 
 		onChange={(e)=>{
@@ -73,7 +73,7 @@ const FavComponent = () => {
 								return (
 
 					<a href="#">
-					  <img src={item.img} />
+					  {/* <img src={item.img} /> */}
 					  <span>{item.title}</span>
 					  <strong>{item.author}</strong>
 					  <span className="badge bg-red-dark font-11 color-white">Audio</span>
@@ -92,7 +92,7 @@ const FavComponent = () => {
 								return(
 
 					<a data-trigger-switch="switch-1" className="border-0" href="#">
-					  <img src="images/avatars/5s.png" />
+					  {/* <img src="images/avatars/5s.png" /> */}
 					  <span>{item.title}</span>
 					  <span className="badge bg-blue-dark font-11 color-white">Category</span>
 					  <i className="fa fa-angle-right" />

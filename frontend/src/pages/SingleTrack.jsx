@@ -107,21 +107,21 @@ const SingleTrack = () => {
     
 
     return (
-        <div className="w-screen">
+        <div className="w-screen sound-sound-div">
             <TopNav path={"audio"}  />
             <section className=''>
                 <div>
-                    <img src={track?.img} className='absolute bottom-60 h-[510px]  rounded-xl px-1' alt="" 
+                    {/* <img src={track?.img} className='absolute bottom-60 h-[510px]  rounded-xl px-1' alt="" 
                     style={{
                         objectFit:"cover"
                     }}
-                    />
+                    /> */}
                 </div>
                 <div className='flex absolute bottom-20  items-center text-2xl w-full mx-5 gap-3  p-5 rounded-xl'>
                     <div>
                         <div className='flex items-center gap-3 justify-between w-full'>
                         <span className='font-semibold text-3xl'>{track?.title} </span>
-                        <RiHeartLine size={30}/>
+                        {/* <RiHeartLine size={30}/> */}
                         </div>
                         <span className='text-lg'>{track?.author} </span>
                     </div>
@@ -142,19 +142,19 @@ const SingleTrack = () => {
                 <div className="controls w-full flex flex-col sm:flex-row justify-center  sm:gap-5 ">
                     <div className="fixed w-full bottom-0">
                         <div className='flex justify-center text-2xl   sm:my-5 my-4'>
-                            <button onClick={handlePrevious} className='bg-black mx-2 rounded-sm text-center   p-2'>
+                            <button onClick={handlePrevious} className='bg-black mx-2 rounded-sm text-center   p-2 check-it-buttons'>
                                 <IoPlaySkipBackSharp />
                             </button>
-                            <button onClick={skipBackward} className='bg-black mx-2 rounded-sm text-center   p-2'>
+                            <button onClick={skipBackward} className='bg-black mx-2 rounded-sm text-center   p-2 check-it-buttons'>
                                 <IoPlayBackSharp />
                             </button>
-                            <button className='bg-black mx-2 rounded-sm text-center   p-2' onClick={togglePlay}>
+                            <button className='bg-black mx-2 rounded-sm text-center  check-it-buttons p-2' onClick={togglePlay}>
                                 {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
                             </button>
-                            <button onClick={skipForward} className='bg-black mx-2 rounded-sm text-center   p-2'>
+                            <button onClick={skipForward} className='bg-black mx-2 rounded-sm text-center   p-2 check-it-buttons'>
                                 <IoPlayForwardSharp />
                             </button>
-                            <button onClick={handleNext} className='bg-black mx-2 rounded-sm text-center   p-2'>
+                            <button onClick={handleNext} className='bg-black mx-2 rounded-sm text-center   p-2 check-it-buttons'>
                                 <IoPlaySkipForwardSharp />
                             </button>
                         </div>

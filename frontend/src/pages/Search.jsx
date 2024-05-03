@@ -32,7 +32,7 @@ const SearchComponent = () => {
 		<div>
 		  <div id="page">
 			<TopNav />
-			<BottomNav />
+			<BottomNav path={"search"}/>
 			<div className="page-title page-title-fixed">
 			  <h1>User Lists</h1>
 			  <a href="#" className="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-share"><i className="fa fa-share-alt" /></a>
@@ -56,9 +56,10 @@ const SearchComponent = () => {
 				
 					
 					<Link data-trigger-switch="switch-1" className="border-0" to="/single-track/2">
-					  <img src={music} />
+					  <div>
 					  <span>Morning Affirmation</span>
 					  <strong>Audio 3 - Belive in me</strong>
+					  </div>
 					  {/* <span className="badge bg-blue-dark font-11 color-white">Category</span> */}
 					  <i className="fa fa-angle-right" />
 					</Link>

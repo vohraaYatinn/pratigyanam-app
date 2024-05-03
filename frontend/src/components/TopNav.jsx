@@ -67,7 +67,7 @@ const TopNav = ({ path }) => {
 			marginRight:"0rem"
 		 }}>
 		  <Link href="#" className="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i className="fa fa-lightbulb color-yellow-dark" /></Link>
-		  <Link href="/profile" className="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i className="fa fa-user" /></Link>
+		  <Link to="/profile" className="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i className="fa fa-user" /></Link>
 		  </div>
 		</div>
 	)

@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 const AudioPreferences = () => {
-  const [gender, setGender] = useState(""); // State to manage selected gender
+  const [gender, setGender] = useState(""); 
 
   const handleGenderChange = (e) => {
-    // Update the selected gender state when dropdown value changes
     setGender(e.target.value);
   };
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
+
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -78,7 +75,7 @@ const AudioPreferences = () => {
                         id="english"
                         name="language"
                         value="english"
-                        checked={gender === "english"} // Check if language is English
+                        checked={gender === "english"}
                         onChange={handleGenderChange}
                         className="mr-2"
                       />
@@ -90,7 +87,7 @@ const AudioPreferences = () => {
                         id="hindi"
                         name="language"
                         value="hindi"
-                        checked={gender === "hindi"} // Check if language is Hindi
+                        checked={gender === "hindi"} 
                         onChange={handleGenderChange}
                         className="mr-2"
                       />
@@ -105,18 +102,7 @@ const AudioPreferences = () => {
 
 
                   {error && <div className="text-red-600">{error}</div>}
-                  {/* <button
-                    onClick={handleSignUp}
-                    type="submit"
-                    className="w-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                  >
-                    Create an account
-                  </button> */}
-                  {/* <div className="w-full flex items-center justify-center text-xl text-gray-600 text-center">
-                    <p className="h-[1px] bg-gray-300 w-full"></p>
-                    <span className="px-5"> or </span>
-                    <p className="h-[1px] bg-gray-300 w-full"></p>
-                  </div> */}
+               
              <div class="flex items-center justify-center ">
 			 <button
 									type="submit"
@@ -132,15 +118,7 @@ const AudioPreferences = () => {
 								</button>
                   </div>
 
-                  {/* <p className="text-sm font-light text-gray-500 ">
-                    Already have an account?{" "}
-                    <Link
-                      to={"/"}
-                      className="font-medium text-primary-600 hover:underline "
-                    >
-                      Login here
-                    </Link>
-                  </p> */}
+                  
                 </form>
               </div>
             </div>

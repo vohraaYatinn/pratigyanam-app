@@ -4,6 +4,7 @@ venv/
 
 # Node.js dependencies
 node_modules/
+frontend/android
 
 # Build files
 build/
