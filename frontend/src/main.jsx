@@ -23,6 +23,9 @@ import SingleTrack from "./pages/SingleTrack.jsx";
 import AudioPreferences from "./pages/AudioPreferences.jsx";
 import AffirmationComponent from "./pages/SubAffirmation.jsx";
 import SigninWithEmail from "./pages/SigninWithEmail.jsx";
+import AdminCategories from './admin-pages/AdminCategories.jsx';
+import AdminUpload from './admin-pages/AdminUpload.jsx';
+import AdminDashboard from './admin-pages/AdminDashboard.jsx'
 
 
 const router = createBrowserRouter([
@@ -96,6 +99,18 @@ const router = createBrowserRouter([
 			{
 				path: "sub-sound",
 				element: <AffirmationComponent />,
+			},
+			{
+				path: "admin-dashboard",
+				element: <AdminDashboard />,
+			},
+			{
+				path: "admin-categories",
+				element: <AdminCategories />,
+			},
+			{
+				path: "admin-upload",
+				element: <AdminUpload />,
 			},
 		],
 	},
