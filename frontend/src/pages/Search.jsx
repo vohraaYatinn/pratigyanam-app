@@ -16,9 +16,11 @@ import { Button, SearchBar, Space } from 'antd-mobile'
 
 
 
+
 const SearchComponent = () => {
 	const [selectedTrack, setSelectedTrack] = useState(tracksFav[0]);
 	const [skeletontime, setSkeletonTime] = useState(true)
+	const [searchValue, setSearchValue]= useState('')
 
 	useEffect(()=>{
 		setTimeout(()=>{
@@ -27,6 +29,7 @@ const SearchComponent = () => {
 	})
 
 	const navigate = useNavigate();
+	console.log(searchValue)
 
 	const handleTrackClick = (track) => {
 		setSelectedTrack(track);
@@ -62,7 +65,7 @@ const SearchComponent = () => {
 				  <h4>Type Your Search </h4>
 
 				  <div class="input-style  has-borders mb-4">
-<input type="text" class="form-control" id="form1" placeholder="start typing here..." />
+<input type="text" class="form-control" id="form1" placeholder="start typing here..." value={searchValue} onChange={(e)=> setSearchValue(e.target.value)} />
 <label for="form1" class="color-highlight">Quantity</label>
 </div>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import vector from "../data/vector.jpeg";
 import { FaPen } from "react-icons/fa6";
@@ -8,6 +8,22 @@ import { Link } from "react-router-dom";
 import img from "../assets/images/6s.jpg"
 
 const EditProfile = () => {
+
+	const [formValues, setFormValues] = useState({
+		fullName: "",
+		email: "",
+		gender: "",
+		dob: ""
+	})
+
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setFormValues({ ...formValues, [name]: value });
+	  };
+
+	const handleSave = ()=> {
+		console.log(formValues)
+	}
 
 	return (
 		<>
@@ -37,7 +53,8 @@ const EditProfile = () => {
 								<p style={{ marginBottom: "0rem" }}>Full Name </p>
 
 								<div class="input-style  has-borders">
-									<input type="text" class="form-control" id="form1" placeholder="kartik singh" />
+									<input type="text" class="form-control" id="form1" name="fullName" placeholder="kartik singh" value={formValues.fullName}
+                    onChange={handleInputChange} />
 									<label for="form1" class="color-highlight">Quantity</label>
 								</div>
 
@@ -46,7 +63,8 @@ const EditProfile = () => {
 								<p style={{ marginBottom: "0rem" }}>Email </p>
 
 								<div class="input-style  has-borders mb-4">
-									<input type="text" class="form-control" id="form1" placeholder="kartik@gmail.com" />
+									<input type="text" class="form-control" id="form1" name="email" placeholder="kartik@gmail.com" value={formValues.email}
+                    onChange={handleInputChange}/>
 									<label for="form1" class="color-highlight">Quantity</label>
 								</div>
 
@@ -56,10 +74,11 @@ const EditProfile = () => {
 								<p style={{ marginBottom: "0rem" }}>Gender </p>
 
 								<div class="input-style  has-borders mb-4">
-								<select  class="form-control" >
+								<select  class="form-control" name="gender" value={formValues.gender}
+                    onChange={handleInputChange}>
 {/* <option value="default">Storage</option> */}
-<option value="z" selected>Male</option>
-<option value="a">Female</option>
+<option value="male" selected>Male</option>
+<option value="female">Female</option>
 </select>
 								</div>
 
@@ -68,12 +87,13 @@ const EditProfile = () => {
 								<p style={{ marginBottom: "0rem" }}>Date of Birth </p>
 
 								<div class="input-style  has-borders mb-4">
-									<input type="date" class="form-control" id="form1" placeholder="start typing here..." />
+									<input type="date" class="form-control" id="form1" name="dob" placeholder="start typing here..." value={formValues.dob}
+                    onChange={handleInputChange}/>
 									<label for="form1" class="color-highlight">Quantity</label>
 								</div>
 
 							</div>
-							<a href="#" class="close-menu mt-5 mb-5 btn btn-m btn-center-l rounded-s shadow-xl text-uppercase font-900 bg-red-dark">Save</a>
+							<a onClick={handleSave} href="#" class="close-menu mt-5 mb-5 btn btn-m btn-center-l rounded-s shadow-xl text-uppercase font-900 bg-red-dark">Save</a>
 
 						</div>
 						<div data-menu-load="menu-footer.html" />
