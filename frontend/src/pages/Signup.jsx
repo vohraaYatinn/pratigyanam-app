@@ -6,6 +6,7 @@ const Signup = () => {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [error, setError] = useState("");
+	const [gender, setGender] = useState('');
 
 	const navigate = useNavigate();
 
@@ -13,17 +14,27 @@ const Signup = () => {
 		e.preventDefault();
 		if (password !== confirmPassword) {
 			setError("Passwords do not match");
+			console.log({
+				email,
+				password,
+				confirmPassword,
+				gender
+			})
+			navigate('/audio-preferences')
 		} else {
-			navigate("/");
+			navigate("/audio-preferences");
 		}
 	};
 
 	const handleGoogleAuth = () => {
-		navigate("/music");
+		navigate("/audio-preferences");
+	};
+	const handleGenderChange = (e) => {
+		setGender(e.target.value); // Update gender state based on selected radio button
 	};
 
 	return (
-		<div className="h-screen bg-white sign-background">
+		<div className="h-screen sign-background">
 			<section style={{
 				    width: "100%"
 			}}>
@@ -88,12 +99,41 @@ const Signup = () => {
 										required=""
 									/>
 								</div>
+								<div className="flex text-sm flex-col">
+									<label className="mb-3" htmlFor="gender">
+										Gender
+									</label>
+									<div className="flex gap-6">
+										<div className="text-sm flex items-center gap-2">
+											<input
+												type="radio"
+												className="rounded-md"
+												id="male"
+												value="Male"
+												checked={gender === "Male"}
+												onChange={handleGenderChange}
+											/>
+											<label htmlFor="male">Male</label>
+										</div>
+										<div className="text-sm flex items-center gap-2">
+											<input
+												type="radio"
+												className="rounded-md"
+												id="female"
+												value="Female"
+												checked={gender === "Female"}
+												onChange={handleGenderChange}
+											/>
+											<label htmlFor="female">Female</label>
+										</div>
+										</div>
+				</div>
 								{error && <div className="text-red-600">{error}</div>}
 								<button
 									onClick={handleSignUp}
 									type="submit"
 									className="w-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-									Create an account
+									Next
 								</button>
 								<div className="w-full flex items-center justify-center text-xl text-gray-600 text-center">
 									<p className="h-[1px] bg-gray-300 w-full"></p>

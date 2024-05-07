@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./styles/index.css";
 import "./styles/customize-progress-bar.css";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
@@ -18,6 +19,10 @@ import EditAddress from "./pages/EditAddress.jsx";
 import EditLanguage from './pages/EditLanguage.jsx'
 import EditSubscriptions from "./pages/EditSubscriptions.jsx";
 import SearchComponent from "./pages/Search.jsx";
+import SingleTrack from "./pages/SingleTrack.jsx";
+import AudioPreferences from "./pages/AudioPreferences.jsx";
+import AffirmationComponent from "./pages/SubAffirmation.jsx";
+import SigninWithEmail from "./pages/SigninWithEmail.jsx";
 
 
 const router = createBrowserRouter([
@@ -34,6 +39,10 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/",
+				element: <SigninWithEmail />,
+			},
+			{
+				path: "/phoneLogin",
 				element: <Signin />,
 			},
 			{
@@ -75,6 +84,18 @@ const router = createBrowserRouter([
 			{
 				path: "search",
 				element: <SearchComponent />,
+			},
+			{
+				path: "single-track/:id",
+				element: <SingleTrack />,
+			},
+			{
+				path: "audio-preferences",
+				element: <AudioPreferences />,
+			},
+			{
+				path: "sub-sound",
+				element: <AffirmationComponent />,
 			},
 		],
 	},
