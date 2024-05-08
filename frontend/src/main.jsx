@@ -26,6 +26,7 @@ import SigninWithEmail from "./pages/SigninWithEmail.jsx";
 import AdminCategories from './admin-pages/AdminCategories.jsx';
 import AdminUpload from './admin-pages/AdminUpload.jsx';
 import AdminDashboard from './admin-pages/AdminDashboard.jsx'
+import AdminSubscription from './admin-pages/AdminSubscription.jsx'
 
 
 const router = createBrowserRouter([
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
 			{
 				path: "admin-upload",
 				element: <AdminUpload />,
+			},
+			{
+				path: "admin-subscription",
+				element: <AdminSubscription />,
 			},
 		],
 	},

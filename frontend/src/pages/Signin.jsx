@@ -2,16 +2,30 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png"
 const Signin = () => {
-	const [phone, setPhone] = useState('');
-
+	const [phoneNumber, setPhoneNumber] = useState('');
+	const [errors, setErrors] = useState({})
 	const navigate = useNavigate();
 	localStorage.setItem("toast",true)
 
 	const handleSignIn = (e) => {
 		e.preventDefault();
-		console.log(phone)
-		navigate("/otp");
+			const errors = validate(phoneNumber);
+			if (Object.keys(errors).length !== 0) {
+			  setErrors(errors);
+			} else {	
+				console.log(phone)
+				navigate("/otp");
+			};
 	};
+	const validate = (phoneNumber) => {
+        const errors = {};
+		if (!phoneNumber) {
+			errors.phoneNumber = "Phone number is required";
+		  } else if (phoneNumber.length < 10) {
+			errors.phoneNumber = "Phone number is not valid";
+		  }
+        return errors;
+    };
 
 	return (
 		<div className="h-screen sign-background" >
@@ -46,12 +60,15 @@ const Signin = () => {
 										type="phone"
 										name="phone"
 										id="phone"
-										value={phone}
-										onChange={(e) => setPhone(e.target.value)}
+										value={phoneNumber}
+										onChange={(e) => setPhoneNumber(e.target.value)}
 										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 										placeholder="+91 8293023392"
 										required=""
 									/>
+									{errors.phoneNumber && (
+                        <div className="text-red-500">{errors.phoneNumber}</div>
+                      )}
 								</div>
 								
 								<button

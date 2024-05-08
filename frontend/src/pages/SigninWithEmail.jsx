@@ -6,15 +6,37 @@ import google from "./google.png"
 const SigninWithEmail = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [errors, setErrors] = useState({});
 
 	const navigate = useNavigate();
 	localStorage.setItem("toast",true)
 
-	const handleSignIn = (e) => {
-		e.preventDefault();
-		console.log("email: ", email, "password: ",password)
-		navigate("/home");
-	};
+	const validate = (email, password) => {
+        const errors = {};
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        if (!email) {
+          errors.email = "Email is required!";
+        } else if (!regex.test(email)) {
+          errors.email = "This is not a valid email format!";
+        }
+        if (!password) {
+          errors.password = "Password is required";
+        } else if (password.length < 6) {
+          errors.password = "Password should be more than 6 characters";
+        }
+        return errors;
+      };
+
+	  const submitValues = () => {
+        const errors = validate(email, password);
+        if (Object.keys(errors).length !== 0) {
+          setErrors(errors);
+        } else {
+				console.log("email: ", email, "password: ",password)
+				navigate("/home");
+			};
+        }
+
 
 	return (
 		<div className="h-screen sign-background" >
@@ -56,6 +78,9 @@ const SigninWithEmail = () => {
 										placeholder="Enter your mail here"
 										required=""
 									/>
+									{errors.email && (
+                        <div className="text-red-500">{errors.email}</div>
+                      )}
 								</div>
 								
 								<div>
@@ -74,10 +99,13 @@ const SigninWithEmail = () => {
 										placeholder="Enter your password here"
 										required=""
 									/>
+									{errors.password && (
+                        <div className="text-red-500">{errors.password}</div>
+                      )}
 								</div>
                                 <button
 									type="submit"
-									onClick={handleSignIn}
+									onClick={submitValues}
 									className="w-full  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center send-otp-button"
 								
 									>
