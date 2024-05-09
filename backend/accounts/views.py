@@ -1,10 +1,8 @@
 from django.shortcuts import render
-
-# Create your views here.
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import JsonResponse
-from CoinsSystem.manager import CoinsManager
+from .manager import CustomManager
 
 
 class coinsManagement(APIView):
@@ -12,7 +10,7 @@ class coinsManagement(APIView):
     def post(request):
         try:
             data = request.data
-            CoinsManager.coins_management_handling(data)
+            CustomManager.coins_management_handling(data)
             return Response({"result":data, "message": "New Group Created"}, 200)
         except Exception as err:
             return Response(str(err), 500)

@@ -1,5 +1,8 @@
 from django.db import models
 
+from user_management.models import UserDetails
+
+
 class SubscriptionPlan(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -18,17 +21,17 @@ class MusicTrack(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class UserLibrary(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserDetails, on_delete=models.CASCADE, related_name='user_lib')
     track = models.ForeignKey(MusicTrack, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
 
 class UserFavorites(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserDetails, on_delete=models.CASCADE, related_name='user_fav')
     track = models.ForeignKey(MusicTrack, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
 
 class UserPlaylist(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserDetails, on_delete=models.CASCADE, related_name='user_play')
     playlist_name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

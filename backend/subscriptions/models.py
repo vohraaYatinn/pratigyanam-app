@@ -1,3 +1,6 @@
+from django.db import models
+
+from user_management.models import UserDetails
 
 
 class MusicTrack(models.Model):
@@ -10,15 +13,7 @@ class MusicTrack(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
         managed = True
-        db_table = "user_details"
-
-# class UserLibrary(models.Model):
-#     user = models.ForeignKey(UserDetails, on_delete=models.CASCADE)
-#     track = models.ForeignKey(MusicTrack, on_delete=models.CASCADE)
-#     added_at = models.DateTimeField(auto_now_add=True)
-#     class Meta:
-#         managed = True
-#         db_table = "user_details"
+        db_table = "music_track"
 
 
 class UserFavorites(models.Model):
@@ -27,7 +22,7 @@ class UserFavorites(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
     class Meta:
         managed = True
-        db_table = "user_details"
+        db_table = "user_favorites"
 
 
 class UserPlaylist(models.Model):
@@ -37,7 +32,7 @@ class UserPlaylist(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
         managed = True
-        db_table = "user_details"
+        db_table = "user_playlist"
 
 
 class PlaylistTrack(models.Model):
@@ -46,4 +41,4 @@ class PlaylistTrack(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     class Meta:
         managed = True
-        db_table = "user_details"
+        db_table = "playlist_track"
