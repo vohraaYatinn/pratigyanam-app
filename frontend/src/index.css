@@ -8,6 +8,8 @@
 	padding: 0;
 }
 body {
+	width: 100vw !important;
+	overflow-x: hidden;
 	font-family: "Poppins", sans-serif;
 	background-image: linear-gradient(to right, #ffffff, #ffffff);
 	color: black;
@@ -23,6 +25,21 @@ body {
 	cursor: pointer;
 	color: black;
 }
+.tracker::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: black;
+	cursor: pointer;
+	color: white;
+  }
+.tracker2::-webkit-slider-thumb{
+	font-size: 2px;
+	width: 1px;
+}
+
 .fix-osahan-footer a{
 display: flex;
 flex-direction: column;
@@ -75,4 +92,42 @@ opacity: 70%;
 	margin-bottom: 1rem !important;
 
 	
+}
+.check-it-profile{
+	display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column-reverse;
+}
+.input-for-profile{
+	margin: 0.2rem 1rem;
+}
+.active-nav-icon{
+	border-bottom: 0.21rem solid rgb(6, 75, 153);
+    margin-bottom: 0.2rem;
+}
+.morning-affirmation-div{
+	background-image: url("./assets/affir/1.png");
+}
+.morning-affirmation-div h3{
+	color: white;
+	font-weight: 700;
+}
+.night-affirmation-div{
+	background-image: url("./assets/affir/2.png");
+}
+.night-affirmation-div h3{
+	color: white;
+	font-weight: 700;
+}
+.sound-sound-div{
+	background-image: url("../images/backcheck.png");
+	height: 100vh;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	
+}
+.check-it-buttons{
+	color: white;
 }
