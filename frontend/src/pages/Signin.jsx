@@ -21,15 +21,7 @@ const Signin = () => {
 				<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 					<div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
 						<div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-							{/* <div style={{
-								display:"flex",
-								alignItems:"center",
-								width:"100%",
-								justifyContent:"center"
-							}}>
-							<img src={logo} alt="" style={{height:"8rem"}}/>
-
-							</div> */}
+					
 							<h1 className="text-xl font-bold text-center leading-tight tracking-tight text-gray-900 md:text-2xl "  style={{
 								marginBottom:"3rem"
 							}}>
@@ -62,14 +54,7 @@ const Signin = () => {
 									>
 									Send Otp
 								</button>
-								{/* <p className="text-sm font-light text-gray-500 ">
-									don't have an account?{" "}
-									<Link
-										to={"/signup"}
-										className="font-medium text-primary-600 hover:underline ">
-										otp
-									</Link>
-								</p> */}
+								
 							</form>
 						</div>
 					</div>
