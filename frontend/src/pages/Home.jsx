@@ -18,9 +18,13 @@ import { Space, Swiper } from 'antd-mobile'
 import po1 from "../assets/images/po1.png"
 import po2 from "../assets/images/po2.png"
 import po3 from "../assets/images/po3.png"
+import { useSelector } from "react-redux";
+import { userData } from "../redux/reducers/functionalities.reducer";
 
 
 const Home = () => {
+	const loggedInUser = useSelector(userData);
+	const [loggedInUserData, setLoggedInUserData] = useState([])  
 	const navigate = useNavigate();
 	const [slideSize1, setSlideSize1] = useState(85)
 	const [slideSize2, setSlideSize2] = useState(85)
@@ -67,6 +71,7 @@ const Home = () => {
 		return () => {
 			window.removeEventListener('resize', updateSlideSize);
 		};
+		setLoggedInUserData(loggedInUser)
 	}, []);
 	const onClose = () => {
 		console.log('I was closed.');

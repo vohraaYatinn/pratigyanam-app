@@ -17,6 +17,7 @@ const SigninWithEmail = () => {
     useAxios();
 	
 const loginFunction = () => {
+	console.log("hiiii")
 	LoginFetch(phoneNumberOtp())
 }
 

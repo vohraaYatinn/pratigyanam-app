@@ -8,7 +8,7 @@ import AudioPlayer from "./AudioPlayer";
 import { Link } from "react-router-dom";
 import TopNav from "./TopNav";
 
-const TrackList = () => {
+const TrackList = ({loggedInUserData}) => {
 	const [selectedTrack, setSelectedTrack] = useState(tracks[0]);
 	const [skeletontime, setSkeletonTime] = useState(true)
 

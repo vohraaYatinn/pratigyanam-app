@@ -10,10 +10,12 @@ import img from "../assets/images/6s.jpg"
 const EditProfile = () => {
 
 	const [formValues, setFormValues] = useState({
+		id:"",
 		fullName: "",
 		email: "",
 		gender: "",
-		dob: ""
+		dob: "",
+		type:"profile"
 	})
 
 	const handleInputChange = (e) => {

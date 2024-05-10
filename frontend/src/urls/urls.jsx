@@ -13,3 +13,7 @@ export const phoneNumberOtp = (payload_data) => {
 export const verifyOtpUrl = (payload_data) => {
   return project.post(Urls.VERIFY_OTP, payload_data);
 };
+
+export const signupUserService= (payload_data) => {
+  return project.post(Urls.SIGN_UP_USER, payload_data);
+};

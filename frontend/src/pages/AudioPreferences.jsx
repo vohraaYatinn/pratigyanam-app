@@ -1,18 +1,31 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation  } from "react-router-dom";
 import logo from "../assets/images/logo.png";
+import { signupUserService } from "../urls/urls";
+import useAxios from "../network/useAxios";
+import { Spin } from "antd";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../redux/reducers/functionalities.reducer";
+
+
 
 const AudioPreferences = () => {
-  const [gender, setGender] = useState("");
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const { email, password, gender, userName } = location.state;
+  const [audioGender, setAudioGender] = useState("");
   const [language, setLanguage] = useState(""); 
   const handleGenderChange = (e) => {
     const { name, value } = e.target;
-    if (name === "gender") {
-      setGender(value); 
+    if (name === "audioGender") {
+      setAudioGender(value); 
     } else if (name === "language") {
       setLanguage(value); 
     }
   };
+
+  const [signupResponse, signupError, signupLoading,signupFetch] =
+    useAxios();
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -22,11 +35,36 @@ const AudioPreferences = () => {
     navigate("/signup");
   };
 
-  const handleGoogleAuth = () => {
-
-    navigate("/music");
-   console.log(gender, language); 
+  const handleGoogleAuth = (e) => {
+    e.preventDefault();
+    let payload={
+      fullName: userName,
+      email: email,
+      password: password,
+      gender: gender,
+      audioGender: audioGender,
+      language: language
+    }
+    signupFetch(signupUserService(payload))
+    // navigate("/music");
+   console.log(audioGender, language); 
   };
+
+  useEffect(()=>{
+      if(signupError?.data)
+        {
+         console.log(signupError.data)
+        }
+  },[signupError])
+
+  useEffect(()=>{
+    if(signupResponse?.message=="Welcome" && signupResponse?.result)
+      {
+        const userProfileData = {email:email, user_id:"" };
+        dispatch(updateUser(signupResponse?.result));
+        navigate("/home");
+      }
+},[signupResponse])
 
   return (
     <div className="h-screen sign-background">
@@ -37,15 +75,15 @@ const AudioPreferences = () => {
               <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                 Audio Preferences
               </h1>
-              <form className="space-y-4 md:space-y-6" onSubmit={handleSignUp}>
+              <form className="space-y-4 md:space-y-6" onSubmit={handleGoogleAuth}>
                 <div>
-                  <label htmlFor="gender" className="block mb-2 text-sm font-medium text-gray-900">
-                    Gender
+                  <label htmlFor="audioGender" className="block mb-2 text-sm font-medium text-gray-900">
+                    Audio Gender
                   </label>
                   <select
-                    id="gender"
-                    name="gender"
-                    value={gender}
+                    id="audioGender"
+                    name="audioGender"
+                    value={audioGender}
                     onChange={handleGenderChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     required
@@ -91,9 +129,8 @@ const AudioPreferences = () => {
                   <button
                     type="submit"
                     className="w-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center send-otp-button"
-                    onClick={handleGoogleAuth}
-                  >
-                    Create an account
+                    // onClick={handleGoogleAuth}
+                  > {signupLoading ? <Spin/> :  "Create an account"}
                   </button>
                 </div>
               </form>

@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from user_management.manager import UserManager
+from user_management.serializers import UserDetailsWithProfileAndPreferencesSerializer
 
 
 class userManagement(APIView):
@@ -19,8 +20,9 @@ class NewUserSignup(APIView):
     def post(request):
         try:
             data = request.data
-            UserManager.signup_new_user(data)
-            return Response({"result": data, "message": "Welcome"}, 200)
+            user_data = UserManager.signup_new_user(data)
+            serialized_data = UserDetailsWithProfileAndPreferencesSerializer(user_data).data
+            return Response({"result": serialized_data, "message": "Welcome"}, 200)
         except Exception as err:
             return Response(str(err), 500)
 

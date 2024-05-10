@@ -9,7 +9,8 @@ const functionalitiesSlice = createSlice({
         showNavbar: false,
         token: false,
         userProfile:{
-
+            user_id:"",
+            email: "",
         }
     },
 

@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import Q
 
 from accounts.models import Profile, UserPreferences
 from user_management.constants import ProfileEditType, UserMessages
@@ -21,17 +22,25 @@ class UserManager:
         audio_gender = data.get('audioGender', None)
         date_of_birth = data.get('dateOfBirth', None)
         language = data.get('language', None)
-        existing_email = UserDetails.objects.filter(email=email)
-        existing_phn = UserDetails.objects.filter(phone=phone_number)
+        query = Q()
+        if email:
+            query |= Q(email=email)
+        if phone_number:
+            query |= Q(phone=phone_number)
+        # existing_email = UserDetails.objects.filter(email=email)
+        # existing_phn = UserDetails.objects.filter(phone=phone_number)
+        existing_value = UserDetails.objects.filter(query)
 
-        if existing_phn:
-            raise Exception("User with same phone number exists")
-        if existing_email:
-            raise Exception("User with same email number exists")
+        if existing_value:
+            raise Exception("User with same phone/email number exists")
+        # if existing_email:
+        #     raise Exception("User with same email number exists")
         with transaction.atomic():
             user_data = UserDetails.objects.create(email=email, phone=phone_number, password = password)
             Profile.objects.create(name=full_name, user=user_data, gender=gender, date_of_birth=date_of_birth)
             UserPreferences.objects.create(user=user_data, gender=audio_gender, language=language)
+
+        return UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(id=user_data.id)
 
 
     @staticmethod
@@ -50,7 +59,7 @@ class UserManager:
         if type == ProfileEditType.PROFILE:
             Profile.objects.get(user_id=user_id).select_related('user')
 
-        if type == ProfileEditType.PREFERENCE:
+        elif type == ProfileEditType.PREFERENCE:
             UserPreferences.objects.get(user_id=user_id)
 
         else:
