@@ -27,6 +27,8 @@ import AdminCategories from './admin-pages/AdminCategories.jsx';
 import AdminUpload from './admin-pages/AdminUpload.jsx';
 import AdminDashboard from './admin-pages/AdminDashboard.jsx'
 import AdminSubscription from './admin-pages/AdminSubscription.jsx'
+import { Provider } from "react-redux";
+import Store from './redux/Store';
 
 
 const router = createBrowserRouter([
@@ -121,7 +123,10 @@ const router = createBrowserRouter([
 	},
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
+	<Provider store={Store}>
+
 	<React.StrictMode>
 		<RouterProvider router={router} />
 	</React.StrictMode>
+	</Provider>
 );

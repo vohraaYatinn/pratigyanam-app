@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png"
 import phone from "./phone.png"
 import google from "./google.png"
+import useAxios from "../network/useAxios";
+import { phoneNumberOtp } from "../urls/urls";
+
 const SigninWithEmail = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -10,6 +13,12 @@ const SigninWithEmail = () => {
 
 	const navigate = useNavigate();
 	localStorage.setItem("toast",true)
+  const [LoginResponse, LoginError, LoginLoading, LoginFetch] =
+    useAxios();
+	
+const loginFunction = () => {
+	LoginFetch(phoneNumberOtp())
+}
 
 	const validate = (email, password) => {
         const errors = {};
@@ -44,24 +53,15 @@ const SigninWithEmail = () => {
 				    width: "100%"
 			}}>
 				<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                {/* <h1 style={{marginBottom:"1rem", fontSize:"1rem"}}>Pratigyanam</h1> */}
                     <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-							{/* <div style={{
-								display:"flex",
-								alignItems:"center",
-								width:"100%",
-								justifyContent:"center"
-							}}>
-							<img src={logo} alt="" style={{height:"8rem"}}/>
-
-							</div> */}
+							
 							<h1 className="text-xl font-bold text-center leading-tight tracking-tight text-gray-900 md:text-2xl "  style={{
 								marginBottom:"3rem"
 							}}>
 								Login
 							</h1>
-							<form className="space-y-4 md:space-y-6">
+							<div className="space-y-4 md:space-y-6">
 								<div>
 									<label
 										htmlFor="email"
@@ -122,7 +122,8 @@ const SigninWithEmail = () => {
 										// onClick={handleGoogleAuth}
 										class="flex items-center w-full justify-center   rounded-lg sm:px-16 px-6 py-3 text-sm font-medium text-gray-800 border border-gray-300 "
                                         onClick={()=>{
-                                            navigate("/phoneLogin");
+											loginFunction()
+                                            // navigate("/phoneLogin");
                                         }}
                                         >
 					<img src={phone} 
@@ -156,7 +157,7 @@ const SigninWithEmail = () => {
 										otp
 									</Link>
 								</p> */}
-							</form>
+							</div>
 						</div>
 					</div>
 				</div>
