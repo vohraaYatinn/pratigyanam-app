@@ -1,16 +1,20 @@
 from django.db import models
 
 from music.models import MusicAudio
+from subscriptions.models import SubscriptionPlan
 from user_management.models import UserDetails
 
 
 class Profile(models.Model):
+    objects = models.Manager()
     name = models.CharField(max_length=200)
     user = models.OneToOneField(UserDetails, on_delete=models.CASCADE, related_name='user_profile')
     gender = models.CharField(max_length=100)
     date_of_birth = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    subscription = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE, related_name='user_subscription', null=True)
+    is_subscription_activated = models.BooleanField(default=False)
 
     class Meta:
         managed = True
@@ -28,10 +32,12 @@ class UserPreferences(models.Model):
         managed = True
         db_table = "user_preference"
 
+
 class RecentMusic(models.Model):
     user = models.ForeignKey(UserDetails, on_delete=models.CASCADE, related_name='user_recent')
     track = models.ForeignKey(MusicAudio, on_delete=models.CASCADE, related_name='recent_music_track')
     added_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=50, default="A")
 
     class Meta:
         managed = True

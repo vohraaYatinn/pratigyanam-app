@@ -11,6 +11,7 @@ class SubscriptionPlan(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=100)
+    status = models.CharField(max_length=50, default="A")
 
     class Meta:
         managed = True

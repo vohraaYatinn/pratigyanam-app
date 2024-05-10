@@ -14,6 +14,7 @@ class MusicAudio(models.Model):
     release_date = models.DateField()
     language = models.CharField(max_length=100)
     gender = models.CharField(max_length=100)
+    path = models.CharField(max_length=500, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
