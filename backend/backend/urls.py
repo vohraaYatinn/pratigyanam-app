@@ -10,4 +10,7 @@ urlpatterns = [
     # path('accounts/', include('accounts.urls')),
     # path('subscriptions/', include('subscriptions.urls')),
     # path('music/', include('music.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('subscriptions/', include('subscriptions.urls')),
+    path('music/', include('music.urls')),
 ]

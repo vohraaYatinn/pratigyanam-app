@@ -1,0 +1,2 @@
+class AccountMessages:
+    SUCCESS = "Success"

@@ -1,7 +1,8 @@
 from django.urls import path
 from . import views
-from .views import coinsManagement
+from .views import GetProfileData
 
 urlpatterns = [
-    path('login/', coinsManagement.as_view(), name="users_auth"),
+    path('get-profile/',  GetProfileData.as_view(), name='get-profile'),
+
 ]
