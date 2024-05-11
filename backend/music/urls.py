@@ -1,8 +1,8 @@
 from django.urls import path
 from . import views
-
+from .views import GetPostMusic
 
 urlpatterns = [
-    # path('get-profile/', views.GetProfileData, name='get-profile'),
+    path('get-post-music/', GetPostMusic.as_view(), name='get-profile'),
 
 ]

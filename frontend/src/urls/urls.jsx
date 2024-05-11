@@ -31,3 +31,8 @@ export const editProfileAndPreferencesService= (payload_data) => {
 export const getAllSubscriptionService= (payload_data) => {
   return project.get(Urls.GET_ALL_SUBSCRIPTION, payload_data);
 };
+
+
+export const getMusicService= (payload_data) => {
+  return project.get(Urls.GET_MUSIC, payload_data);
+};

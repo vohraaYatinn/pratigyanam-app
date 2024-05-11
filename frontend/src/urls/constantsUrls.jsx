@@ -9,6 +9,7 @@ export class Urls {
     static EDIT_USER_PROFILE = Urls.MPHRMS_API_PREFIX + 'users/edit-profile/';
     static GET_USER_FAV = Urls.MPHRMS_API_PREFIX + 'accounts/user-favourite-music/';
     static GET_ALL_SUBSCRIPTION = Urls.MPHRMS_API_PREFIX + 'subscriptions/get-post-subscription/';
+    static GET_MUSIC = Urls.MPHRMS_API_PREFIX + 'music/get-post-music/';
     
 
 

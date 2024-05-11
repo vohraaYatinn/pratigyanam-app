@@ -1,6 +1,6 @@
 from django.db.models import Q
 
-from music.models import MusicAudio
+from music.models import MusicAudio, MusicCategoryMapping
 
 
 class MusicManager:
@@ -28,15 +28,27 @@ class MusicManager:
         genre = data.get('genre', None)
         language = data.get('language', None)
         category = data.get('category', None)
+        name = data.get('name',None)
+        search_text = data.get('searchText', None)
         query = Q()
         if genre:
-            query &= Q(genre=genre)
+            query &= Q(music__genre=genre)
 
         if language:
-            query &= Q(language=language)
+            query &= Q(music__language=language)
 
         if category:
-            query &= Q(category=category)
+            query &= Q(music__category=category)
+
+        if name:
+            query &= Q(music_title=name)
+
+        if search_text:
+            query &= Q(category__type__icontains=search_text) | Q(music__title__icontains=search_text)
+
+        return MusicCategoryMapping.objects.filter(query).select_related('music', 'category')
+
+
 
 
 

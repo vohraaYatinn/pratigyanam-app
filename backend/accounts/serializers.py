@@ -36,3 +36,4 @@ class UserRecentSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserFavorites
         fields = "__all__"
+

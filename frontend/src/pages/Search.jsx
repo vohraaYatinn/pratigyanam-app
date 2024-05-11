@@ -12,11 +12,17 @@ import { AudioOutlined } from "@ant-design/icons";
 import { Input, Skeleton } from "antd";
 const { Search } = Input;
 import { Button, SearchBar, Space } from "antd-mobile";
+import { getMusicService } from "../urls/urls";
+import useAxios from "../network/useAxios";
 
 const SearchComponent = () => {
   const [selectedTrack, setSelectedTrack] = useState(tracksFav[0]);
   const [skeletontime, setSkeletonTime] = useState(true);
   const [searchValue, setSearchValue] = useState("");
+
+  const [musicList, setMusicList] = useState([]);
+
+  const [searchResponse, searchError, searchLoading, searchFetch] = useAxios();
 
   useEffect(() => {
     setTimeout(() => {
@@ -35,9 +41,29 @@ const SearchComponent = () => {
   };
   const ref = useRef(null);
 
-  const searchSong = (value) => {
+  const getSong = (value) => {
+    setTimeout(() => {
+      //   setManager([]);
+      //   setShowElement(true)
+      let payloadData = {
+        searchText: value,
+      };
+      searchFetch(getMusicService(payloadData));
+    }, 500);
+    // setTimer(delayDebounceFn)
+  };
 
-  }
+  const searchSong = (value) => {
+    if (value.length >= 3) {
+      getSong(value);
+    }
+  };
+
+  useEffect(() => {
+    if (searchResponse?.result) {
+      setMusicList(searchResponse.result);
+    }
+  }, [searchResponse]);
 
   return (
     <div>
@@ -106,28 +132,42 @@ const SearchComponent = () => {
                     id="form1"
                     placeholder="start typing here..."
                     value={searchValue}
-					onSearch={searchSong}
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    // onSearch={searchSong}
+                    onChange={(e) => {
+                      setSearchValue(e.target.value);
+                      searchSong(e.target.value); // Call searchSong function with the current value
+                    }}
                   />
                   <label for="form1" class="color-highlight">
                     Quantity
                   </label>
                 </div>
 
-                <div className="list-group list-custom-large">
-                  <Link
-                    data-trigger-switch="switch-1"
-                    className="border-0"
-                    to="/single-track/2"
-                  >
-                    <div>
-                      <span>Morning Affirmation</span>
-                      <strong>Audio 3 - Belive in me</strong>
+                {searchLoading ? (
+                  <Skeleton
+                    active={true}
+                    title={false}
+                    paragraph={{ rows: 2 }}
+                    className="mt-5 mx-8"
+                  />
+                ) : (
+                  musicList.map((data, index) => (
+                    <div className="list-group list-custom-large">
+                      <Link
+                        data-trigger-switch="switch-1"
+                        className="border-0"
+                        to="/single-track/2"
+                      >
+                        <div>
+                          <span>{data.category.type}</span>
+                          <strong>{data.music.title}</strong>
+                        </div>
+                        {/* <span className="badge bg-blue-dark font-11 color-white">Category</span> */}
+                        <i className="fa fa-angle-right" />
+                      </Link>
                     </div>
-                    {/* <span className="badge bg-blue-dark font-11 color-white">Category</span> */}
-                    <i className="fa fa-angle-right" />
-                  </Link>
-                </div>
+                  ))
+                )}
               </div>
             </div>
 

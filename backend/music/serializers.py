@@ -30,3 +30,13 @@ class MusicAudioCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MusicAudio
         fields = '__all__'
+
+
+class MusicCategoryMappingNormalSerializer(serializers.ModelSerializer):
+    category = MusicCategorySerializer()
+    music = MusicAudioSerializer()
+
+    class Meta:
+        model = MusicCategoryMapping
+        fields = '__all__'
+
