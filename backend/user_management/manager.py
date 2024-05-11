@@ -8,9 +8,15 @@ from user_management.models import UserDetails
 
 class UserManager:
     @staticmethod
-    def check_if_admin_exists(email):
-        check_login = UserDetails.objects.filter(email=email).exists()
-        return check_login
+    def check_if_admin_exists(data):
+        # check_login = UserDetails.objects.filter(email=email)
+        email = data.get('email', None)
+        try:
+            details = UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(email=email)
+
+            return details
+        except Exception:
+            raise Exception("User does not exists!")
 
     @staticmethod
     def signup_new_user(data):
@@ -50,18 +56,23 @@ class UserManager:
         password = data.get('password', None)
         gender = data.get('gender', None)
         audio_gender = data.get('audioGender', None)
-        date_of_birth = data.get('dateOfBirth', None)
+        date_of_birth = data.get('dob', None)
         language = data.get('language', None)
         edit_type = data.get('editType', None)
         user_id = data.get('userId')
 
+
+        existing_email = UserDetails.objects.filter(email=email).exclude(id=user_id)
+        if existing_email:
+            raise Exception("exists")
         if edit_type == ProfileEditType.PROFILE:
-            profile_data = Profile.objects.get(user_id=user_id).select_related('user')
+            profile_data = Profile.objects.select_related('user').get(user_id=user_id)
             profile_data.name = full_name
             profile_data.gender = gender
             profile_data.date_of_birth = date_of_birth
             profile_data.user.email = email
             profile_data.save()
+
         elif edit_type == ProfileEditType.PREFERENCE:
             preference_data = UserPreferences.objects.get(user_id=user_id)
             preference_data.audio_gender = audio_gender
@@ -70,6 +81,9 @@ class UserManager:
 
         else:
             raise Exception(UserMessages.SOMETHING_WENT_WRONG)
+
+        return UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(
+            id=user_id)
 
 
 

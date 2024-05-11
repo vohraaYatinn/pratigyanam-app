@@ -1,3 +1,4 @@
+from accounts.models import Profile
 from subscriptions.models import SubscriptionPlan
 
 
@@ -22,10 +23,14 @@ class SubscriptionManager:
 
         return SubscriptionPlan.objects.filter(status="A")
 
-
     @staticmethod
     def buy_subscription(data):
         user_id = data.get('userId')
+        profile_data = Profile.objects.get(user_id=user_id)
+        subscription = data.get('subscription_id')
+
+
+
 
 
 

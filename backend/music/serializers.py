@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from music.models import MusicAudio, MusicCategory
+from music.models import MusicAudio, MusicCategory, MusicCategoryMapping
 
 
 class MusicAudioSerializer(serializers.ModelSerializer):
@@ -16,9 +16,17 @@ class MusicCategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class MusicCategoryMappingSerializer(serializers.ModelSerializer):
+    category = MusicCategorySerializer()
+
+    class Meta:
+        model = MusicCategoryMapping
+        fields = '__all__'
+
+
 class MusicAudioCategorySerializer(serializers.ModelSerializer):
-    categories = MusicCategorySerializer(many=True, read_only=True)
+    categories = MusicCategoryMappingSerializer(many=True)
 
     class Meta:
         model = MusicAudio
-        fields = '_all__'
+        fields = '__all__'

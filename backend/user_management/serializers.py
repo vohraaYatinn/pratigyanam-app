@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from accounts.models import Profile, UserPreferences
+from subscriptions.serializers import SubscriptionSerializer
 from user_management.models import UserDetails
 
 
@@ -12,6 +13,8 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    subscription = SubscriptionSerializer()
+
     class Meta:
         model = Profile
         fields = "__all__"

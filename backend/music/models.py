@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 
 from user_management.models import UserDetails
@@ -14,7 +15,7 @@ class MusicAudio(models.Model):
     release_date = models.DateField()
     language = models.CharField(max_length=100)
     gender = models.CharField(max_length=100)
-    path = models.CharField(max_length=500, null=True)
+    path = models.FileField(upload_to='mp3_files/', validators=[FileExtensionValidator(['mp3'])], null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

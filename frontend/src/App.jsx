@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TrackList from "./components/TrackList.jsx";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { userData } from "./redux/reducers/functionalities.reducer.js";
 import { useSelector } from "react-redux";
 // import { App as CapacitorApp } from '@capacitor/app';
@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 
 const App = () => {
 	const loggedInUser = useSelector(userData);
+	const location = useLocation();
+	const { user, type } = location.state || {};
 	// CapacitorApp.addListener('backButton', ({canGoBack}) => {
 	// 	if(!canGoBack){
 	// 	  CapacitorApp.exitApp();
@@ -25,7 +27,7 @@ const App = () => {
 
 	return (
 		<>
-			<TrackList loggedInUser={loggedInUserData} />
+			<TrackList loggedInUser={loggedInUserData} type={type} />
 		</>
 	);
 };

@@ -9,8 +9,9 @@ class userManagement(APIView):
     def post(request):
         try:
             data = request.data
-            UserManager.check_if_admin_exists(data)
-            return Response({"result": data, "message": "New Group Created"}, 200)
+            user_data = UserManager.check_if_admin_exists(data)
+            serialized_data = UserDetailsWithProfileAndPreferencesSerializer(user_data).data
+            return Response({"result": serialized_data, "message": "New Group Created"}, 200)
         except Exception as err:
             return Response(str(err), 500)
 
@@ -32,8 +33,9 @@ class EditProfileDetails(APIView):
     def post(request):
         try:
             data = request.data
-            UserManager.edit_profile_details(data)
-            return Response({"result": data, "message": "Welcome"}, 200)
+            details = UserManager.edit_profile_details(data)
+            serialized_data = UserDetailsWithProfileAndPreferencesSerializer(details).data
+            return Response({"result": serialized_data, "message": "Welcome"}, 200)
         except Exception as err:
             return Response(str(err), 500)
 

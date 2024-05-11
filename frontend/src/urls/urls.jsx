@@ -17,3 +17,17 @@ export const verifyOtpUrl = (payload_data) => {
 export const signupUserService= (payload_data) => {
   return project.post(Urls.SIGN_UP_USER, payload_data);
 };
+
+export const getUserFavouriteService= (payload_data) => {
+  return project.get(Urls.GET_USER_FAV, payload_data);
+};
+
+
+export const editProfileAndPreferencesService= (payload_data) => {
+  return project.post(Urls.EDIT_USER_PROFILE, payload_data);
+};
+
+
+export const getAllSubscriptionService= (payload_data) => {
+  return project.get(Urls.GET_ALL_SUBSCRIPTION, payload_data);
+};
