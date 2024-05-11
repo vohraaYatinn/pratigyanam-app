@@ -29,4 +29,14 @@ class AddGetSubscriptions(APIView):
             return Response(str(err), 500)
 
 
+class BuySubscriptionByUser(APIView):
+    @staticmethod
+    def post(request):
+        try:
+            data = request.data
+            SubscriptionManager.buy_subscription(data)
+            return Response({"result": data, "message": "Plan added"}, 200)
+        except Exception as err:
+            return Response(str(err), 500)
+
 

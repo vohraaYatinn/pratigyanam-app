@@ -30,7 +30,6 @@ class GetProfileData(APIView):
             return Response(str(err), 500)
 
 
-
 class UserFavouriteMusic(APIView):
 
     @staticmethod
@@ -74,9 +73,9 @@ class UserRecentMusic(APIView):
         try:
             data = request.data
             user_id = data.get('userId')
-            data = CustomManager.get_user_favourite(user_id)
-            serialized_data = UserFavouritesSerializer(data, many=True).data
-            return Response({"result": serialized_data, "message": AccountMessages.SUCCESS}, 200)
+            track_id = data.get('trackId')
+            CustomManager.post_user_recent(user_id, track_id)
+            return Response({"result": data, "message": AccountMessages.SUCCESS}, 200)
         except Exception as err:
             return Response(str(err), 500)
 

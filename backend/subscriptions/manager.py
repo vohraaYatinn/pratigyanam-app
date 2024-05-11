@@ -23,4 +23,10 @@ class SubscriptionManager:
         return SubscriptionPlan.objects.filter(status="A")
 
 
+    @staticmethod
+    def buy_subscription(data):
+        user_id = data.get('userId')
+
+
+
 

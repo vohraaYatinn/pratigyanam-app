@@ -1,4 +1,7 @@
+from django.db.models import Prefetch
+
 from accounts.models import Profile, UserFavorites, RecentMusic
+from music.models import MusicCategory
 
 
 class CustomManager:
@@ -10,13 +13,16 @@ class CustomManager:
 
     @staticmethod
     def get_user_profile_data(user_id):
-        profile_data = Profile.objects.filter()
+        profile_data = Profile.objects.filter(user_id=user_id).select_related('user')
         return profile_data
 
     @staticmethod
     def get_user_favourite(user_id):
-        favourites_data = UserFavorites.objects.filter(user_id=user_id).select_related('user', 'track')
-        return favourites_data
+        user_favorites_with_categories = UserFavorites.objects.filter(user_id=user_id).prefetch_related(
+            Prefetch('track__music_category', queryset=MusicCategory.objects.all(), to_attr='categories')
+        )
+
+        return user_favorites_with_categories
 
     @staticmethod
     def post_user_favourite(user_id, track_id):

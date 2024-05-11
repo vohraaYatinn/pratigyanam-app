@@ -13,8 +13,18 @@ class GetPostMusic(APIView):
         try:
             data = request.data
             MusicManager.post_new_music(data)
-            return Response({"result": data, "message": "Welcome"}, 200)
+            return Response({"result": data, "message": "Success"}, 200)
         except Exception as err:
             return Response(str(err), 500)
+
+    @staticmethod
+    def get(request):
+        try:
+            data = request.query_params
+            MusicManager.get_music(data)
+            return Response({"result": data, "message": "Success"}, 200)
+        except Exception as err:
+            return Response(str(err), 500)
+
 
 

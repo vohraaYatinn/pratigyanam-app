@@ -42,7 +42,6 @@ class UserManager:
 
         return UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(id=user_data.id)
 
-
     @staticmethod
     def edit_profile_details(data):
         full_name = data.get('fullName', None)
@@ -56,11 +55,18 @@ class UserManager:
         edit_type = data.get('editType', None)
         user_id = data.get('userId')
 
-        if type == ProfileEditType.PROFILE:
-            Profile.objects.get(user_id=user_id).select_related('user')
-
-        elif type == ProfileEditType.PREFERENCE:
-            UserPreferences.objects.get(user_id=user_id)
+        if edit_type == ProfileEditType.PROFILE:
+            profile_data = Profile.objects.get(user_id=user_id).select_related('user')
+            profile_data.name = full_name
+            profile_data.gender = gender
+            profile_data.date_of_birth = date_of_birth
+            profile_data.user.email = email
+            profile_data.save()
+        elif edit_type == ProfileEditType.PREFERENCE:
+            preference_data = UserPreferences.objects.get(user_id=user_id)
+            preference_data.audio_gender = audio_gender
+            preference_data.language = language
+            preference_data.save()
 
         else:
             raise Exception(UserMessages.SOMETHING_WENT_WRONG)

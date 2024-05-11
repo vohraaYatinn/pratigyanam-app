@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from accounts.models import Profile, UserFavorites, UserPreferences
-from music.serializers import MusicAudioSerializer
+from music.serializers import MusicAudioSerializer, MusicAudioCategorySerializer
 from user_management.serializers import UserDetailsSerializer
 
 
@@ -22,7 +22,7 @@ class UserPreferencesSerializer(serializers.ModelSerializer):
 
 class UserFavouritesSerializer(serializers.ModelSerializer):
     user = UserDetailsSerializer()
-    track = MusicAudioSerializer()
+    track = MusicAudioCategorySerializer()
 
     class Meta:
         model = UserFavorites
