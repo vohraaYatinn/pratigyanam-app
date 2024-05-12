@@ -17,12 +17,15 @@ const App = () => {
 	// 	  window.history.back();
 	// 	}
 	//   });
+
+	
 	const [loggedInUserData, setLoggedInUserData] = useState([])
 	const navigate = useNavigate();
 	useEffect(() => {
 		const user = localStorage.getItem("loggedin");
 		setLoggedInUserData(loggedInUser)
 		console.log(loggedInUser)
+		console.log("app type app", type)
 	}, []);
 
 	return (

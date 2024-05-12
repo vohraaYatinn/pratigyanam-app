@@ -9,13 +9,14 @@ from user_management.models import UserDetails
 
 class MusicAudio(models.Model):
     title = models.CharField(max_length=200)
-    artist = models.CharField(max_length=100)
-    genre = models.CharField(max_length=100)
-    duration = models.DurationField()
-    release_date = models.DateField()
+    artist = models.CharField(max_length=100, null=True)
+    description = models.CharField(max_length=200, null=True)
+    duration = models.DurationField(null=True)
+    release_date = models.DateField(null=True)
     language = models.CharField(max_length=100)
     gender = models.CharField(max_length=100)
     path = models.FileField(upload_to='mp3_files/', validators=[FileExtensionValidator(['mp3'])], null=True)
+    image = models.FileField(upload_to='image_files/', validators=[FileExtensionValidator(['jpg', 'jpeg', 'png', 'gif'])], null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -34,7 +35,7 @@ class MusicCategory(models.Model):
 
 class MusicCategoryMapping(models.Model):
     category = models.ForeignKey(MusicCategory, on_delete=models.CASCADE, related_name='music_category')
-    music = models.ForeignKey(MusicAudio, on_delete=models.CASCADE, related_name='music_track')
+    music = models.OneToOneField(MusicAudio, on_delete=models.CASCADE, related_name='music_track')
 
     class Meta:
         managed = True

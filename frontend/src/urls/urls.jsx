@@ -36,3 +36,19 @@ export const getAllSubscriptionService= (payload_data) => {
 export const getMusicService= (payload_data) => {
   return project.get(Urls.GET_MUSIC, payload_data);
 };
+
+export const adddNewSubscriptionService= (payload_data) => {
+  return project.post(Urls.GET_ALL_SUBSCRIPTION, payload_data);
+};
+
+export const adddNewCategoryService= (payload_data) => {
+  return project.post(Urls.ADD_GET_CATEGORIES, payload_data);
+};
+
+export const getNewCategoryService= (payload_data) => {
+  return project.get(Urls.ADD_GET_CATEGORIES, payload_data);
+};
+
+export const getUserRecentService= (payload_data) => {
+  return project.get(Urls.ADD_GET_RECENT, payload_data);
+};

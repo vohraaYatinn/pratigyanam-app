@@ -70,8 +70,8 @@ const FavComponent = () => {
       favResponse?.result &&
         favResponse?.result.map((value) => {
           if (value.track.categories) {
-            const categoryId = value.track.categories[0].category.id;
-            const categoryName = value.track.categories[0].category.type;
+            const categoryId = value.track.categories.category.id;
+            const categoryName = value.track.categories.category.type;
             const isIdPresent = categoryList.some(
               (category) => category.id === categoryId
             );

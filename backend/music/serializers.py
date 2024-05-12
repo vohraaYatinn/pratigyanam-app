@@ -25,7 +25,7 @@ class MusicCategoryMappingSerializer(serializers.ModelSerializer):
 
 
 class MusicAudioCategorySerializer(serializers.ModelSerializer):
-    categories = MusicCategoryMappingSerializer(many=True)
+    categories = MusicCategoryMappingSerializer()
 
     class Meta:
         model = MusicAudio

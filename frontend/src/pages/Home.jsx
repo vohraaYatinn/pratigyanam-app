@@ -160,8 +160,13 @@ const Home = () => {
   });
 
   const recentOnClick=(user)=>{
-	navigate('/music',{ state:  { user: user, type:"recent" } })
+	navigate('/music',{ state:  { user: loggedInUser, type:"recent" } })
   }
+
+  const randomOnClick=(user)=>{
+    navigate('/music',{ state:  { user: loggedInUser, type:"random" } })
+    }
+  
 
   return (
     <div>

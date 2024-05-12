@@ -1,10 +1,17 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import TopNav from "../components/TopNav";
 import BottomNav from "../components/BottomNav";
 import { Button, Dropdown } from "antd-mobile";
 
 const AdminUpload = () => {
   const ref = useRef(null);
+
+  const [formValues, setFormValues] = useState({
+    name: "",
+    description: "",
+    image:"",
+    path: "",
+  });
 
   return (
     <>
@@ -98,72 +105,48 @@ const AdminUpload = () => {
           </label>
           <div className="flex items-center justify-evenly ">
             <div className="">
-              <Dropdown ref={ref} className="font-bold">
-                <Dropdown.Item key="sorter" title="Categories">
-                  <div
-                    style={{
-                      padding: 12,
-                      fontSize: "20px", // Adjust the font size here
-                      fontWeight: "bold", // Optionally adjust font weight
-                    }}
-                  >
-                    <br />
-                    <p>Morning Affirmation</p>
-                    <br />
-                    <p>Night Affirmation</p>
-                    <br />
-                    <p>Morning Affirmation</p>
-                    <br />
-                    <p>Morning Affirmation</p>
-                    <br />
-                  </div>
-                  <div style={{ padding: "0 12px 12px" }}>
-                    <Button
-                      color="primary"
-                      block
-                      onClick={() => {
-                        ref.current?.close();
-                      }}
-                    >
-                      Select
-                    </Button>
-                  </div>
-                </Dropdown.Item>
-              </Dropdown>
+              <label
+                htmlFor="duration"
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              >
+                Duration
+              </label>
+              <select
+                id="duration"
+                name="duration"
+                value={formValues.duration} // Bind value to state variable
+                onChange={(e) => {
+                  setFormValues({ ...formValues, duration: e.target.value });
+                }} // Call handleDurationChange on change
+                className="block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-3 focus:outline-none focus:bg-white"
+              >
+                <option value="">Select duration</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+              </select>
             </div>
             <div className="">
-              <Dropdown ref={ref} className="font-bold">
-                <Dropdown.Item key="sorter" title="Voice Category">
-                  <div
-                    style={{
-                      padding: 12,
-                      fontSize: "20px", // Adjust the font size here
-                      fontWeight: "bold", // Optionally adjust font weight
-                    }}
-                  >
-                    <br />
-                    <p>Male-English</p>
-                    <br />
-                    <p>Female-English</p>
-                    <br />
-                    <p>Male-Hindi</p>
-                    <br />
-                    <p>Female-Hindi</p>
-                    <br />
-                  </div>
-                  <div style={{ padding: "0 12px 12px" }}>
-                    <Button
-                      color="primary"
-                      block
-                      onClick={() => {
-                        ref.current?.close();
-                      }}
-                    >
-                      Select
-                    </Button>
-                  </div>
-                </Dropdown.Item>
-              </Dropdown>
+              <label
+                htmlFor="duration"
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              >
+                Duration
+              </label>
+              <select
+                id="duration"
+                name="duration"
+                value={formValues.duration} // Bind value to state variable
+                onChange={(e) => {
+                  setFormValues({ ...formValues, duration: e.target.value });
+                }} // Call handleDurationChange on change
+                className="block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-3 focus:outline-none focus:bg-white"
+              >
+                <option value="">Select duration</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+              </select>
             </div>
           </div>
 

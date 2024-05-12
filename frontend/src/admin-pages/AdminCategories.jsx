@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TopNav from "../components/TopNav";
 import BottomNav from "../components/BottomNav";
-import { categories } from "../data/categories";
+// import { categories } from "../data/categories";
+import { adddNewCategoryService, getNewCategoryService } from "../urls/urls";
+import useAxios from "../network/useAxios";
 
 const AdminCategories = () => {
+
+	const [addResponse, addError, addLoading, addFetch] = useAxios();
+	const [getResponse, getError, getLoading, getFetch] = useAxios();
+	const [categories, setCategories] = useState([]);
+	const [formValues, setFormValues] = useState({
+		type: ""
+	  });
+	
+	  const [message, setMessage] = useState({
+		showMessage: false,
+		isError: true,
+		message: "",
+	  });
+	
+	  const handleSubmit = () => {
+		addFetch(adddNewCategoryService(formValues));
+	  };
+
+	  useEffect(()=>{
+
+		getFetch(getNewCategoryService())
+
+	  }, [addResponse])
+
+	  useEffect(()=>{
+		setCategories(getResponse?.result)
+	  },[getResponse])
 	return (
 		<>
 			<TopNav />
@@ -16,8 +45,11 @@ const AdminCategories = () => {
 						id="grid-first-name"
 						type="text"
 						placeholder="Add new category"
+						onChange={(e) => {
+							setFormValues({ ...formValues, type: e.target.value });
+						  }}
 					/>
-					<button className="bg-blue-500 text-white px-5 py-1.5 rounded-lg">
+					<button className="bg-blue-500 text-white px-5 py-1.5 rounded-lg" onClick={handleSubmit}>
 						Submit
 					</button>
 				</div>
@@ -30,7 +62,7 @@ const AdminCategories = () => {
 					return (
 						<>
 							<div className="text-2xl flex items-center ml-5 gap-4">
-								<p>{item.id}. {item.title}</p>
+								<p>{item.id}. {item.type}</p>
 							</div>
 						</>
 					);
