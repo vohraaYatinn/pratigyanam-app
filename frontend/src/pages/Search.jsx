@@ -161,11 +161,13 @@ const SearchComponent = () => {
                       <Link
                         data-trigger-switch="switch-1"
                         className="border-0"
-                        to="/single-track/2"
+                        // to="/single-track/2"
+                        to={`/single-track/${data?.music?.id}`}
                       >
                         <div>
-                          <span>{data.category.type}</span>
-                          <strong>{data.music.title}</strong>
+                          
+                          <span>{data.music.title}</span>
+                          <strong>{data.category.type}</strong>
                         </div>
                         {/* <span className="badge bg-blue-dark font-11 color-white">Category</span> */}
                         <i className="fa fa-angle-right" />
