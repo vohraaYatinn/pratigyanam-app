@@ -5,6 +5,7 @@ import { IoPauseSharp, IoPlayBackSharp, IoPlayForwardSharp, IoPlaySharp, IoPlayS
 import { MdOutlineShuffle, MdRepeat, MdRepeatOn, MdShuffleOn } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
 import { tracks } from '../data/tracks';
+import useAxios from '../network/useAxios';
 
 const SingleTrack = () => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -106,7 +107,7 @@ const SingleTrack = () => {
     }, [trackIndex, setTrack]);
     
     useEffect(()=>{
-        getUserFavouriteService
+        // getUserFavouriteService
     },[])
 
     return (
