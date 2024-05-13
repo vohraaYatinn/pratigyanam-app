@@ -92,7 +92,7 @@ DATABASES = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-        "http://127.0.0.1:5175"
+        "http://127.0.0.1:5173"
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -148,10 +148,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:5175",]
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:5175',]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:5173",]
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:5173',]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/home/ubuntu/djangoa-app/media/'
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
