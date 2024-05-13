@@ -104,15 +104,10 @@ const TrackList = ({
         >
           {/* <i className={track.iconClass} /> */}
           <span> {track?.music?.title}</span>
-          {/* <strong>{`${track?.music?.language} - ${track?.music?.gender}`}</strong> */}
           {lastString == "recent-music" &&
           <strong>{`${track?.music?.categories?.category?.type}`}</strong> }
           <i className="fa fa-angle-right" />
-          {/* <button style={buttonStyle} onClick={toggleFavorite}>
-            {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-			{"add"}
-          </button> */}
-          {/* onClick={addToRecent} */}
+
         </Link>
       )}
     </React.Fragment>
