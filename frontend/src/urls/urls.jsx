@@ -52,3 +52,7 @@ export const getNewCategoryService= (payload_data) => {
 export const getUserRecentService= (payload_data) => {
   return project.get(Urls.ADD_GET_RECENT, payload_data);
 };
+
+export const addUserRecentService= (payload_data) => {
+  return project.post(Urls.ADD_GET_RECENT, payload_data);
+};

@@ -7,16 +7,54 @@ import { tracks } from "../data/tracks";
 import AudioPlayer from "./AudioPlayer";
 import { Link } from "react-router-dom";
 import TopNav from "./TopNav";
+import useAxios from "../network/useAxios";
+import {
+  addUserRecentService,
+  getMusicService,
+  getUserRecentService,
+} from "../urls/urls";
+import { userData } from "../redux/reducers/functionalities.reducer";
+import { useSelector } from "react-redux";
 
 const TrackList = ({ loggedInUserData, type }) => {
+  const loggedInUser = useSelector(userData);
   const [selectedTrack, setSelectedTrack] = useState(tracks[0]);
   const [skeletontime, setSkeletonTime] = useState(true);
-
+  const [getResponse, getError, getLoading, getFetch] = useAxios();
+  const [
+    addToRecentResponse,
+    addToRecentError,
+    addToRecentLoading,
+    addToRecentFetch,
+  ] = useAxios();
+  const [music, setMusic] = useState();
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);
     }, 1500);
   });
+
+  useEffect(() => {
+    console.log("app type app", type);
+
+    if (type && type == "recent") {
+      getFetch(getUserRecentService({ userId: loggedInUser?.id }));
+    } else {
+      console.log("not");
+      getFetch(getMusicService());
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("response", getResponse?.result);
+    if (getResponse?.result) {
+      setMusic(getResponse?.result);
+    }
+  }, [getResponse]);
+
+  useEffect(() => {
+    console.log("music:", music);
+  }, [music]);
 
   const handleTrackClick = (track) => {
     setSelectedTrack(track);
@@ -113,20 +151,31 @@ const TrackList = ({ loggedInUserData, type }) => {
       category: "Positivity",
     },
   ];
-  const trackElements = tracks12.map((track, index) => (
+
+  const addToRecent = (trackId) => {
+    addToRecentFetch(
+      addUserRecentService({ userId: loggedInUser?.id, trackId: trackId })
+    );
+  };
+  const trackElements = music?.map((track, index) => (
     <React.Fragment key={index}>
       {skeletontime ? (
         <Skeleton active={true} className="px-4 my-4" title={false} />
       ) : (
-        <Link to={track.link} className="track-link">
-          <i className={track.iconClass} />
-          <span>{track.title}</span>
-          <strong>{track.tagline}</strong>
+        <Link
+          to={`/single-track/${track?.music?.id}`}
+          className="track-link"
+          onClick={() => addToRecent(track?.music?.id)}
+        >
+          {/* <i className={track.iconClass} /> */}
+          <span>{track?.music?.title}</span>
+          <strong>{track?.music?.description}</strong>
           <i className="fa fa-angle-right" />
           {/* <button style={buttonStyle} onClick={toggleFavorite}>
             {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
 			{"add"}
           </button> */}
+          {/* onClick={addToRecent} */}
         </Link>
       )}
     </React.Fragment>
@@ -233,7 +282,7 @@ const TrackList = ({ loggedInUserData, type }) => {
           />
         </div>
       </div>
-      );
+
       {/* <AudioPlayer selectedTrack={selectedTrack} /> */}
     </>
   );

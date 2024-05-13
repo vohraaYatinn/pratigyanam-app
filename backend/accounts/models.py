@@ -35,7 +35,7 @@ class UserPreferences(models.Model):
 
 class RecentMusic(models.Model):
     user = models.ForeignKey(UserDetails, on_delete=models.CASCADE, related_name='user_recent')
-    track = models.ForeignKey(MusicAudio, on_delete=models.CASCADE, related_name='recent_music_track')
+    music = models.ForeignKey(MusicAudio, on_delete=models.CASCADE, related_name='recent_music_track')
     added_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=50, default="A")
 

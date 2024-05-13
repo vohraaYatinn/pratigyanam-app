@@ -20,6 +20,8 @@ import po2 from "../assets/images/po2.png";
 import po3 from "../assets/images/po3.png";
 import { useSelector } from "react-redux";
 import { userData } from "../redux/reducers/functionalities.reducer";
+import useAxios from "../network/useAxios";
+import { getNewCategoryService } from "../urls/urls";
 
 const Home = () => {
   const loggedInUser = useSelector(userData);
@@ -28,14 +30,18 @@ const Home = () => {
   const [slideSize1, setSlideSize1] = useState(85);
   const [slideSize2, setSlideSize2] = useState(85);
   const [skeletontime, setSkeletonTime] = useState(true);
+  const [getCategoriesResponse, getCategoriesError, getCategoriesLoading, getCategoriesFetch] = useAxios();
+  
+  const [categories, setCategories] = useState([])
+  
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);
     }, 1500);
   });
 
-  const navigateTo = () => {
-    navigate("/music");
+  const navigateTo = (catId) => {
+    navigate("/music", {state:{category:catId}});
   };
   const colors = ["#ace0ff", "#bcffbd", "#e4fabd", "#ffcfac"];
 
@@ -118,12 +124,22 @@ const Home = () => {
 			navigate('/manage-subscriptions')
 		}
     }
+
+    getCategoriesFetch(getNewCategoryService())
+
   }, []);
-  const topDoctors = topDoctor.map((color, index) => (
+
+  useEffect(()=>{
+      if(getCategoriesResponse?.result)
+        {
+          setCategories(getCategoriesResponse?.result)
+        }
+  },[getCategoriesResponse]);
+  const topDoctors = categories.map((color, index) => (
     <Swiper.Item
       key={index}
       onClick={() => {
-        navigateTo();
+        navigateTo(color?.id);
       }}
     >
       <Card
@@ -131,7 +147,7 @@ const Home = () => {
         style={{
           width: 250,
         }}
-        cover={<img alt="example" src={color.image} />}
+        cover={<img alt="example" src={color?.id} />}
       >
         <h1
           style={{
@@ -139,7 +155,7 @@ const Home = () => {
             fontSize: "1.1rem",
           }}
         >
-          {color.title}
+          {color?.type}
         </h1>
         <div
           style={{

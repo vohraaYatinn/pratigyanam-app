@@ -27,6 +27,8 @@ class MusicAudio(models.Model):
 
 class MusicCategory(models.Model):
     type = models.CharField(max_length=100)
+    image = models.FileField(upload_to='image_files/',
+                             validators=[FileExtensionValidator(['jpg', 'jpeg', 'png', 'gif'])], null=True)
 
     class Meta:
         managed = True

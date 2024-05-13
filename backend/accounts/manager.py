@@ -35,12 +35,12 @@ class CustomManager:
 
     @staticmethod
     def get_user_recent(user_id):
-        favourites_data = RecentMusic.objects.filter(user_id=user_id, status="A").select_related('user', 'track')
+        favourites_data = RecentMusic.objects.filter(user_id=user_id, status="A").select_related('user', 'music')
         return favourites_data
 
     @staticmethod
     def post_user_recent(user_id, track_id):
-        existing_recent = RecentMusic.objects.filter(user_id=user_id, track_id=track_id, status="A")
+        existing_recent = RecentMusic.objects.filter(user_id=user_id, music_id=track_id, status="A")
         if existing_recent:
             existing_recent.update(status="I")
-        UserFavorites.objects.create(user_id=user_id, track_id=track_id)
+        RecentMusic.objects.create(user_id=user_id, music_id=track_id)

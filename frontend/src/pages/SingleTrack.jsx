@@ -14,6 +14,7 @@ const SingleTrack = () => {
     const [repeatMode, setRepeatMode] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
+    const [getFavResponse, getFavError, getFavLoading, searchFetch] = useAxios();
 
     const audioRef = useRef(null);
     const rangeInputRef = useRef(null);
@@ -104,7 +105,9 @@ const SingleTrack = () => {
         setTrack(tracks[trackIndex]); // Update the current track when trackIndex changes
     }, [trackIndex, setTrack]);
     
-    
+    useEffect(()=>{
+        getUserFavouriteService
+    },[])
 
     return (
         <div className="w-screen sound-sound-div">
@@ -157,6 +160,7 @@ const SingleTrack = () => {
                             <button onClick={handleNext} className='bg-black mx-2 rounded-sm text-center   p-2 check-it-buttons'>
                                 <IoPlaySkipForwardSharp />
                             </button>
+                            <button></button>
                         </div>
                     </div>
                 </div>

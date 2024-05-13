@@ -50,17 +50,15 @@ class MusicManager:
         return MusicCategoryMapping.objects.filter(query).select_related('music', 'category')
 
 
-
-
     @staticmethod
-    def post_new_category(data):
+    def post_new_category(data, request):
         cat_type = data.get('type')
-
+        image = request.FILES.get('image', None)
         existing_music = MusicCategory.objects.filter(type=cat_type)
         if existing_music:
             raise Exception("Category with same title exists, choose a different title.")
 
-        MusicCategory.objects.create(type=cat_type)
+        MusicCategory.objects.create(type=cat_type, image=image)
 
     @staticmethod
     def get_category(data):

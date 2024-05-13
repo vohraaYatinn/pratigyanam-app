@@ -34,7 +34,7 @@ class GetPostCategory(APIView):
     def post(request):
         try:
             data = request.data
-            MusicManager.post_new_category(data)
+            MusicManager.post_new_category(data, request)
             return Response({"result": data, "message": "Success"}, 200)
         except Exception as err:
             return Response(str(err), 500)
