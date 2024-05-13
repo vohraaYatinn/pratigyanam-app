@@ -120,7 +120,10 @@ const SigninWithEmail = () => {
                 </div>
                 <button
                   type="submit"
-                  onClick={submitValues}
+                  onClick={() => {
+					loginFunction();
+					// navigate("/phoneLogin");
+				  }}
                   className="w-full  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center send-otp-button"
                 >
                   Login
