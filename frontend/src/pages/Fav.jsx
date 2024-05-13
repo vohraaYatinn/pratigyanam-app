@@ -24,7 +24,7 @@ import { Dialog, List, SwipeAction, Toast, Image } from "antd-mobile";
 import { categoriesFav } from "../data/categories";
 import { useSelector } from "react-redux";
 import { userData } from "../redux/reducers/functionalities.reducer";
-import { getUserFavouriteService } from "../urls/urls";
+import { addUserRecentService, getUserFavouriteService } from "../urls/urls";
 import useAxios from "../network/useAxios";
 
 const FavComponent = () => {
@@ -34,6 +34,12 @@ const FavComponent = () => {
   const [skeletontime, setSkeletonTime] = useState(true);
   const [loggedInUserData, setLoggedInUserData] = useState([]);
   const [userFavourites, setUserFavourites] = useState([]);
+  const [
+    addToRecentResponse,
+    addToRecentError,
+    addToRecentLoading,
+    addToRecentFetch,
+  ] = useAxios();
 
   const [userCategories, setUserCategories] = useState([]);
   const [favResponse, favError, favLoading, favpFetch] = useAxios();
@@ -86,6 +92,12 @@ const FavComponent = () => {
     setUserFavourites(favResponse?.result ? favResponse?.result : []);
   }, [favResponse]);
 
+  const addToRecent = (trackId) => {
+    addToRecentFetch(
+      addUserRecentService({ userId: loggedInUser?.id, trackId: trackId })
+    );
+  };
+
   return (
     <>
       <TopNav />
@@ -134,15 +146,22 @@ const FavComponent = () => {
                         paragraph={{ row: 1 }}
                       />
                     ) : (
-                      <a href="#">
+                      // <a href="#">
+                      <Link
+                        to={`/single-track/${item?.track?.id}`}
+                        className="track-link"
+                        onClick={() => addToRecent(item?.track?.id)}
+                      >
                         {/* <img src={item.img} /> */}
                         <span>{item?.track?.title}</span>
-                        <strong>{item?.track?.artist}</strong>
+                        {/* <strong>{item?.track?.artist}</strong> */}
+                        <strong>{`${item?.track?.categories?.category?.type}`}</strong> 
                         <span className="badge bg-red-dark font-11 color-white">
                           Audio
                         </span>
                         <i className="fa fa-angle-right" />
-                      </a>
+                        {/* </a> */}
+                      </Link>
                     );
                   })}
                 </>
@@ -157,10 +176,19 @@ const FavComponent = () => {
                         paragraph={{ row: 1 }}
                       />
                     ) : (
-                      <a
-                        data-trigger-switch="switch-1"
-                        className="border-0"
-                        href="#"
+                      // <a
+                      //   data-trigger-switch="switch-1"
+                      //   className="border-0"
+                      //   href="#"
+                      // >
+                      <Link
+                        // to={{
+                        //   pathname: `/music`,
+                        //   search: `?filter=${item.id}&filterName=${item.name}`,
+                        //   state: { category: item.id }
+                        // }}
+                        className="track-link"
+                       
                       >
                         {/* <img src="images/avatars/5s.png" alt="Avatar" /> */}
 
@@ -170,7 +198,8 @@ const FavComponent = () => {
                         </span>
 
                         <i className="fa fa-angle-right" />
-                      </a>
+                        {/* </a> */}
+                      </Link>
                     );
                   })}
                 </>

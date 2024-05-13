@@ -21,7 +21,7 @@ class CustomManager:
         user_favorites_with_categories = UserFavorites.objects.filter(user_id=user_id).select_related('track',
                                                                                                       'user').prefetch_related(
             Prefetch('track__music_track', queryset=MusicCategoryMapping.objects.select_related('category').all(),
-                     to_attr='categories'))
+                     to_attr='categories')).order_by('-added_at')
 
         return user_favorites_with_categories
 
@@ -37,7 +37,7 @@ class CustomManager:
     def get_user_recent(user_id):
         favourites_data = RecentMusic.objects.filter(user_id=user_id, status = "A").select_related('music', 'user').prefetch_related(
             Prefetch('music__music_track', queryset=MusicCategoryMapping.objects.select_related('category').all(),
-                     to_attr='categories'))
+                     to_attr='categories')).order_by('-added_at')
         return favourites_data
 
     @staticmethod
