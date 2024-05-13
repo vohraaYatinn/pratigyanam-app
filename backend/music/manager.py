@@ -26,20 +26,21 @@ class MusicManager:
 
     @staticmethod
     def get_music(data):
-        genre = data.get('genre', None)
         language = data.get('language', None)
         category = data.get('category', None)
         name = data.get('name', None)
+        gender = data.get('gender', None)
         search_text = data.get('searchText', None)
         query = Q()
-        if genre:
-            query &= Q(music__genre=genre)
+
+        if gender:
+            query &= Q(music__gender=gender)
 
         if language:
             query &= Q(music__language=language)
 
         if category:
-            query &= Q(music__category=category)
+            query &= Q(category_id=category)
 
         if name:
             query &= Q(music_title=name)

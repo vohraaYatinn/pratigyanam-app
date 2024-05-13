@@ -30,10 +30,15 @@ const Home = () => {
   const [slideSize1, setSlideSize1] = useState(85);
   const [slideSize2, setSlideSize2] = useState(85);
   const [skeletontime, setSkeletonTime] = useState(true);
-  const [getCategoriesResponse, getCategoriesError, getCategoriesLoading, getCategoriesFetch] = useAxios();
-  
-  const [categories, setCategories] = useState([])
-  
+  const [
+    getCategoriesResponse,
+    getCategoriesError,
+    getCategoriesLoading,
+    getCategoriesFetch,
+  ] = useAxios();
+
+  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);
@@ -41,7 +46,7 @@ const Home = () => {
   });
 
   const navigateTo = (catId) => {
-    navigate("/music", {state:{category:catId}});
+    navigate(`/music?filter=${catId}`, { state: { category: catId } });
   };
   const colors = ["#ace0ff", "#bcffbd", "#e4fabd", "#ffcfac"];
 
@@ -73,68 +78,45 @@ const Home = () => {
     return () => {
       window.removeEventListener("resize", updateSlideSize);
     };
-   
   }, []);
 
   const onClose = () => {
     console.log("I was closed.");
   };
 
-  const topDoctor = [
-    {
-      title: "Health Affirmations",
-      image: image1,
-    },
-
-    {
-      title: "Wealth Affirmations",
-      image: image2,
-    },
-    {
-      title: "Stress Management",
-      image: image3,
-    },
-    {
-      title: "Deep Sleep",
-      image: image4,
-    },
-  ];
   useEffect(() => {
     const toast = localStorage.getItem("toast");
     if (toast) {
       localStorage.setItem("toast", false);
     }
-	setLoggedInUserData(loggedInUser);
+    setLoggedInUserData(loggedInUser);
     console.log(loggedInUser);
     if (!loggedInUser?.user_profile?.is_subscription_activated) {
-		const start = new Date(loggedInUser?.user_profile?.created_at);
-		const today = new Date();
-		start.setHours(0, 0, 0, 0);
-		today.setHours(0, 0, 0, 0);
-		const differenceInTime = today.getTime() - start.getTime();
-		const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-		let days = Math.round(differenceInDays);
+      const start = new Date(loggedInUser?.user_profile?.created_at);
+      const today = new Date();
+      start.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+      const differenceInTime = today.getTime() - start.getTime();
+      const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+      let days = Math.round(differenceInDays);
       setMessage({
         showMessage: true,
         isError: false,
         message: `You are currently using free trail, ${7 - days} days left`,
       });
-	  if(7 - days==0)
-		{
-			navigate('/manage-subscriptions')
-		}
+      if (7 - days == 0) {
+        navigate("/manage-subscriptions");
+      }
     }
 
-    getCategoriesFetch(getNewCategoryService())
-
+    getCategoriesFetch(getNewCategoryService());
   }, []);
 
-  useEffect(()=>{
-      if(getCategoriesResponse?.result)
-        {
-          setCategories(getCategoriesResponse?.result)
-        }
-  },[getCategoriesResponse]);
+  useEffect(() => {
+    if (getCategoriesResponse?.result) {
+      setCategories(getCategoriesResponse?.result);
+    }
+  }, [getCategoriesResponse]);
   const topDoctors = categories.map((color, index) => (
     <Swiper.Item
       key={index}
@@ -175,14 +157,15 @@ const Home = () => {
     message: "",
   });
 
-  const recentOnClick=(user)=>{
-	navigate('/music',{ state:  { user: loggedInUser, type:"recent" } })
-  }
+  const recentOnClick = (user) => {
+    navigate("/recent-music", {
+      state: { user: loggedInUser, type: "recent" },
+    });
+  };
 
-  const randomOnClick=(user)=>{
-    navigate('/music',{ state:  { user: loggedInUser, type:"random" } })
-    }
-  
+  const randomOnClick = (user) => {
+    navigate("/music", { state: { user: loggedInUser, type: "random" } });
+  };
 
   return (
     <div>
@@ -223,22 +206,22 @@ const Home = () => {
         <BottomNav path={"home"} />
         <TopNav />
         <div className="page-title-clear" />
-		<div style={{padding:"10px"}}>
-        {message.showMessage ? (
-          <Alert
-            closable
-            type="warning"
-            message={message.message}
-            dismiss={() => {
-              setMessage((prevState) => ({
-                ...prevState,
-                showMessage: false,
-              }));
-            }}
-            isError={message.isError}
-          />
-        ) : null}
-		</div>
+        <div style={{ padding: "10px" }}>
+          {message.showMessage ? (
+            <Alert
+              closable
+              type="warning"
+              message={message.message}
+              dismiss={() => {
+                setMessage((prevState) => ({
+                  ...prevState,
+                  showMessage: false,
+                }));
+              }}
+              isError={message.isError}
+            />
+          ) : null}
+        </div>
         <div
           id="menu-main"
           className="menu menu-box-left rounded-0"
@@ -391,7 +374,14 @@ const Home = () => {
             <Skeleton active={true} className="px-4 my-4" title={false} />
           ) : (
             <div className="row mb-0">
-              <a href="#" className="col-6 pe-0" onClick={()=>recentOnClick(loggedInUser)}>
+              {/* <a href="" className="col-6 pe-0" onClick={()=>recentOnClick(loggedInUser)}> */}
+              <Link
+                className="text-black"
+                to={{
+                  pathname: "/recent-music",
+                  state: { user: loggedInUser, type: "recent" },
+                }}
+              >
                 <div className="card mr-0 card-style">
                   <div className="d-flex pt-3 pb-3">
                     <div className="align-self-center">
@@ -408,30 +398,12 @@ const Home = () => {
                     with ease.
                   </p>
                 </div>
-              </a>
-              <a href="#" className="col-6 ps-0">
-                <div className="card ml-0 card-style">
-                  <div className="d-flex pt-3 pb-3">
-                    <div className="align-self-center">
-                      <i className="fa fa-music color-blue-dark ms-3 font-34 mt-1" />
-                    </div>
-                    <div className="align-self-center">
-                      <h5 className="ps-2 ms-1 mb-0">
-                        Audio
-                        <br />
-                        Library
-                      </h5>
-                    </div>
-                  </div>
-                  <p className="px-3  pb-3">
-                    Dive into a treasure trove of soundscapes designed to
-                    nourish Soul.
-                  </p>
-                </div>
-              </a>
+                {/* </a> */}
+              </Link>
+              
             </div>
           )}
-          <a href="#" data-toggle-theme></a>
+          {/* <a href="" data-toggle-theme></a> */}
           <div data-menu-load="menu-footer.html" />
         </div>
       </div>

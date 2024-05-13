@@ -14,8 +14,11 @@ const { Search } = Input;
 import { Button, SearchBar, Space } from "antd-mobile";
 import { getMusicService } from "../urls/urls";
 import useAxios from "../network/useAxios";
+import { useSelector } from "react-redux";
+import { userData } from "../redux/reducers/functionalities.reducer";
 
 const SearchComponent = () => {
+  const loggedInUser = useSelector(userData);
   const [selectedTrack, setSelectedTrack] = useState(tracksFav[0]);
   const [skeletontime, setSkeletonTime] = useState(true);
   const [searchValue, setSearchValue] = useState("");
@@ -47,12 +50,14 @@ const SearchComponent = () => {
       //   setShowElement(true)
       let payloadData = {
         searchText: value,
+        language:loggedInUser?.user_preferences[0]?.language,
+        gender: loggedInUser?.user_preferences[0]?.gender
       };
       searchFetch(getMusicService(payloadData));
     }, 500);
     // setTimer(delayDebounceFn)
   };
-
+  console.log(loggedInUser)
   const searchSong = (value) => {
     if (value.length >= 3) {
       getSong(value);

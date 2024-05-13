@@ -5,7 +5,7 @@ import { Skeleton } from "antd";
 
 import { tracks } from "../data/tracks";
 import AudioPlayer from "./AudioPlayer";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import TopNav from "./TopNav";
 import useAxios from "../network/useAxios";
 import {
@@ -16,10 +16,20 @@ import {
 import { userData } from "../redux/reducers/functionalities.reducer";
 import { useSelector } from "react-redux";
 
-const TrackList = ({ loggedInUserData, type }) => {
+const TrackList = ({
+  loggedInUserData,
+  type,
+  category,
+  language,
+  gender
+}) => {
+  const location = useLocation();
+  const currentURL = window.location.href;
+  const lastString = currentURL.substring(currentURL.lastIndexOf("/") + 1);
   const loggedInUser = useSelector(userData);
   const [selectedTrack, setSelectedTrack] = useState(tracks[0]);
   const [skeletontime, setSkeletonTime] = useState(true);
+  const [filterValue, setFilterValue] = useState('');
   const [getResponse, getError, getLoading, getFetch] = useAxios();
   const [
     addToRecentResponse,
@@ -33,15 +43,29 @@ const TrackList = ({ loggedInUserData, type }) => {
       setSkeletonTime(false);
     }, 1500);
   });
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const filterParam = searchParams.get('filter');
+    setFilterValue(filterParam || '');
+    console.log("filter", filterParam)
+  }, [location.search]);
 
   useEffect(() => {
-    console.log("app type app", type);
+    console.log("last string", lastString);
 
-    if (type && type == "recent") {
+    if (lastString == "recent-music") {
       getFetch(getUserRecentService({ userId: loggedInUser?.id }));
     } else {
       console.log("not");
-      getFetch(getMusicService());
+      const searchParams = new URLSearchParams(location.search);
+    const filterParam = searchParams.get('filter');
+      getFetch(
+        getMusicService({
+          language: loggedInUser?.user_preferences[0]?.language,
+          gender: loggedInUser?.user_preferences[0]?.gender,
+          category: filterParam || ""
+        })
+      );
     }
   }, []);
 
@@ -59,98 +83,7 @@ const TrackList = ({ loggedInUserData, type }) => {
   const handleTrackClick = (track) => {
     setSelectedTrack(track);
   };
-  const tracks12 = [
-    {
-      link: "/single-track/1",
-      iconClass:
-        "fa fa-music font-14 bg-green-dark color-white rounded-sm shadow-xl",
-      title: "Affirmation Sound 1",
-      tagline: "Believe in yourself",
-      affirmationText: "You are capable of achieving great things.",
-      category: "Motivation",
-    },
-    {
-      link: "/single-track/2",
-      iconClass:
-        "fa fa-music font-14 bg-green-dark color-white rounded-sm shadow-xl",
-      title: "Affirmation Sound 2",
-      tagline: "Positive Energy",
-      affirmationText: "Radiate positive energy and attract positivity.",
-      category: "Positivity",
-    },
-    {
-      link: "/single-track/2",
-      iconClass:
-        "fa fa-music font-14 bg-green-dark color-white rounded-sm shadow-xl",
-      title: "Affirmation Sound 3",
-      tagline: "Positive Energy",
-      affirmationText: "Radiate positive energy and attract positivity.",
-      category: "Positivity",
-    },
-    {
-      link: "/single-track/2",
-      iconClass:
-        "fa fa-music font-14 bg-green-dark color-white rounded-sm shadow-xl",
-      title: "Affirmation Sound 3",
-      tagline: "Positive Energy",
-      affirmationText: "Radiate positive energy and attract positivity.",
-      category: "Positivity",
-    },
-    {
-      link: "/single-track/2",
-      iconClass:
-        "fa fa-music font-14 bg-green-dark color-white rounded-sm shadow-xl",
-      title: "Affirmation Sound 4",
-      tagline: "Positive Energy",
-      affirmationText: "Radiate positive energy and attract positivity.",
-      category: "Positivity",
-    },
-    {
-      link: "/single-track/2",
-      iconClass:
-        "fa fa-music font-14 bg-green-dark color-white rounded-sm shadow-xl",
-      title: "Affirmation Sound 5",
-      tagline: "Positive Energy",
-      affirmationText: "Radiate positive energy and attract positivity.",
-      category: "Positivity",
-    },
-    {
-      link: "/single-track/2",
-      iconClass:
-        "fa fa-music font-14 bg-green-dark color-white rounded-sm shadow-xl",
-      title: "Affirmation Sound 6",
-      tagline: "Positive Energy",
-      affirmationText: "Radiate positive energy and attract positivity.",
-      category: "Positivity",
-    },
-    {
-      link: "/single-track/2",
-      iconClass:
-        "fa fa-music font-14 bg-green-dark color-white rounded-sm shadow-xl",
-      title: "Affirmation Sound 7",
-      tagline: "Positive Energy",
-      affirmationText: "Radiate positive energy and attract positivity.",
-      category: "Positivity",
-    },
-    {
-      link: "/single-track/2",
-      iconClass:
-        "fa fa-music font-14 bg-green-dark color-white rounded-sm shadow-xl",
-      title: "Affirmation Sound 8",
-      tagline: "Positive Energy",
-      affirmationText: "Radiate positive energy and attract positivity.",
-      category: "Positivity",
-    },
-    {
-      link: "/single-track/2",
-      iconClass:
-        "fa fa-music font-14 bg-green-dark color-white rounded-sm shadow-xl",
-      title: "Affirmation Sound 9",
-      tagline: "Positive Energy",
-      affirmationText: "Radiate positive energy and attract positivity.",
-      category: "Positivity",
-    },
-  ];
+
 
   const addToRecent = (trackId) => {
     addToRecentFetch(
@@ -224,14 +157,8 @@ const TrackList = ({ loggedInUserData, type }) => {
             <div className="page-title-clear" />
             <div className="card card-style">
               <div className="card mb-0 bg-6" data-card-height={150} />
-              {skeletontime ? (
-                <Skeleton.Image
-                  active={true}
-                  className="mx-auto pt-4"
-                  style={{ width: "300px", height: "200px" }}
-                  title={false}
-                />
-              ) : (
+
+              {lastString === "recent-music" ? (
                 <div
                   className="content mt-3"
                   style={{
@@ -250,6 +177,8 @@ const TrackList = ({ loggedInUserData, type }) => {
                     smile.
                   </p>
                 </div>
+              ) : (
+                ""
               )}
             </div>
             <div className="card card-style">

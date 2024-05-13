@@ -40,6 +40,14 @@ const router = createBrowserRouter([
 				element: <App />,
 			},
 			{
+				path: "/recent-music",
+				element: <App />,
+			},
+			{
+				path: "/sub-music",
+				element: <App />,
+			},
+			{
 				path: "signup",
 				element: <Signup />,
 			},
