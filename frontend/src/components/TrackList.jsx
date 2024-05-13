@@ -46,7 +46,8 @@ const TrackList = ({
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const filterParam = searchParams.get('filter');
-    setFilterValue(filterParam || '');
+    const filterName = searchParams.get('filterName');
+    setFilterValue(filterName || '');
     console.log("filter", filterParam)
   }, [location.search]);
 
@@ -59,6 +60,7 @@ const TrackList = ({
       console.log("not");
       const searchParams = new URLSearchParams(location.search);
     const filterParam = searchParams.get('filter');
+    const filterName = searchParams.get('filterName');
       getFetch(
         getMusicService({
           language: loggedInUser?.user_preferences[0]?.language,
@@ -101,8 +103,10 @@ const TrackList = ({
           onClick={() => addToRecent(track?.music?.id)}
         >
           {/* <i className={track.iconClass} /> */}
-          <span>{track?.music?.title}</span>
-          <strong>{track?.music?.description}</strong>
+          <span> {track?.music?.title}</span>
+          {/* <strong>{`${track?.music?.language} - ${track?.music?.gender}`}</strong> */}
+          {lastString == "recent-music" &&
+          <strong>{`${track?.music?.categories?.category?.type}`}</strong> }
           <i className="fa fa-angle-right" />
           {/* <button style={buttonStyle} onClick={toggleFavorite}>
             {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
@@ -159,6 +163,9 @@ const TrackList = ({
               <div className="card mb-0 bg-6" data-card-height={150} />
 
               {lastString === "recent-music" ? (
+                ""
+              ) : (
+                (category && music) && 
                 <div
                   className="content mt-3"
                   style={{
@@ -170,15 +177,13 @@ const TrackList = ({
                   <img src="https://t3.ftcdn.net/jpg/03/01/43/92/240_F_301439209_vpF837oCGM1lp0cnC7stzCBn3th0dQ6O.jpg" />
                   <p className="color-highlight font-500 mb-n1"> </p>
                   <h1 className="mt-4" style={{ fontSize: "1.2rem" }}>
-                    Morning Affirmation
+                    {filterValue ? filterValue : ""}
                   </h1>
-                  <p className="mb-3">
+                  {/* <p className="mb-3">
                     I am strong, capable, and ready to face the day with a
                     smile.
-                  </p>
+                  </p> */}
                 </div>
-              ) : (
-                ""
               )}
             </div>
             <div className="card card-style">

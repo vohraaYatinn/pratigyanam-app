@@ -45,8 +45,8 @@ const Home = () => {
     }, 1500);
   });
 
-  const navigateTo = (catId) => {
-    navigate(`/music?filter=${catId}`, { state: { category: catId } });
+  const navigateTo = (catId, catName) => {
+    navigate(`/music?filter=${catId}&filterName=${catName}`, { state: { category: catId } });
   };
   const colors = ["#ace0ff", "#bcffbd", "#e4fabd", "#ffcfac"];
 
@@ -121,7 +121,7 @@ const Home = () => {
     <Swiper.Item
       key={index}
       onClick={() => {
-        navigateTo(color?.id);
+        navigateTo(color?.id, color?.type);
       }}
     >
       <Card
