@@ -15,6 +15,7 @@ class Profile(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     subscription = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE, related_name='user_subscription', null=True)
     is_subscription_activated = models.BooleanField(default=False)
+    sub_active_till = models.DateTimeField(null=True)
 
     class Meta:
         managed = True

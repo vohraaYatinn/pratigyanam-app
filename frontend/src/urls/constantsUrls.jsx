@@ -13,6 +13,8 @@ export class Urls {
 
     static ADD_GET_CATEGORIES = Urls.MPHRMS_API_PREFIX + 'music/get-post-category/';
     static ADD_GET_RECENT = Urls.MPHRMS_API_PREFIX + 'accounts/user-recent-music/';
+
+    static BUY_SUBSCRIPTION = Urls.MPHRMS_API_PREFIX + 'subscriptions/buy-subscription/';
     
 
 

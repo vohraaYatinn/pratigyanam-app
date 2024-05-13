@@ -8,6 +8,7 @@ import { tracks } from '../data/tracks';
 import useAxios from '../network/useAxios';
 
 const SingleTrack = () => {
+    const loggedInUser = useSelector(userData);
     const [isPlaying, setIsPlaying] = useState(false);
     const [shuffleMode, setShuffleMode] = useState(false);
     const [trackIndex, setTrackIndex] = useState(0); // Track index to keep track of current track

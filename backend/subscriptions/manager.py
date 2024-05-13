@@ -1,3 +1,6 @@
+from datetime import datetime
+from datetime import timedelta
+
 from accounts.models import Profile
 from subscriptions.models import SubscriptionPlan
 
@@ -27,9 +30,20 @@ class SubscriptionManager:
     def buy_subscription(data):
         user_id = data.get('userId')
         profile_data = Profile.objects.get(user_id=user_id)
-        subscription = data.get('subscription_id')
+        subscription_id = data.get('subscription_id')
+        get_sub_obj = SubscriptionPlan.objects.get(id=subscription_id)
 
+        current_datetime = datetime.now()
 
+        if not profile_data.is_subscription_activated:
+            profile_data.sub_active_till = current_datetime+timedelta(days=get_sub_obj.duration)
+
+        else:
+            profile_data.sub_active_till += timedelta(days=get_sub_obj.duration)
+
+        profile_data.subscription = get_sub_obj
+        profile_data.is_subscription_activated = True
+        profile_data.save()
 
 
 

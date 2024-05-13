@@ -7,7 +7,7 @@ import BottomNav from "../components/BottomNav";
 import { Skeleton } from "antd";
 import { useSelector } from "react-redux";
 import { userData } from "../redux/reducers/functionalities.reducer";
-import { getAllSubscriptionService } from "../urls/urls";
+import { buySubscriptionService, getAllSubscriptionService } from "../urls/urls";
 import useAxios from "../network/useAxios";
 
 const EditSubscriptions = () => {
@@ -15,6 +15,7 @@ const EditSubscriptions = () => {
   const loggedInUser = useSelector(userData);
   const [getSubsResponse, getSubsError, getSubsLoading, getSubsFetch] =
     useAxios();
+  const [subscribeResponse, subscribeError, subscribeLoading, subscribeFetch] = useAxios();
   const [allSubs, setAllSubs] = useState([]);
   useEffect(() => {
     setTimeout(() => {
@@ -31,8 +32,26 @@ const EditSubscriptions = () => {
     console.log(getSubsResponse?.result);
   }, [getSubsResponse]);
 
-  const manageBuySubscription = (sub_id) =>{
-	console.log(sub_id)
+  const manageBuySubscription = (sub_id) => {
+    subscribeFetch(buySubscriptionService({
+      userId:loggedInUser?.id,
+      subscription_id :sub_id
+    }))
+    console.log(sub_id);
+  };
+
+  const getFormattedDate = (dateValue) =>{
+    const date = new Date(dateValue);
+
+
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+  
+  
+    const formattedDate = `${day} ${month}, ${year}`;
+    return formattedDate
+    
   }
 
   return (
@@ -96,11 +115,11 @@ const EditSubscriptions = () => {
                 <h1>You Dont Have A active plan</h1>
               ) : (
                 <div>
-                  <h1>Monthly</h1>
+                  <h1>{loggedInUser?.user_profile?.subscription?.name}</h1>
                   <div class="list-group list-custom-large">
                     <a href="#">
                       <i class="fa font-14 fa-calendar rounded-sm shadow-m bg-red-dark color-white"></i>
-                      <span>30 April, 2024</span>
+                      <span>{getFormattedDate(loggedInUser?.user_profile?.sub_active_till)}</span>
                       <strong>Valid Through</strong>
                       <i class="fa fa-angle-right"></i>
                     </a>
@@ -121,7 +140,7 @@ const EditSubscriptions = () => {
               }}
             />
           ) : (
-            allSubs.map((sub, index) => (
+            allSubs?.map((sub, index) => (
               <div key={index}>
                 <div
                   class="card card-style p-4 bg-31"
@@ -131,18 +150,20 @@ const EditSubscriptions = () => {
                   <div class="card-center text-center">
                     {/* <h6 class="mb-0 color-highlight">Get AppKit Today</h6> */}
                     <h1 class="font-800 color-white font-30 line-height-xl">
-                      {`₹ ${sub?.price}/-`} <br />
+                        {sub?.name} <br />
                       {`${sub?.duration} days`}
                     </h1>
                     <p class="font-16 color-white opacity-50 line-height-l boxed-text-l">
-                      {sub?.description}
+                  
+                      {`₹ ${sub?.price}/-`} <br />
                     </p>
                     <a
                       href="#"
                       class="btn btn-center-m btn-m gradient-blue rounded-s font-700 text-uppercase"
-					  onClick={()=>manageBuySubscription(sub?.id)}
+                      onClick={() => manageBuySubscription(sub?.id)}
                     >
-                      Subscribe
+                      {loggedInUser?.user_profile?.is_subscription_activated ? "Extend" : " Subscribe"}
+                     
                     </a>
                   </div>
                   <div class="card-overlay bg-black opacity-80"></div>

@@ -112,7 +112,7 @@ const AdminSubscription = () => {
                 >
                   Duration
                 </label>
-                <select
+                {/* <select
                   id="duration"
                   name="duration"
                   value={formValues.duration} // Bind value to state variable
@@ -125,7 +125,19 @@ const AdminSubscription = () => {
                   <option value="weekly">Weekly</option>
                   <option value="monthly">Monthly</option>
                   <option value="yearly">Yearly</option>
-                </select>
+                </select> */}
+                <input
+                  className=" block w-full  bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-4 mb-3  focus:outline-none focus:bg-white"
+                  id="grid-first-name"
+                  type="number"
+                  placeholder="Enter duration in days"
+                  onChange={(e) => {
+                    setFormValues({
+                      ...formValues,
+                      duration: e.target.value,
+                    });
+                  }}
+                />
               </div>
               <div className="w-full px-3  ">
                 <label
