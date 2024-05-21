@@ -6,6 +6,8 @@ import { MdOutlineShuffle, MdRepeat, MdRepeatOn, MdShuffleOn } from 'react-icons
 import { useParams } from 'react-router-dom';
 import { tracks } from '../data/tracks';
 import useAxios from '../network/useAxios';
+import { userData } from '../redux/reducers/functionalities.reducer';
+import { useSelector } from 'react-redux';
 
 const SingleTrack = () => {
     const loggedInUser = useSelector(userData);
@@ -17,6 +19,8 @@ const SingleTrack = () => {
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [getFavResponse, getFavError, getFavLoading, searchFetch] = useAxios();
+    const [getMusicResponse, getMusicError, getMusicLoading, musicFetch] = useAxios();
+
 
     const audioRef = useRef(null);
     const rangeInputRef = useRef(null);

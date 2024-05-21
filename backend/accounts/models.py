@@ -49,6 +49,7 @@ class UserFavorites(models.Model):
     user = models.ForeignKey(UserDetails, on_delete=models.CASCADE, related_name='user_fav')
     track = models.ForeignKey(MusicAudio, on_delete=models.CASCADE, related_name='user_fav_track')
     added_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.CharField(max_length=20, default="A")
 
     class Meta:
         managed = True

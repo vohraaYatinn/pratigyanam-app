@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from music.manager import MusicManager
-from music.serializers import MusicCategoryMappingNormalSerializer, MusicCategorySerializer
+from music.serializers import MusicCategoryMappingNormalSerializer, MusicCategorySerializer, MusicAudioSerializer
 
 
 class GetPostMusic(APIView):
@@ -48,6 +48,19 @@ class GetPostCategory(APIView):
             return Response({"result": serialized_data, "message": "Success"}, 200)
         except Exception as err:
             return Response(str(err), 500)
+
+
+class GetMusicById(APIView):
+    @staticmethod
+    def get(request):
+        try:
+            data = request.query_params
+            music_data = MusicManager.get_music_by_id(data)
+            serialized_data = MusicAudioSerializer(music_data, many=True).data
+            return Response({"result": serialized_data, "message": "Success"}, 200)
+        except Exception as err:
+            return Response(str(err), 500)
+
 
 
 

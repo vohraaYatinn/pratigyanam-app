@@ -50,6 +50,15 @@ class MusicManager:
 
         return MusicCategoryMapping.objects.filter(query).select_related('music', 'category')
 
+    @staticmethod
+    def get_music_by_id(data):
+        music_id = data.get('musicId')
+        try:
+            return MusicAudio.objects.get(id=music_id)
+        except Exception as e:
+            raise Exception("Audio doesn't exists")
+
+
 
     @staticmethod
     def post_new_category(data, request):
