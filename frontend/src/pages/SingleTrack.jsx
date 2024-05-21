@@ -34,14 +34,18 @@ const SingleTrack = () => {
         setTrack(selectedTrack);
         setTrackIndex(initialIndex);
         if(id){
-            getData()
+            getMusicData()
+            getIsFav()
         }
     }, [id]);
 
-    const getData = () =>{
+    const getMusicData = () =>{
         musicFetch(getMusicByIdService({
             musicId : id
         }))
+       
+    }
+    const getIsFav = () =>{
         favFetch(isMusicUserFavService({
             musicId : id,
             userId:  loggedInUser ? loggedInUser?.id : "",
@@ -126,7 +130,7 @@ const SingleTrack = () => {
     }, [trackIndex, setTrack]);
     
     useEffect(()=>{
-        getData()
+        getIsFav()
     },[addRemoveFavResponse])
 
     const addRemoveFavOnClick = ()=>{
