@@ -28,14 +28,18 @@ class CustomManager:
     @staticmethod
     def add_remove_user_favourite(user_id, track_id):
         try:
-            existing_fav = UserFavorites.objects.get(user_id=user_id, track_id=track_id, is_active="A")
-
-            existing_fav.is_active = "I"
+            existing_fav = UserFavorites.objects.get(user_id=user_id, track_id=track_id)
+            if existing_fav.is_active == "A":
+                existing_fav.is_active = "I"
+                message = "Successfully removed from favourites"
+            else:
+                existing_fav.is_active = "A"
+                message = "Successfully added to favourites"
             existing_fav.save()
-            return "Successfully removed from favourites"
+            return message
         except:
             UserFavorites.objects.create(user_id=user_id, track_id=track_id)
-            return "Successfully added from favourites"
+            return "Successfully added to favourites"
 
     @staticmethod
     def get_user_recent(user_id):
