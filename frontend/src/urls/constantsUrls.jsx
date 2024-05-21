@@ -5,7 +5,7 @@ export class Urls {
     static PHONE_NUMBER_OTP = Urls.MPHRMS_API_PREFIX + 'users/phone-otp-verify/';
     static VERIFY_OTP = Urls.MPHRMS_API_PREFIX + 'users/phone-otp-verify/';
     static SIGN_UP_USER = Urls.MPHRMS_API_PREFIX + 'users/sign-up/';
-    static SIGN_UP_USER = Urls.MPHRMS_API_PREFIX + 'users/sign-up/';
+    // static SIGN_UP_USER = Urls.MPHRMS_API_PREFIX + 'users/sign-up/';
     static EDIT_USER_PROFILE = Urls.MPHRMS_API_PREFIX + 'users/edit-profile/';
     static GET_USER_FAV = Urls.MPHRMS_API_PREFIX + 'accounts/user-favourite-music/';
     static GET_ALL_SUBSCRIPTION = Urls.MPHRMS_API_PREFIX + 'subscriptions/get-post-subscription/';
@@ -16,6 +16,8 @@ export class Urls {
 
     static BUY_SUBSCRIPTION = Urls.MPHRMS_API_PREFIX + 'subscriptions/buy-subscription/';
     
+    static GET_MUSIC_BY_ID = Urls.MPHRMS_API_PREFIX + 'music/get-music-by-id/';
 
+    static IS_MUSIC_USER_FAV = Urls.MPHRMS_API_PREFIX + 'accounts/is-music-user-fav/';
 
 }

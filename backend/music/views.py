@@ -56,7 +56,7 @@ class GetMusicById(APIView):
         try:
             data = request.query_params
             music_data = MusicManager.get_music_by_id(data)
-            serialized_data = MusicAudioSerializer(music_data, many=True).data
+            serialized_data = MusicAudioSerializer(music_data).data
             return Response({"result": serialized_data, "message": "Success"}, 200)
         except Exception as err:
             return Response(str(err), 500)

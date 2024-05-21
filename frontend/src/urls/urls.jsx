@@ -61,3 +61,17 @@ export const addUserRecentService= (payload_data) => {
 export const buySubscriptionService= (payload_data) => {
   return project.post(Urls.BUY_SUBSCRIPTION, payload_data);
 };
+
+
+export const getMusicByIdService= (payload_data) => {
+  return project.get(Urls.GET_MUSIC_BY_ID, payload_data);
+};
+
+
+export const isMusicUserFavService= (payload_data) => {
+  return project.get(Urls.IS_MUSIC_USER_FAV, payload_data);
+};
+
+export const addRemoveUserFavouriteService= (payload_data) => {
+  return project.post(Urls.GET_USER_FAV, payload_data);
+};

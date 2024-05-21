@@ -26,12 +26,16 @@ class CustomManager:
         return user_favorites_with_categories
 
     @staticmethod
-    def post_user_favourite(user_id, track_id):
-        existing_fav = UserFavorites.objects.filter(user_id=user_id, track_id=track_id)
-        if existing_fav:
-            raise Exception("Already added in Favourites")
+    def add_remove_user_favourite(user_id, track_id):
+        try:
+            existing_fav = UserFavorites.objects.get(user_id=user_id, track_id=track_id, is_active="A")
 
-        UserFavorites.objects.create(user_id=user_id, track_id=track_id)
+            existing_fav.is_active = "I"
+            existing_fav.save()
+            return "Successfully removed from favourites"
+        except:
+            UserFavorites.objects.create(user_id=user_id, track_id=track_id)
+            return "Successfully added from favourites"
 
     @staticmethod
     def get_user_recent(user_id):
@@ -46,3 +50,14 @@ class CustomManager:
         if existing_recent:
             existing_recent.update(status="I")
         RecentMusic.objects.create(user_id=user_id, music_id=track_id)
+
+
+    @staticmethod
+    def check_is_music_user_fav(data):
+        music_id = data.get('musicId')
+        user_id = data.get('userId')
+        fav_music = UserFavorites.objects.filter(user_id=user_id, is_active="A", track_id=music_id)
+        if fav_music:
+            return 1
+        else:
+            return 0

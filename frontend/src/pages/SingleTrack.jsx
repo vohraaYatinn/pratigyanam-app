@@ -8,6 +8,7 @@ import { tracks } from '../data/tracks';
 import useAxios from '../network/useAxios';
 import { userData } from '../redux/reducers/functionalities.reducer';
 import { useSelector } from 'react-redux';
+import { addRemoveUserFavouriteService, getMusicByIdService, isMusicUserFavService } from '../urls/urls';
 
 const SingleTrack = () => {
     const loggedInUser = useSelector(userData);
@@ -18,9 +19,9 @@ const SingleTrack = () => {
     const [repeatMode, setRepeatMode] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
-    const [getFavResponse, getFavError, getFavLoading, searchFetch] = useAxios();
+    const [getFavResponse, getFavError, getFavLoading, favFetch] = useAxios();
     const [getMusicResponse, getMusicError, getMusicLoading, musicFetch] = useAxios();
-
+    const [addRemoveFavResponse, addRemoveFavError, addRemoveFavLoading, addRemoveFavFetch] = useAxios();
 
     const audioRef = useRef(null);
     const rangeInputRef = useRef(null);
@@ -32,7 +33,20 @@ const SingleTrack = () => {
         const initialIndex = id ? tracks.findIndex(track => track.id === id) : 0;
         setTrack(selectedTrack);
         setTrackIndex(initialIndex);
+        if(id){
+            getData()
+        }
     }, [id]);
+
+    const getData = () =>{
+        musicFetch(getMusicByIdService({
+            musicId : id
+        }))
+        favFetch(isMusicUserFavService({
+            musicId : id,
+            userId:  loggedInUser ? loggedInUser?.id : "",
+        })) 
+    }
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -112,8 +126,15 @@ const SingleTrack = () => {
     }, [trackIndex, setTrack]);
     
     useEffect(()=>{
-        // getUserFavouriteService
-    },[])
+        getData()
+    },[addRemoveFavResponse])
+
+    const addRemoveFavOnClick = ()=>{
+        addRemoveFavFetch(addRemoveUserFavouriteService({
+            trackId : id,
+            userId:  loggedInUser ? loggedInUser?.id : "",
+        }))
+    }
 
     return (
         <div className="w-screen sound-sound-div">
@@ -166,7 +187,7 @@ const SingleTrack = () => {
                             <button onClick={handleNext} className='bg-black mx-2 rounded-sm text-center   p-2 check-it-buttons'>
                                 <IoPlaySkipForwardSharp />
                             </button>
-                            <button></button>
+                            <button onClick={addRemoveFavOnClick}>{getFavResponse?.result === 1 ? "remove" : "add"}</button>
                         </div>
                     </div>
                 </div>

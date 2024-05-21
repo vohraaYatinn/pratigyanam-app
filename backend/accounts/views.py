@@ -38,9 +38,10 @@ class UserFavouriteMusic(APIView):
             data = request.data
             user_id = data.get('userId')
             track_id = data.get('trackId')
-            CustomManager.post_user_favourite(user_id, track_id)
 
-            return Response({"result": data, "message": AccountMessages.SUCCESS}, 200)
+            message = CustomManager.add_remove_user_favourite(user_id, track_id)
+
+            return Response({"message": message, "status": AccountMessages.SUCCESS}, 200)
         except Exception as err:
             return Response(str(err), 500)
 
@@ -80,4 +81,13 @@ class UserRecentMusic(APIView):
             return Response(str(err), 500)
 
 
+class CheckUserFavouriteOrNot(APIView):
+    @staticmethod
+    def get(request):
+        try:
+            data = request.query_params
+            is_fav = CustomManager.check_is_music_user_fav(data)
+            return Response({"result": is_fav, "message": AccountMessages.SUCCESS}, 200)
+        except Exception as err:
+            return Response(str(err), 500)
 
