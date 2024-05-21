@@ -33,11 +33,11 @@ class MusicManager:
         search_text = data.get('searchText', None)
         query = Q()
 
-        # if gender:
-        #     query &= Q(music__gender=gender)
-        #
-        # if language:
-        #     query &= Q(music__language=language)
+        if gender:
+            query &= Q(music__gender=gender)
+
+        if language:
+            query &= Q(music__language=language)
 
         if category:
             query &= Q(category_id=category)
