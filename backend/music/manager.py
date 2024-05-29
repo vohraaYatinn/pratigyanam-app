@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.db.models import Q
 
 from music.models import MusicAudio, MusicCategoryMapping, MusicCategory
@@ -15,13 +16,14 @@ class MusicManager:
         gender = data.get('gender', None)
         path = request.FILES.get('path', None)
         image = request.FILES.get('image', None)
-
+        category = data.get('category', None)
         existing_music = MusicAudio.objects.filter(title=title)
         if existing_music:
             raise Exception("Music with same title exists, choose a different title.")
-
-        MusicAudio.objects.create(title=title, artist=artist, description=description, duration=duration, release_date=release_date,
+        with(transaction.atomic()):
+            music_obj = MusicAudio.objects.create(title=title, artist=artist, description=description, duration=duration, release_date=release_date,
                                   language=language, gender=gender, path=path, image=image)
+            MusicCategoryMapping.objects.create(music=music_obj, category_id=category)
 
 
     @staticmethod
