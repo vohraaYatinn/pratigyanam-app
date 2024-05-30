@@ -37,6 +37,7 @@ const EditProfile = () => {
   };
 
   const handleSave = () => {
+    dispatch(updateUser(formValues))
     editFetch(editProfileAndPreferencesService(formValues));
     console.log(formValues);
   };
@@ -50,9 +51,9 @@ const EditProfile = () => {
   const editResponseRef = useRef(editResponse);
 
   useEffect(() => {
-    console.log(formValues);
     setLoggedInUserData(loggedInUser);
-    console.log(loggedInUser);
+    console.log(loggedInUser)
+    setFormValues(loggedInUser)
     if (editResponseRef.current !== editResponse) {
       setMessage({
         showMessage: true,

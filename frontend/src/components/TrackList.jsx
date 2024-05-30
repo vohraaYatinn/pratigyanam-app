@@ -78,9 +78,9 @@ const TrackList = ({
     }
   }, [getResponse]);
 
-  useEffect(() => {
-    console.log("music:", music);
-  }, [music]);
+  // useEffect(() => {
+  //   console.log("music:", music);
+  // }, [music]);
 
   const handleTrackClick = (track) => {
     setSelectedTrack(track);

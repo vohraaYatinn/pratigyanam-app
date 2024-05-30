@@ -144,7 +144,6 @@ const Home = () => {
             lineHeight: "0.2rem",
           }}
         >
-          <p>Hindi / English</p>
           {/* <p>Male / Female</p> */}
         </div>
       </Card>

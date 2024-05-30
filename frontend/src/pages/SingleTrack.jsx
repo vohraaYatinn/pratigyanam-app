@@ -9,6 +9,8 @@ import useAxios from '../network/useAxios';
 import { userData } from '../redux/reducers/functionalities.reducer';
 import { useSelector } from 'react-redux';
 import { addRemoveUserFavouriteService, getMusicByIdService, isMusicUserFavService } from '../urls/urls';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { Alert } from 'antd';
 
 const SingleTrack = () => {
     const loggedInUser = useSelector(userData);
@@ -22,6 +24,7 @@ const SingleTrack = () => {
     const [getFavResponse, getFavError, getFavLoading, favFetch] = useAxios();
     const [getMusicResponse, getMusicError, getMusicLoading, musicFetch] = useAxios();
     const [addRemoveFavResponse, addRemoveFavError, addRemoveFavLoading, addRemoveFavFetch] = useAxios();
+    const [message, setMessage] = useState("");
 
     const audioRef = useRef(null);
     const rangeInputRef = useRef(null);
@@ -138,11 +141,24 @@ const SingleTrack = () => {
             trackId : id,
             userId:  loggedInUser ? loggedInUser?.id : "",
         }))
+        setMessage(addRemoveFavResponse.message)
     }
 
     return (
         <div className="w-screen sound-sound-div">
             <TopNav path={"audio"}  />
+
+            <div>
+            {message ? (
+          <Alert
+           className='content  border-2 border-blue-700 bg-blue-400 absolute top-20 w-full mr-3 '
+            closable
+            type={message ? "Removed from Favorite" : "Added to Favorite"}
+            message={message}           
+          />
+        ) : null}
+      </div>
+
             <section className=''>
                 <div>
                     {/* <img src={track?.img} className='absolute bottom-60 h-[510px]  rounded-xl px-1' alt="" 
@@ -191,7 +207,9 @@ const SingleTrack = () => {
                             <button onClick={handleNext} className='bg-black mx-2 rounded-sm text-center   p-2 check-it-buttons'>
                                 <IoPlaySkipForwardSharp />
                             </button>
-                            <button onClick={addRemoveFavOnClick}>{getFavResponse?.result === 1 ? "remove" : "add"}</button>
+                            <button onClick={addRemoveFavOnClick}>{getFavResponse?.result === 1 ? (<div className='bg-black text-white
+                             p-[7px] rounded-md'><FaRegHeart /></div>): (<div className='bg-black text-red-400
+                             p-[7px] rounded-md'><FaHeart /></div>)}</button>
                         </div>
                     </div>
                 </div>

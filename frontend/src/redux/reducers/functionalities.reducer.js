@@ -24,6 +24,7 @@ const functionalitiesSlice = createSlice({
     },
     updateUser(state, payload) {
       state.functionalities.userProfile = payload.payload
+      console.log("STate: ", state.functionalities.userProfile)
     },
     clearRedux(state) {
       state.functionalities = {
