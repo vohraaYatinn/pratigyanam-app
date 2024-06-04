@@ -148,12 +148,18 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:5174",]
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:5174',]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:5173",]
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:5173',]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/home/ubuntu/djangoa-app/media/'
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = False
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:5173",]
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:5173',]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL='/media/'

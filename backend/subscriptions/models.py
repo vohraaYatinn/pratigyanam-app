@@ -1,44 +1,21 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 
 from user_management.models import UserDetails
 
 
-class MusicTrack(models.Model):
-    title = models.CharField(max_length=200)
-    artist = models.CharField(max_length=100)
-    genre = models.CharField(max_length=100)
-    duration = models.DurationField()
-    release_date = models.DateField()
+class SubscriptionPlan(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    duration = models.IntegerField(null=True)
+    image = models.FileField(upload_to='image_files/',
+                             validators=[FileExtensionValidator(['jpg', 'jpeg', 'png', 'gif'])], null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    type = models.CharField(max_length=100, null=True)
+    status = models.CharField(max_length=50, default="A")
+
     class Meta:
         managed = True
-        db_table = "music_track"
-
-
-class UserFavorites(models.Model):
-    user = models.ForeignKey(UserDetails, on_delete=models.CASCADE)
-    track = models.ForeignKey(MusicTrack, on_delete=models.CASCADE)
-    added_at = models.DateTimeField(auto_now_add=True)
-    class Meta:
-        managed = True
-        db_table = "user_favorites"
-
-
-class UserPlaylist(models.Model):
-    user = models.ForeignKey(UserDetails, on_delete=models.CASCADE)
-    playlist_name = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    class Meta:
-        managed = True
-        db_table = "user_playlist"
-
-
-class PlaylistTrack(models.Model):
-    playlist = models.ForeignKey(UserPlaylist, on_delete=models.CASCADE)
-    track = models.ForeignKey(MusicTrack, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    class Meta:
-        managed = True
-        db_table = "playlist_track"
+        db_table = "subscriptions"

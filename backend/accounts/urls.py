@@ -1,7 +1,10 @@
 from django.urls import path
 from . import views
-from .views import coinsManagement
+from .views import GetProfileData, UserFavouriteMusic, UserRecentMusic, CheckUserFavouriteOrNot
 
 urlpatterns = [
-    path('login/', coinsManagement.as_view(), name="users_auth"),
+    path('get-profile/',  GetProfileData.as_view(), name='get-profile'),
+    path('user-favourite-music/', UserFavouriteMusic.as_view(), name='user-favourite-music'),
+    path('user-recent-music/', UserRecentMusic.as_view(), name='user-recent-music'),
+    path('is-music-user-fav/', CheckUserFavouriteOrNot.as_view(), name='user-recent-music'),
 ]
