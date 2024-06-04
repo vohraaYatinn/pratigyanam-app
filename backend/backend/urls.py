@@ -8,10 +8,6 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('api/v2/users/', include('user_management.urls')),
-
-    # path('accounts/', include('accounts.urls')),
-    # path('subscriptions/', include('subscriptions.urls')),
-    # path('music/', include('music.urls')),
     path('api/v2/accounts/', include('accounts.urls')),
     path('api/v2/subscriptions/', include('subscriptions.urls')),
     path('api/v2/music/', include('music.urls')),

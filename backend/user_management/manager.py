@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.db.models import Q
 
@@ -9,14 +10,16 @@ from user_management.models import UserDetails
 class UserManager:
     @staticmethod
     def check_if_admin_exists(data):
-        # check_login = UserDetails.objects.filter(email=email)
         email = data.get('email', None)
-        try:
-            details = UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(email=email)
+        password = data.get('password', None)
+        details = UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(email=email, password=password )
+        return details
 
-            return details
-        except Exception:
-            raise Exception("User does not exists!")
+    @staticmethod
+    def check_if_jwt_exists(data):
+        details = UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(id=data['user_id'])
+        return details
+
 
     @staticmethod
     def signup_new_user(data):

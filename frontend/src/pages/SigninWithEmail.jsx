@@ -7,6 +7,7 @@ import useAxios from "../network/useAxios";
 import { phoneNumberOtp } from "../urls/urls";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/reducers/functionalities.reducer";
+import { Alert } from "antd";
 
 const SigninWithEmail = () => {
   const dispatch = useDispatch();
@@ -17,17 +18,32 @@ const SigninWithEmail = () => {
   const navigate = useNavigate();
   localStorage.setItem("toast", true);
   const [LoginResponse, LoginError, LoginLoading, LoginFetch] = useAxios();
+  const [message, setMessage] = useState({
+    showMessage: false,
+    isError: true,
+    message: "",
+  });
 
   const loginFunction = () => {
-    console.log("hiiii");
-    LoginFetch(phoneNumberOtp({ email: email }));
+	if(submitValues()){
+		setErrors({})
+		LoginFetch(phoneNumberOtp({ email: email, password:password }));
+	}
   };
 
   useEffect(() => {
-    if (LoginResponse?.result) {
+    if (LoginResponse?.check == "success") {
       dispatch(updateUser(LoginResponse?.result));
+	  localStorage.setItem("jwt", LoginResponse?.token)
       navigate("/home");
     }
+	else if(LoginResponse?.check == "failure"){
+		setMessage({
+			showMessage: true,
+			isError: true,
+			message: LoginResponse?.message,
+		  });
+	}
   }, [LoginResponse]);
 
   const validate = (email, password) => {
@@ -50,9 +66,9 @@ const SigninWithEmail = () => {
     const errors = validate(email, password);
     if (Object.keys(errors).length !== 0) {
       setErrors(errors);
+	  return false
     } else {
-      console.log("email: ", email, "password: ", password);
-      navigate("/home");
+      return true
     }
   };
 
@@ -118,6 +134,20 @@ const SigninWithEmail = () => {
                     <div className="text-red-500">{errors.password}</div>
                   )}
                 </div>
+				{message.showMessage ? (
+          <Alert
+            closable
+            type={message?.isError ? "error" : "success"}
+            message={message.message}
+            onClose={() => {
+              setMessage((prevState) => ({
+                ...prevState,
+                showMessage: false,
+              }));
+            }}
+           
+          />
+        ) : null}
                 <button
                   type="submit"
                   onClick={() => {

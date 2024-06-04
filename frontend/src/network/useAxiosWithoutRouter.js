@@ -2,12 +2,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { tokenJson } from "../redux/reducers/functionalities.reducer";
-import { useRouter } from "../hooks/use-router";
 import { updateToken } from '../redux/reducers/functionalities.reducer';
 
 
-const useAxios = () => {
-    const router = useRouter();
+const useAxiosWithoutRouter = () => {
     const dispatch = useDispatch();
 
     const [response, setResponse] = useState([]);
@@ -37,9 +35,6 @@ const useAxios = () => {
             if (err?.response?.status === 404) {
                 setError(err);
             }
-            if (err?.response?.status === 403) {
-                router.push("/login-phone")
-            }
             else{
                 setError(err);
             }
@@ -56,4 +51,4 @@ const useAxios = () => {
     return [response, error, loading, axiosFetch, setError];
 }
 
-export default useAxios
+export default useAxiosWithoutRouter

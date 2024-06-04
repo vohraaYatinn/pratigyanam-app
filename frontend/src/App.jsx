@@ -3,20 +3,20 @@ import TrackList from "./components/TrackList.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { userData } from "./redux/reducers/functionalities.reducer.js";
 import { useSelector } from "react-redux";
-// import { App as CapacitorApp } from '@capacitor/app';
+import { App as CapacitorApp } from '@capacitor/app';
 
 
 const App = () => {
 	const loggedInUser = useSelector(userData);
 	const location = useLocation();
 	const { user, type } = location.state || {};
-	// CapacitorApp.addListener('backButton', ({canGoBack}) => {
-	// 	if(!canGoBack){
-	// 	  CapacitorApp.exitApp();
-	// 	} else {
-	// 	  window.history.back();
-	// 	}
-	//   });
+	CapacitorApp.addListener('backButton', ({canGoBack}) => {
+		if(!canGoBack){
+		  CapacitorApp.exitApp();
+		} else {
+		  window.history.back();
+		}
+	  });
 
 	
 	const [loggedInUserData, setLoggedInUserData] = useState([])

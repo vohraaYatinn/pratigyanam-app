@@ -56,3 +56,7 @@ export const getUserRecentService= (payload_data) => {
 export const addUserRecentService= (payload_data) => {
   return project.post(Urls.ADD_GET_RECENT, payload_data);
 };
+
+export const jwtCheckRefresh= (payload_data) => {
+  return project.post(Urls.JWT_FRESH, payload_data);
+};

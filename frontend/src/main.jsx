@@ -29,6 +29,7 @@ import AdminDashboard from './admin-pages/AdminDashboard.jsx'
 import AdminSubscription from './admin-pages/AdminSubscription.jsx'
 import { Provider } from "react-redux";
 import Store from './redux/Store';
+import MainCheck from "./MainCheck.jsx";
 
 
 const router = createBrowserRouter([
@@ -127,6 +128,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 	<React.StrictMode>
 		<RouterProvider router={router} />
+		<MainCheck />
 	</React.StrictMode>
 	</Provider>
 );
