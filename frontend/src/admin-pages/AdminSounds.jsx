@@ -4,7 +4,7 @@ import BottomNav from "../components/BottomNav";
 // import { categories } from "../data/categories";
 import { adddNewCategoryService, deleteMusicCategory, deleteNewCategoryServices, fetchMusicByCategory, getNewCategoryService } from "../urls/urls";
 import useAxios from "../network/useAxios";
-import { Select } from "antd";
+import { Alert, Select } from "antd";
 
 const AdminSounds = () => {
   const [addResponse, addError, addLoading, addFetch] = useAxios();
@@ -69,6 +69,15 @@ const AdminSounds = () => {
 
   }, [addResponse]);
 
+  useEffect(() => {
+    if (addResponse.message) {
+      setMessage({
+        showMessage: true,
+        isError: true,
+        message: addResponse.message,
+      });
+    }
+  }, [addResponse]);
 
   return (
     <>
@@ -77,9 +86,21 @@ const AdminSounds = () => {
       <div className="w-full px-3 ">
         <div className="pt-20">
           <h1 className="font-bold text-center text-3xl mb-4">Audio Management</h1>
-
+          {message.showMessage ? (
+            <Alert
+              closable
+              type={message?.isError ? "error" : "success"}
+              message={message.message}
+              onClose={() => {
+                setMessage((prevState) => ({
+                  ...prevState,
+                  showMessage: false,
+                }));
+              }}
+            />
+          ) : null}
           <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mt-3"
             for="grid-first-name"
           >
             Select Categories
@@ -97,6 +118,7 @@ const AdminSounds = () => {
         </div>
 
           <button
+          disabled={getLoading}
             className="bg-blue-500 text-white px-5 py-1.5 rounded-lg"
             onClick={handleSubmit}
             style={{
@@ -109,7 +131,7 @@ const AdminSounds = () => {
         </div>
       </div>
       <div className="mt-5">
-        <h1 className="text-2xl text-center my-2 font-bold">
+        <h1 className="text-2xl text-center my-2 font-bold mb-20">
           Total Audios
         </h1>
         <div style={{paddingBottom:"10rem", marginTop:"2rem"}}>
@@ -123,6 +145,7 @@ const AdminSounds = () => {
                   {index+1}. {item.title}
                 </p>
                 <button className="btn btn-danger"
+                disabled={getLoading}
                 onClick={()=>{
                   deleteFunction(item.id)
                 }}
