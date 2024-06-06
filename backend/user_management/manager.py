@@ -2,6 +2,7 @@ from django.db import transaction
 from django.db.models import Q
 
 from accounts.models import Profile, UserPreferences
+from subscriptions.models import SubscriptionPlan
 from user_management.constants import ProfileEditType, UserMessages
 from user_management.models import UserDetails
 import jwt
@@ -45,9 +46,12 @@ class UserManager:
         #     raise Exception("User with same email number exists")
         with transaction.atomic():
             user_data = UserDetails.objects.create(email=email, phone=phone_number, password = password)
-            Profile.objects.create(name=full_name, user=user_data, gender=gender, date_of_birth=date_of_birth)
+            subscription = SubscriptionPlan.objects.filter(name="TRIAL")
+            if not subscription:
+                raise Exception("There is a issue with subscription plan")
+            seven_days_from_now = datetime.now() + timedelta(days=subscription[0].duration)
+            Profile.objects.create(name=full_name, user=user_data, gender=gender, date_of_birth=date_of_birth, subscription=subscription[0], sub_active_till=seven_days_from_now)
             UserPreferences.objects.create(user=user_data, gender=audio_gender, language=language)
-
         return UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(id=user_data.id)
 
     @staticmethod

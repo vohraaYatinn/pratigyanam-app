@@ -92,22 +92,20 @@ const Home = () => {
     }
     setLoggedInUserData(loggedInUser);
     console.log(loggedInUser);
-    if (!loggedInUser?.user_profile?.is_subscription_activated) {
-      const start = new Date(loggedInUser?.user_profile?.created_at);
+    if (loggedInUser?.user_profile?.sub_active_till) {
+      const subActiveTill = loggedInUser?.user_profile?.sub_active_till;
+      const subActiveTillDate = new Date(subActiveTill.split('T')[0]);
       const today = new Date();
-      start.setHours(0, 0, 0, 0);
-      today.setHours(0, 0, 0, 0);
-      const differenceInTime = today.getTime() - start.getTime();
-      const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-      let days = Math.round(differenceInDays);
+      const timeDiff = subActiveTillDate - today;
+      const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      if(days < 0){
+        navigate("/manage-subscriptions");
+      }
       setMessage({
         showMessage: true,
         isError: false,
-        message: `You are currently using free trail, ${7 - days} days left`,
+        message: `You are currently using free trail, ${days} days left`,
       });
-      if (7 - days == 0) {
-        navigate("/manage-subscriptions");
-      }
     }
 
     getCategoriesFetch(getNewCategoryService());
