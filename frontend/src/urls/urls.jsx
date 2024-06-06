@@ -7,6 +7,9 @@ import { test_url } from "../../src/config/environment.js"
 const project = new HttpAxiosService(test_url);
 
 //login and signup
+export const emailSignIn = (payload_data) => {
+  return project.post(Urls.SIGN_IN_EMAIL, payload_data);
+};
 export const phoneNumberOtp = (payload_data) => {
   return project.post(Urls.PHONE_NUMBER_OTP, payload_data);
 };
@@ -31,6 +34,12 @@ export const editProfileAndPreferencesService= (payload_data) => {
 export const getAllSubscriptionService= (payload_data) => {
   return project.get(Urls.GET_ALL_SUBSCRIPTION, payload_data);
 };
+export const getAllSubscriptionPost= (payload_data) => {
+  return project.post(Urls.GET_ALL_SUBSCRIPTION, payload_data);
+};
+export const editSubscriptionPostAdmin= (payload_data) => {
+  return project.post(Urls.EDIT_SUBSCRIPTION_ADMIN, payload_data);
+};
 
 
 export const getMusicService= (payload_data) => {
@@ -40,9 +49,21 @@ export const getMusicService= (payload_data) => {
 export const adddNewSubscriptionService= (payload_data) => {
   return project.post(Urls.GET_ALL_SUBSCRIPTION, payload_data);
 };
+export const fetchSubscriptions= (payload_data) => {
+  return project.post(Urls.FETCH_ALL_SUBSCRIPTION_ADMIN, payload_data);
+};
 
 export const adddNewCategoryService= (payload_data) => {
-  return project.post(Urls.ADD_GET_CATEGORIES, payload_data);
+  return project.multiPartFormData(Urls.ADD_GET_CATEGORIES, payload_data);
+};
+export const fetchMusicByCategory= (payload_data) => {
+  return project.get(Urls.FETCH_MUSIC_BY_CATEGORY, payload_data);
+};
+export const deleteNewCategoryServices= (payload_data) => {
+  return project.post(Urls.DELETE_CATEGORIES, payload_data);
+};
+export const deleteMusicCategory= (payload_data) => {
+  return project.post(Urls.DELETE_MUSIC, payload_data);
 };
 
 export const getNewCategoryService= (payload_data) => {
@@ -74,4 +95,12 @@ export const isMusicUserFavService= (payload_data) => {
 
 export const addRemoveUserFavouriteService= (payload_data) => {
   return project.post(Urls.GET_USER_FAV, payload_data);
+};
+
+export const fetchAdminAccount= (payload_data) => {
+  return project.get(Urls.FETCH_ADMIN_ACCOUNT, payload_data);
+};
+
+export const addMusicWithCategory= (payload_data) => {
+  return project.multiPartFormData(Urls.GET_MUSIC, payload_data);
 };

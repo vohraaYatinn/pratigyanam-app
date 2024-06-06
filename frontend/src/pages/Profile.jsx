@@ -73,7 +73,12 @@ const Profile = () => {
 						  <span style={{fontSize: "1rem", marginTop: "2px"}} >Help & Support</span>
 						  <i className="fa fa-angle-right" />
 						</a>
-						<Link to={"/"}>
+						<Link 
+						onClick={()=>{
+							localStorage.removeItem("storedToken")
+							router.push("/")
+						}}
+						>
 						  <i className="fa fa-right-from-bracket font-14 bg-yellow-dark color-white rounded-sm shadow-xl" />
 						  <span style={{fontSize: "1rem", marginTop: "2px"}}>Logout</span>
 						  <i className="fa fa-angle-right" />

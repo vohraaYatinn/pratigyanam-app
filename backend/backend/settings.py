@@ -102,10 +102,18 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+
 CORS_ALLOW_HEADERS = [
-    'Accept',
-    'Authorization',
-    'Content-Type',
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'jwtToken'
 ]
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -142,16 +150,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:5173",]
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:5173',]
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Media files (User uploaded files)
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -161,5 +166,9 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
 CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:5173",]
 CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:5173',]
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL='/media/'
+
+
+JWT_SECRET_KEY = 'secret_key_hash_3434checking'
+JWT_ALGORITHM = 'HS256'  # You can use other algorithms like 'RS256'
+JWT_EXP_DELTA_SECONDS = 3600
+

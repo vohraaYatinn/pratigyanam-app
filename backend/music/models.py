@@ -9,10 +9,7 @@ from user_management.models import UserDetails
 
 class MusicAudio(models.Model):
     title = models.CharField(max_length=200)
-    artist = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=200, null=True)
-    duration = models.DurationField(null=True)
-    release_date = models.DateField(null=True)
     language = models.CharField(max_length=100)
     gender = models.CharField(max_length=100)
     path = models.FileField(upload_to='mp3_files/', validators=[FileExtensionValidator(['mp3'])], null=True)
@@ -28,7 +25,7 @@ class MusicAudio(models.Model):
 class MusicCategory(models.Model):
     type = models.CharField(max_length=100)
     image = models.FileField(upload_to='image_files/',
-                             validators=[FileExtensionValidator(['jpg', 'jpeg', 'png', 'gif'])], null=True)
+                             validators=[FileExtensionValidator(['jpg', 'jpeg', 'png', 'gif', 'webp'])], null=True)
 
     class Meta:
         managed = True

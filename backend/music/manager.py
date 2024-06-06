@@ -7,22 +7,16 @@ from music.models import MusicAudio, MusicCategoryMapping, MusicCategory
 class MusicManager:
     @staticmethod
     def post_new_music(data, request):
-        title = data.get('title', None)
-        artist = data.get('artist', None)
+        title = data.get('name', None)
         description = data.get('description', None)
-        duration = data.get('duration', None)
-        release_date = data.get('releaseDate', None)
         language = data.get('language', None)
         gender = data.get('gender', None)
-        path = request.FILES.get('path', None)
-        image = request.FILES.get('image', None)
+        audio = data.get('audio', None)
+        image = data.get('image', None)
         category = data.get('category', None)
-        existing_music = MusicAudio.objects.filter(title=title)
-        if existing_music:
-            raise Exception("Music with same title exists, choose a different title.")
         with(transaction.atomic()):
-            music_obj = MusicAudio.objects.create(title=title, artist=artist, description=description, duration=duration, release_date=release_date,
-                                  language=language, gender=gender, path=path, image=image)
+            music_obj = MusicAudio.objects.create(title=title, description=description,
+                                  language=language, gender=gender, path=audio, image=image)
             MusicCategoryMapping.objects.create(music=music_obj, category_id=category)
 
 
@@ -60,12 +54,24 @@ class MusicManager:
         except Exception as e:
             raise Exception("Audio doesn't exists")
 
+    @staticmethod
+    def delete_category(data):
+        category_id = data.get('id')
+        if not category_id:
+            raise Exception("Category id not provided")
+        try:
+            music_cat = MusicCategory.objects.get(id=category_id)
+            all_music_id = MusicCategoryMapping.objects.filter(category_id=category_id).values_list("music")
+            get_all_music = MusicAudio.objects.filter(id__in=all_music_id).delete()
+            music_cat.delete()
+        except MusicCategory.DoesNotExist:
+            raise Exception("Category doesn't exists")
 
 
     @staticmethod
     def post_new_category(data, request):
         cat_type = data.get('type')
-        image = request.FILES.get('image', None)
+        image = data.get('image', None)
         existing_music = MusicCategory.objects.filter(type=cat_type)
         if existing_music:
             raise Exception("Category with same title exists, choose a different title.")
@@ -86,8 +92,27 @@ class MusicManager:
 
 
 
+    @staticmethod
+    def get_music_by_category(data):
+        category_id = data.get('category')
+        if not category_id:
+            raise Exception("Category id not provided")
+        try:
+            all_music_id = MusicCategoryMapping.objects.filter(category_id=category_id).values_list("music")
+            get_all_music = MusicAudio.objects.filter(id__in=all_music_id)
+            return get_all_music
+        except MusicCategory.DoesNotExist:
+            raise Exception("Category doesn't exists")
 
-
+    @staticmethod
+    def delete_music(data):
+        music_id = data.get('id')
+        if not music_id:
+            raise Exception("Music id not provided")
+        try:
+            get_all_music = MusicAudio.objects.get(id=music_id).delete()
+        except MusicCategory.DoesNotExist:
+            raise Exception("Category doesn't exists")
 
 
 

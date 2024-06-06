@@ -12,7 +12,7 @@ import { updateUser } from "../redux/reducers/functionalities.reducer";
 const AudioPreferences = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { email, password, gender, userName } = location.state;
+  const { email, password, gender, userName, phoneNumber } = location.state;
   const [audioGender, setAudioGender] = useState("");
   const [language, setLanguage] = useState(""); 
   const handleGenderChange = (e) => {
@@ -43,7 +43,8 @@ const AudioPreferences = () => {
       password: password,
       gender: gender,
       audioGender: audioGender,
-      language: language
+      language: language,
+      phoneNumber:phoneNumber
     }
     signupFetch(signupUserService(payload))
     // navigate("/music");
