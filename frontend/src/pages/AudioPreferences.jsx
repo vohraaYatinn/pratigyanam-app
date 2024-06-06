@@ -3,7 +3,7 @@ import { useNavigate, useLocation  } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import { signupUserService } from "../urls/urls";
 import useAxios from "../network/useAxios";
-import { Spin } from "antd";
+import { Radio, Space, Spin } from "antd";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/reducers/functionalities.reducer";
 
@@ -67,6 +67,10 @@ const AudioPreferences = () => {
       }
 },[signupResponse])
 
+const onChange = (e) => {
+  setLanguage(e.target.value);
+};
+
   return (
     <div className="h-screen sign-background">
       <section style={{ width: "100%" }}>
@@ -96,32 +100,17 @@ const AudioPreferences = () => {
                 </div>
 
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900">Language</label>
-                  <div className="flex items-center">
-                    <input
-                      type="radio"
-                      id="english"
-                      name="language"
-                      value="english"
-                      checked={language === "english"}
-                      onChange={handleGenderChange}
-                    />
-                    <label htmlFor="english" className="text-sm text-gray-900 ml-2">
-                      English
-                    </label>
-                    <input
-                      type="radio"
-                      id="hindi"
-                      name="language"
-                      value="hindi"
-                      checked={language === "hindi"}
-                      onChange={handleGenderChange}
-                      className="ml-4"
-                    />
-                    <label htmlFor="hindi" className="text-sm text-gray-900">
-                      Hindi
-                    </label>
-                  </div>
+                  <div className="flex text-sm flex-col">
+									<label className="mb-3" htmlFor="gender">
+										Language
+									</label>
+									<Radio.Group onChange={onChange} value={language}>
+										<Space direction="horizontal">
+											<Radio value={"English"}>English</Radio>
+											<Radio value={"Hindi"}>Hindi</Radio>
+										</Space>
+									</Radio.Group>
+								</div>
                 </div>
 
                 {error && <div className="text-red-600">{error}</div>}
