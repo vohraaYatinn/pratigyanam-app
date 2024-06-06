@@ -14,7 +14,6 @@ class SubscriptionManager:
         price = data.get('price')
         duration = data.get('duration')
         sub_type = data.get('type')
-
         existing_plan = SubscriptionPlan.objects.filter(name=name)
         if existing_plan:
             raise Exception("Use a different name")
@@ -46,6 +45,28 @@ class SubscriptionManager:
         profile_data.save()
 
 
+    @staticmethod
+    def edit_subscription_admin(data):
+        id = data.get('id')
+        if not id:
+            raise Exception("No id provided")
+        name = data.get('name')
+        description = data.get('description')
+        price = data.get('price')
+        duration = data.get('duration')
+        try:
+            existing_plan = SubscriptionPlan.objects.get(id=id)
+        except SubscriptionPlan.DoesNotExist:
+            raise Exception("Subscription plan does not exist")
+        if name:
+            existing_plan.name = name
+        if description:
+            existing_plan.description = description
+        if price:
+            existing_plan.price = price
+        if duration:
+            existing_plan.duration = duration
+        existing_plan.save()
 
 
 

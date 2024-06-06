@@ -22,6 +22,7 @@ import { useSelector } from "react-redux";
 import { userData } from "../redux/reducers/functionalities.reducer";
 import useAxios from "../network/useAxios";
 import { getNewCategoryService } from "../urls/urls";
+import { test_url_images } from "../config/environment";
 
 const Home = () => {
   const loggedInUser = useSelector(userData);
@@ -129,7 +130,7 @@ const Home = () => {
         style={{
           width: 250,
         }}
-        cover={<img alt="example" src={color?.id} />}
+        cover={<img alt="example" src={test_url_images + color?.image} />}
       >
         <h1
           style={{

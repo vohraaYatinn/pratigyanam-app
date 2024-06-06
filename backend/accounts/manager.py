@@ -65,3 +65,22 @@ class CustomManager:
             return 1
         else:
             return 0
+
+    @staticmethod
+    def get_admin_data(data):
+        music_id = data.get('musicId')
+        user_id = data.get('userId')
+        all_customer = Profile.objects.filter(user__role="customer")
+        total_user_count = all_customer.count()
+        male_user = all_customer.filter(gender="M").count()
+        female_user = all_customer.filter(gender="F").count()
+        monthly_sub = all_customer.filter(subscription__name="Monthly").count()
+        yearly_sub = all_customer.filter(subscription__name="Yearly").count()
+        stats = {
+            "total_user_count": total_user_count,
+            "male_user": male_user,
+            "female_user": female_user,
+            "monthly_sub": monthly_sub,
+            "yearly_sub": yearly_sub,
+        }
+        return stats

@@ -27,7 +27,7 @@ const TrackList = ({
   const currentURL = window.location.href;
   const lastString = currentURL.substring(currentURL.lastIndexOf("/") + 1);
   const loggedInUser = useSelector(userData);
-  const [selectedTrack, setSelectedTrack] = useState(tracks[0]);
+  const [selectedTrack, setSelectedTrack] = useState();
   const [skeletontime, setSkeletonTime] = useState(true);
   const [filterValue, setFilterValue] = useState('');
   const [getResponse, getError, getLoading, getFetch] = useAxios();
@@ -63,8 +63,8 @@ const TrackList = ({
     const filterName = searchParams.get('filterName');
       getFetch(
         getMusicService({
-          language: loggedInUser?.user_preferences[0]?.language,
-          gender: loggedInUser?.user_preferences[0]?.gender,
+          language: loggedInUser?.user_preferences?.[0]?.language,
+          gender: loggedInUser?.user_preferences?.[0]?.gender,
           category: filterParam || ""
         })
       );

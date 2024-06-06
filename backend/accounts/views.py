@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from user_management.custom_permissions import CheckAuthUser
 from .constants import AccountMessages
 from .manager import CustomManager
 
@@ -31,12 +32,13 @@ class GetProfileData(APIView):
 
 
 class UserFavouriteMusic(APIView):
+    permission_classes = [CheckAuthUser]
 
     @staticmethod
     def post(request):
         try:
             data = request.data
-            user_id = data.get('userId')
+            user_id = request.user.id
             track_id = data.get('trackId')
 
             message = CustomManager.add_remove_user_favourite(user_id, track_id)
@@ -88,6 +90,16 @@ class CheckUserFavouriteOrNot(APIView):
             data = request.query_params
             is_fav = CustomManager.check_is_music_user_fav(data)
             return Response({"result": is_fav, "message": AccountMessages.SUCCESS}, 200)
+        except Exception as err:
+            return Response(str(err), 500)
+
+class adminDashboard(APIView):
+    @staticmethod
+    def get(request):
+        try:
+            data = request.query_params
+            admin_stats_data = CustomManager.get_admin_data(data)
+            return Response({"result": "success", "message": AccountMessages.SUCCESS, "data":admin_stats_data}, 200)
         except Exception as err:
             return Response(str(err), 500)
 

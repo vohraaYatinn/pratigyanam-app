@@ -29,6 +29,7 @@ import AdminDashboard from './admin-pages/AdminDashboard.jsx'
 import AdminSubscription from './admin-pages/AdminSubscription.jsx'
 import { Provider } from "react-redux";
 import Store from './redux/Store';
+import AdminSounds from "./admin-pages/AdminSounds.jsx";
 
 
 const router = createBrowserRouter([
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
 				element: <App />,
 			},
 			{
-				path: "signup",
+				path: "/signup",
 				element: <Signup />,
 			},
 			{
@@ -64,35 +65,35 @@ const router = createBrowserRouter([
 				element: <OtpEnter />,
 			},
 			{
-				path: "home",
+				path: "/home",
 				element: <Home />,
 			},
 			{
-				path: "refer-and-earn",
+				path: "/refer-and-earn",
 				element: <Refer />,
 			},
 			{
-				path: "profile",
+				path: "/profile",
 				element: <Profile />,
 			},
 			{
-				path: "edit-profile",
+				path: "/edit-profile",
 				element: <EditProfile />,
 			},
 			{
-				path: "fav",
+				path: "/fav",
 				element: <FavComponent />,
 			},
 			{
-				path: "edit-address",
+				path: "/edit-address",
 				element: <EditAddress />,
 			},
 			{
-				path: "manage-subscriptions",
+				path: "/manage-subscriptions",
 				element: <EditSubscriptions />,
 			},
 			{
-				path: "edit-language",
+				path: "/edit-language",
 				element: <EditLanguage />,
 			},
 			{
@@ -100,31 +101,35 @@ const router = createBrowserRouter([
 				element: <SearchComponent />,
 			},
 			{
-				path: "single-track/:id",
+				path: "/single-track/:id",
 				element: <SingleTrack />,
 			},
 			{
-				path: "audio-preferences",
+				path: "/audio-preferences",
 				element: <AudioPreferences />,
 			},
 			{
-				path: "sub-sound",
+				path: "/sub-sound",
 				element: <AffirmationComponent />,
 			},
 			{
-				path: "admin-dashboard",
+				path: "/admin-dashboard",
 				element: <AdminDashboard />,
 			},
 			{
-				path: "admin-categories",
+				path: "/admin-categories",
 				element: <AdminCategories />,
 			},
 			{
-				path: "admin-upload",
+				path: "/admin-sound-edit",
+				element: <AdminSounds />,
+			},
+			{
+				path: "/admin-upload",
 				element: <AdminUpload />,
 			},
 			{
-				path: "admin-subscription",
+				path: "/admin-subscription",
 				element: <AdminSubscription />,
 			},
 		],

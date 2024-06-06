@@ -4,7 +4,7 @@ import logo from "../assets/images/logo.png";
 import phone from "./phone.png";
 import google from "./google.png";
 import useAxios from "../network/useAxios";
-import { phoneNumberOtp } from "../urls/urls";
+import { emailSignIn, phoneNumberOtp } from "../urls/urls";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/reducers/functionalities.reducer";
 
@@ -13,20 +13,37 @@ const SigninWithEmail = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-
   const navigate = useNavigate();
   localStorage.setItem("toast", true);
   const [LoginResponse, LoginError, LoginLoading, LoginFetch] = useAxios();
 
   const loginFunction = () => {
     console.log("hiiii");
-    LoginFetch(phoneNumberOtp({ email: email }));
+    LoginFetch(emailSignIn({ email: email, password:password }));
   };
-
+  useEffect(()=>{
+    if(localStorage.getItem("storedToken")){
+      navigate('/home')
+    }
+  },[])
   useEffect(() => {
-    if (LoginResponse?.result) {
-      dispatch(updateUser(LoginResponse?.result));
-      navigate("/home");
+    if (LoginResponse?.result && LoginResponse?.login_check) {
+      if(LoginResponse?.user?.role == "admin"){
+        localStorage.setItem("adminToken", LoginResponse?.token)
+        dispatch(updateUser(LoginResponse?.user));
+        navigate("/admin-dashboard");
+      }
+      else{
+        localStorage.setItem("storedToken", LoginResponse?.token)
+        dispatch(updateUser(LoginResponse?.user));
+        navigate("/home");
+      }
+
+    }
+    else if(LoginResponse?.result && !LoginResponse?.login_check){
+      setErrors({
+        "logincheck": "Email or Password is invalid"
+      })
     }
   }, [LoginResponse]);
 
@@ -122,12 +139,14 @@ const SigninWithEmail = () => {
                   type="submit"
                   onClick={() => {
 					loginFunction();
-					// navigate("/phoneLogin");
 				  }}
                   className="w-full  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center send-otp-button"
                 >
                   Login
                 </button>
+                {errors.logincheck && (
+                    <div className="text-red-500" style={{marginTop:"0.5rem"}}>{errors.logincheck}</div>
+                  )}
                 <div className="w-full flex items-center justify-center text-xl text-gray-600 text-center">
                   <p className="h-[1px] bg-gray-300 w-full"></p>
                   <span className="px-5"> or </span>
@@ -139,14 +158,13 @@ const SigninWithEmail = () => {
                     // onClick={handleGoogleAuth}
                     class="flex items-center w-full justify-center   rounded-lg sm:px-16 px-6 py-3 text-sm font-medium text-gray-800 border border-gray-300 "
                     onClick={() => {
-                      loginFunction();
-                      // navigate("/phoneLogin");
+                      navigate("/phoneLogin");
                     }}
                   >
                     <img
                       src={phone}
                       style={{
-                        height: "2rem",
+                        height: "1.4rem",
                         marginRight: "1rem",
                       }}
                       alt=""
@@ -156,7 +174,9 @@ const SigninWithEmail = () => {
                 </div>
                 <div class="flex items-center justify-center ">
                   <button
-                    // onClick={handleGoogleAuth}
+                    onClick={()=>{
+                      navigate('/signup')
+                    }}
                     class="flex items-center w-full justify-center   rounded-lg sm:px-16 px-6 py-3 text-sm font-medium text-gray-800 border border-gray-300 "
                   >
                     <img
@@ -168,7 +188,7 @@ const SigninWithEmail = () => {
                       alt=""
                     />
 
-                    <span>Continue with Google</span>
+                    <span>Create a new account</span>
                   </button>
                 </div>
 

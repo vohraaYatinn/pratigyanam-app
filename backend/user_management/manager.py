@@ -4,7 +4,9 @@ from django.db.models import Q
 from accounts.models import Profile, UserPreferences
 from user_management.constants import ProfileEditType, UserMessages
 from user_management.models import UserDetails
-
+import jwt
+from django.conf import settings
+from datetime import datetime, timedelta
 
 class UserManager:
     @staticmethod
@@ -81,16 +83,36 @@ class UserManager:
 
         else:
             raise Exception(UserMessages.SOMETHING_WENT_WRONG)
-
         return UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(
             id=user_id)
 
+    @staticmethod
+    def generate_jwt(payload):
+        payload['exp'] = datetime.utcnow() + timedelta(seconds=settings.JWT_EXP_DELTA_SECONDS)
+        token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
+        return token
 
+    @staticmethod
+    def decode_jwt(token):
+        try:
+            decoded_payload = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
+            return decoded_payload
+        except jwt.ExpiredSignatureError:
+            return None
+        except jwt.InvalidTokenError:
+            return None
 
-
-
-
-
-
-
-
+    @staticmethod
+    def check_sign_in_user(data):
+        email = data.get('email', None)
+        password = data.get('password', None)
+        check_login = UserDetails.objects.filter(email=email, password=password).select_related('user_profile').prefetch_related('user_preferences')
+        token = ""
+        if check_login:
+            token = UserManager.generate_jwt({
+                'id': check_login[0].id,
+                'email': check_login[0].email,
+                'role': check_login[0].role,
+            })
+            return check_login[0], True, token
+        return False, False, False

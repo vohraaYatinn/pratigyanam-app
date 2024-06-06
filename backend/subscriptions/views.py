@@ -40,3 +40,15 @@ class BuySubscriptionByUser(APIView):
             return Response(str(err), 500)
 
 
+
+class EditSubscriptionAdmin(APIView):
+    @staticmethod
+    def post(request):
+        try:
+            data = request.data
+            SubscriptionManager.edit_subscription_admin(data)
+            return Response({"result": data, "message": "Plan Edited Successfully"}, 200)
+        except Exception as err:
+            return Response(str(err), 500)
+
+

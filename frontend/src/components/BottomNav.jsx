@@ -1,46 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { RiAccountCircleLine, RiHeartLine, RiHome2Line, RiSearchLine } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
+import { userData } from '../redux/reducers/functionalities.reducer';
 
 const BottomNav = ({path}) => {
-//   return (
-// <>
-// <div className="footer mt-auto p-3 fix-osahan-footer" style={{
-//     height:"5rem",
-//     margin:"1.4rem",
-//     background: "#fffffd",
-//     border:"2px solid transparent",
-//     borderRadius:"30px",
-//     display:"flex",
-//     alignItems:"center",
-//     justifyContent:"space-around",
-//     position:"fixed",
-//     bottom:"1.4rem",
-//     width:"90%",
-//     boxShadow: "4px 4px 4px 4px rgba(0, 0, 0, 0.1)"
-
-// }}>
-//             <Link to="/home" className={`col footer-bottom-nav ${path=="home" && "active"}`}>
-//             <RiHome2Line className="footer-icon" />
-//               <span className={path=="home" && "border-radius-bottom"}>Home</span>
-//             </Link>
-//             <Link to="/search" className={`col footer-bottom-nav ${path=="search" && "active"}`}>
-//             <RiSearchLine className="footer-icon" />
-//             <span className={path=="search" && "border-radius-bottom"}>Search</span>
-//             </Link>
-//             <Link to="/fav" className={`col footer-bottom-nav ${path=="fav" && "active"}`}>
-//             <RiHeartLine className="footer-icon" />
-//               <span className={path=="fav" && "border-radius-bottom"}>Favrouite</span>
-//             </Link>
-//             <Link to="/profile" className={`col footer-bottom-nav ${path=="profile" && "active"}`}>
-//             <RiAccountCircleLine className="footer-icon" />
-//               <span className={path=="edit" && "border-radius-bottom"}>Profile</span>
-//             </Link>
-//         </div>
-// </>  )
-
+  const loggedInUser = useSelector(userData);
+  useEffect(()=>{
+    console.log(loggedInUser)
+  })
 
 return (
+  (loggedInUser?.role == "admin") ? 
+  <div id="footer-bar" className="footer-bar-6">
+  <Link to="/admin-dashboard" className={`${path == "home" && "active-nav-icon"}`}
+><i className="fa fa-home" /><span>Dashboard</span></Link>
+<Link to="/admin-categories" className={`${path == "search" && "active-nav-icon"}`}><i className='fa-solid fa-list'/><span>Category</span></Link>
+
+<Link to="/admin-upload" className={`${path == "fav" && "active-nav-icon"}`}><i className="fa-solid fa-plus" /><span>Add Sound</span></Link>
+
+<Link to="/admin-sound-edit" className={`${path == "profile" && "active-nav-icon"}`} data-menu="menu-main"><i className="fa-solid fa-music" /><span>Sounds</span></Link>
+<Link to="/admin-subscription" className={`${path == "profile" && "active-nav-icon"}`} data-menu="menu-main"><i className="fa-solid fa-money-bill"></i><span>Subscription</span></Link>
+</div>
+  : 
   <div id="footer-bar" className="footer-bar-6">
       <Link to="/home" className={`${path == "home" && "active-nav-icon"}`}
   ><i className="fa fa-home" /><span>Home</span></Link>
@@ -49,7 +31,7 @@ return (
   <Link to="/fav" className={`${path == "fav" && "active-nav-icon"}`}><i className="fa fa-heart" /><span>Favourites</span></Link>
 
   <Link to="/profile" className={`${path == "profile" && "active-nav-icon"}`} data-menu="menu-main"><i className="fa fa-user" /><span>Profile</span></Link>
-</div>
+</div> 
 )
 }
 

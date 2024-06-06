@@ -14,17 +14,8 @@ const useAxios = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false); 
     const [controller, setController] = useState();
-    let token = useSelector(tokenJson);
-    useEffect(()=>{
-        if(token == false){
-            let storedToken = localStorage.getItem('storedToken');
-            if (storedToken) {
-                dispatch(updateToken(storedToken))
-                token = storedToken
-            }
-
-        }
-    },[token])
+    let storedToken = localStorage.getItem('storedToken');
+    let adminToken = localStorage.getItem('adminToken');
     const axiosFetch = async (configObj) => {
 
         const {
@@ -34,7 +25,7 @@ const useAxios = () => {
             requestConfig = {}
         } = configObj;
         try {
-            axiosInstance.defaults.headers['jwtToken'] = token;
+            axiosInstance.defaults.headers['jwtToken'] = adminToken?adminToken:storedToken;
             setLoading(true);
             const ctrl = new AbortController();
             setController(ctrl);
@@ -48,7 +39,8 @@ const useAxios = () => {
                 setError(err);
             }
             if (err?.response?.status === 403) {
-                router.push("/login-phone")
+                localStorage.removeItem("storedToken")
+                router.push("/")
             }
             else{
                 setError(err);

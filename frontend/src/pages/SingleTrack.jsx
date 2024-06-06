@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { addRemoveUserFavouriteService, getMusicByIdService, isMusicUserFavService } from '../urls/urls';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { Alert } from 'antd';
+import { test_url_images } from '../config/environment';
 
 const SingleTrack = () => {
     const loggedInUser = useSelector(userData);
@@ -64,6 +65,14 @@ const SingleTrack = () => {
             });
         }
     }, [track]);
+    const [selectedMusic, setSelectedMusic] = useState({})
+
+    useEffect(() => {
+        if(getMusicResponse?.result == "success"){
+            setSelectedMusic(getMusicResponse?.data)
+            console.log(getMusicResponse?.data)
+        }
+    }, [getMusicResponse]);
 
     const togglePlay = () => {
         const audio = audioRef.current;
@@ -214,8 +223,8 @@ const SingleTrack = () => {
                     </div>
                 </div>
             </section>
-            {track && (
-                <audio ref={audioRef} src={track.src} preload="metadata" />
+            {test_url_images + selectedMusic?.path && (
+                <audio ref={audioRef} src={test_url_images + selectedMusic?.path} preload="metadata" />
             )}
         </div>
     );
