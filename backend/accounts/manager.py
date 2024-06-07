@@ -1,7 +1,11 @@
+import jwt
 from django.db.models import Prefetch
 
 from accounts.models import Profile, UserFavorites, RecentMusic
+from backend import settings
 from music.models import MusicCategory, MusicCategoryMapping
+from user_management.manager import UserManager
+from user_management.models import UserDetails
 
 
 class CustomManager:
@@ -84,3 +88,27 @@ class CustomManager:
             "yearly_sub": yearly_sub,
         }
         return stats
+
+
+    @staticmethod
+    def get_refresh_token(request, data):
+        token = request.headers.get("jwtToken", False)
+        role = data.get("role", False)
+        if not token or not role:
+            raise Exception("Role not found")
+        try:
+            decoded_payload = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
+            check_login = False
+            if decoded_payload['id']:
+                check_login = UserDetails.objects.filter(id=decoded_payload['id']).select_related(
+                    'user_profile').prefetch_related('user_preferences')
+            if check_login:
+                token = UserManager.generate_jwt({
+                    'id': check_login[0].id,
+                    'email': check_login[0].email,
+                    'role': check_login[0].role,
+                })
+                return check_login[0], True, token
+            return False, False, False
+        except Exception:
+            return False, False, False

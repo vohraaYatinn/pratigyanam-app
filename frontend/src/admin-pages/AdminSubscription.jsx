@@ -88,7 +88,7 @@ const AdminSubscription = () => {
   return (
     <>
       <TopNav />
-      <BottomNav />
+      <BottomNav path={"admin-subscription"}/>
       <div className="pt-20">
         <h1 className="text-2xl font-bold text-center">Add subscriptions</h1>
         <div style={{ padding: "10px" }}>

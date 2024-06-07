@@ -13,14 +13,14 @@ const BottomNav = ({path}) => {
 return (
   (loggedInUser?.role == "admin") ? 
   <div id="footer-bar" className="footer-bar-6">
-  <Link to="/admin-dashboard" className={`${path == "home" && "active-nav-icon"}`}
+  <Link to="/admin-dashboard" className={`${path == "admin-dashboard" && "active-nav-icon"}`}
 ><i className="fa fa-home" /><span>Dashboard</span></Link>
-<Link to="/admin-categories" className={`${path == "search" && "active-nav-icon"}`}><i className='fa-solid fa-list'/><span>Category</span></Link>
+<Link to="/admin-categories" className={`${path == "admin-categories" && "active-nav-icon"}`}><i className='fa-solid fa-list'/><span>Category</span></Link>
 
-<Link to="/admin-upload" className={`${path == "fav" && "active-nav-icon"}`}><i className="fa-solid fa-plus" /><span>Add Sound</span></Link>
+<Link to="/admin-upload" className={`${path == "admin-upload" && "active-nav-icon"}`}><i className="fa-solid fa-plus" /><span>Add Sound</span></Link>
 
-<Link to="/admin-sound-edit" className={`${path == "profile" && "active-nav-icon"}`} data-menu="menu-main"><i className="fa-solid fa-music" /><span>Sounds</span></Link>
-<Link to="/admin-subscription" className={`${path == "profile" && "active-nav-icon"}`} data-menu="menu-main"><i className="fa-solid fa-money-bill"></i><span>Subscription</span></Link>
+<Link to="/admin-sound-edit" className={`${path == "admin-sound-edit" && "active-nav-icon"}`} data-menu="menu-main"><i className="fa-solid fa-music" /><span>Sounds</span></Link>
+<Link to="/admin-subscription" className={`${path == "admin-subscription" && "active-nav-icon"}`} data-menu="menu-main"><i className="fa-solid fa-money-bill"></i><span>Subscription</span></Link>
 </div>
   : 
   <div id="footer-bar" className="footer-bar-6">

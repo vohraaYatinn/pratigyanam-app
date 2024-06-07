@@ -8,6 +8,8 @@ from user_management.models import UserDetails
 import jwt
 from django.conf import settings
 from datetime import datetime, timedelta
+from django.utils import timezone
+
 
 class UserManager:
     @staticmethod
@@ -92,7 +94,7 @@ class UserManager:
 
     @staticmethod
     def generate_jwt(payload):
-        payload['exp'] = datetime.utcnow() + timedelta(seconds=settings.JWT_EXP_DELTA_SECONDS)
+        # payload['exp'] = datetime.utcnow() + timedelta(seconds=settings.JWT_EXP_DELTA_SECONDS)
         token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
         return token
 
@@ -111,6 +113,17 @@ class UserManager:
         email = data.get('email', None)
         password = data.get('password', None)
         check_login = UserDetails.objects.filter(email=email, password=password).select_related('user_profile').prefetch_related('user_preferences')
+        user_profile = check_login[0].user_profile
+        if user_profile:
+            effective_till = user_profile.sub_active_till
+            today = timezone.now()
+            if effective_till and today > effective_till and user_profile.subscription:
+                user_profile.is_subscription_activated = False
+                user_profile.subscription = None
+                user_profile.save()
+                check_login = UserDetails.objects.filter(email=email, password=password).select_related(
+                    'user_profile').prefetch_related('user_preferences')
+
         token = ""
         if check_login:
             token = UserManager.generate_jwt({

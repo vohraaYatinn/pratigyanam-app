@@ -104,3 +104,6 @@ export const fetchAdminAccount= (payload_data) => {
 export const addMusicWithCategory= (payload_data) => {
   return project.multiPartFormData(Urls.GET_MUSIC, payload_data);
 };
+export const getRefershToken= (payload_data) => {
+  return project.post(Urls.GET_REFRESH_TOKEN, payload_data);
+};

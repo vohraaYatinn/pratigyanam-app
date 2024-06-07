@@ -20,6 +20,7 @@ export class Urls {
     static DELETE_MUSIC = Urls.MPHRMS_API_PREFIX + 'music/delete-music/';
     static ADD_GET_RECENT = Urls.MPHRMS_API_PREFIX + 'accounts/user-recent-music/';
     static FETCH_ADMIN_ACCOUNT = Urls.MPHRMS_API_PREFIX + 'accounts/admin-dashboard/';
+    static GET_REFRESH_TOKEN = Urls.MPHRMS_API_PREFIX + 'accounts/get-refresh-token/';
 
     static BUY_SUBSCRIPTION = Urls.MPHRMS_API_PREFIX + 'subscriptions/buy-subscription/';
     

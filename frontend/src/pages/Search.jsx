@@ -26,7 +26,18 @@ const SearchComponent = () => {
   const [musicList, setMusicList] = useState([]);
 
   const [searchResponse, searchError, searchLoading, searchFetch] = useAxios();
-
+  useEffect(() => {
+    if (loggedInUser?.user_profile?.sub_active_till) {
+      const subActiveTill = loggedInUser?.user_profile?.sub_active_till;
+      const subActiveTillDate = new Date(subActiveTill.split('T')[0]);
+      const today = new Date();
+      const timeDiff = subActiveTillDate - today;
+      const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      if(days < 0){
+        navigate("/manage-subscriptions");
+      }
+    }
+  }, []);
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);

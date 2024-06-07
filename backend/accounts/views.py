@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from user_management.custom_permissions import CheckAuthUser
+from user_management.serializers import UserDetailsWithProfileAndPreferencesSerializer
 from .constants import AccountMessages
 from .manager import CustomManager
 
@@ -100,6 +101,21 @@ class adminDashboard(APIView):
             data = request.query_params
             admin_stats_data = CustomManager.get_admin_data(data)
             return Response({"result": "success", "message": AccountMessages.SUCCESS, "data":admin_stats_data}, 200)
+        except Exception as err:
+            return Response(str(err), 500)
+
+class adminRefreshToken(APIView):
+
+    @staticmethod
+    def post(request):
+        try:
+            data = request.data
+            user, login_check, token = CustomManager.get_refresh_token(request , data)
+            serialized_data = False
+            if token:
+                serialized_data = UserDetailsWithProfileAndPreferencesSerializer(user).data
+            return Response({"result": "success", "login_check": login_check,"token":token, "user": serialized_data}, 200)
+
         except Exception as err:
             return Response(str(err), 500)
 

@@ -82,7 +82,7 @@ const AdminSounds = () => {
   return (
     <>
       <TopNav />
-      <BottomNav />
+      <BottomNav path={"admin-sound-edit"}/>
       <div className="w-full px-3 ">
         <div className="pt-20">
           <h1 className="font-bold text-center text-3xl mb-4">Audio Management</h1>

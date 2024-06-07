@@ -93,7 +93,7 @@ const AdminCategories = () => {
   return (
     <>
       <TopNav />
-      <BottomNav />
+      <BottomNav path={"admin-categories"}/>
       <div className="w-full px-3 ">
         <div className="pt-20">
           <h1 className="font-bold text-center text-3xl mb-4">Categories</h1>

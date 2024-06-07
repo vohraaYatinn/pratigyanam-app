@@ -75,6 +75,7 @@ const Profile = () => {
 						</a>
 						<Link 
 						onClick={()=>{
+							localStorage.removeItem('adminToken');  
 							localStorage.removeItem("storedToken")
 							router.push("/")
 						}}

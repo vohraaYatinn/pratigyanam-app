@@ -112,7 +112,9 @@ const EditSubscriptions = () => {
                 Your Current Subscription plan
               </p>
               {!loggedInUser?.user_profile?.is_subscription_activated ? (
-                <h1>You Dont Have A active plan</h1>
+                <>
+                <h1>You Dont Have a active plan</h1>
+                </>
               ) : (
                 <div>
                   <h1>{loggedInUser?.user_profile?.subscription?.name}</h1>

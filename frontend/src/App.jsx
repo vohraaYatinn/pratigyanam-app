@@ -11,13 +11,13 @@ const App = () => {
   const loggedInUser = useSelector(userData);
   const location = useLocation();
   const { user, type, category, language, gender } = location.state || {};
-  // CapacitorApp.addListener('backButton', ({canGoBack}) => {
-  // 	if(!canGoBack){
-  // 	  CapacitorApp.exitApp();
-  // 	} else {
-  // 	  window.history.back();
-  // 	}
-  //   });
+  CapacitorApp.addListener('backButton', ({canGoBack}) => {
+  	if(!canGoBack){
+  	  CapacitorApp.exitApp();
+  	} else {
+  	  window.history.back();
+  	}
+    });
 
   const [loggedInUserData, setLoggedInUserData] = useState([]);
   const navigate = useNavigate();

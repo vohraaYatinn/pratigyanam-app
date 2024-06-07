@@ -30,6 +30,7 @@ import AdminSubscription from './admin-pages/AdminSubscription.jsx'
 import { Provider } from "react-redux";
 import Store from './redux/Store';
 import AdminSounds from "./admin-pages/AdminSounds.jsx";
+import RefreshToken from "./RefreshToken.jsx";
 
 
 const router = createBrowserRouter([
@@ -139,6 +140,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 	<Provider store={Store}>
 
 	<React.StrictMode>
+	<RefreshToken />
+
 		<RouterProvider router={router} />
 	</React.StrictMode>
 	</Provider>

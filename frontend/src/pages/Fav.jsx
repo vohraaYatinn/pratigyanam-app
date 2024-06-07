@@ -14,7 +14,7 @@ import { Flex, Radio, Skeleton } from "antd";
 
 import { FiEdit } from "react-icons/fi";
 import vector from "../data/vector.jpeg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NavBar } from "antd-mobile";
 import BottomNav from "../components/BottomNav";
 import TopNav from "../components/TopNav";
@@ -28,6 +28,8 @@ import { addUserRecentService, getUserFavouriteService } from "../urls/urls";
 import useAxios from "../network/useAxios";
 
 const FavComponent = () => {
+  const navigate = useNavigate();
+
   const loggedInUser = useSelector(userData);
   const [selectedTrack, setSelectedTrack] = useState(tracksFav[0]);
   const [toggleCategory, setToggleCategory] = useState("category");
@@ -48,7 +50,18 @@ const FavComponent = () => {
       setSkeletonTime(false);
     }, 1500);
   });
-
+  useEffect(() => {
+    if (loggedInUser?.user_profile?.sub_active_till) {
+      const subActiveTill = loggedInUser?.user_profile?.sub_active_till;
+      const subActiveTillDate = new Date(subActiveTill.split('T')[0]);
+      const today = new Date();
+      const timeDiff = subActiveTillDate - today;
+      const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      if(days < 0){
+        navigate("/manage-subscriptions");
+      }
+    }
+  }, []);
   useEffect(() => {
     setLoggedInUserData(loggedInUser);
     console.log(loggedInUser);

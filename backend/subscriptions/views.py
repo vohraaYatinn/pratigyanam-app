@@ -18,6 +18,16 @@ class AddGetSubscriptions(APIView):
         except Exception as err:
             return Response(str(err), 500)
 
+class AddGetSubscriptionsUser(APIView):
+    @staticmethod
+    def post(request):
+        try:
+            data = request.data
+            SubscriptionManager.add_new_subscription(data)
+            return Response({"result": data, "message": "Plan added"}, 200)
+        except Exception as err:
+            return Response(str(err), 500)
+
     @staticmethod
     def get(request):
         try:

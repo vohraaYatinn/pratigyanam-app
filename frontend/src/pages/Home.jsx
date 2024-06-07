@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import vector from "../data/vector.jpeg";
 import music from "../assets/music.png";
-
-import image1 from "../assets/images/banners/1.png";
-import image2 from "../assets/images/banners/2.png";
-import image3 from "../assets/images/banners/3.png";
-import image4 from "../assets/images/banners/4.png";
 import { IoMdSearch } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import BottomNav from "../components/BottomNav";
@@ -51,11 +46,7 @@ const Home = () => {
   };
   const colors = ["#ace0ff", "#bcffbd", "#e4fabd", "#ffcfac"];
 
-  const items = colors.map((color, index) => (
-    <Swiper.Item key={index}>
-      <div style={{ background: color }}>{index + 1}</div>
-    </Swiper.Item>
-  ));
+
 
   useEffect(() => {
     const updateSlideSize = () => {
@@ -81,9 +72,7 @@ const Home = () => {
     };
   }, []);
 
-  const onClose = () => {
-    console.log("I was closed.");
-  };
+
 
   useEffect(() => {
     const toast = localStorage.getItem("toast");
@@ -242,22 +231,11 @@ const Home = () => {
           data-menu-height={480}
         />
         <div className="page-content text-center">
-          {skeletontime ? (
-            <Skeleton.Image
-              active={true}
-              style={{ width: "300px", height: "300px" }}
-            />
-          ) : (
-            <Swiper
-              slideSize={slideSize1}
-              trackOffset={15}
-              loop
-              stuckAtBoundary={false}
-              style={{ marginBottom: "1.5rem" }}
-            >
-              {topDoctors}
-            </Swiper>
-          )}
+          <div style={{
+            minHeight:"6rem", background:"red", marginBottom:"1rem"
+          }}>
+            Chakras Healing
+          </div>
 
           <div className="card card-style shadow-xl">
             {skeletontime ? (
@@ -279,6 +257,22 @@ const Home = () => {
               </div>
             )}
           </div>
+          {skeletontime ? (
+            <Skeleton.Image
+              active={true}
+              style={{ width: "300px", height: "300px" }}
+            />
+          ) : (
+            <Swiper
+              slideSize={slideSize1}
+              trackOffset={15}
+              loop
+              stuckAtBoundary={false}
+              style={{ marginBottom: "1.5rem" }}
+            >
+              {topDoctors}
+            </Swiper>
+          )}
 
           <div className="card card-full-left card-style">
             <div className="content">
