@@ -8,6 +8,7 @@ class UserDetails(models.Model):
     password = models.CharField(max_length=20, null=True)
     status = models.CharField(default="active", max_length=20)
     role = models.CharField(default="customer", max_length=20)
+    referral_code = models.CharField( max_length=10)
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:

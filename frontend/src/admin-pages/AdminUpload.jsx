@@ -35,9 +35,9 @@ const AdminUpload = () => {
   useEffect(() => {
     if (getResponse?.message === "success") {
       setCategories(getResponse?.result);
-      const options = getResponse.result.map((item) => ({
+      const options = getResponse.result.map((item, index) => ({
         value: item.id,
-        label: `${item.id}. ${item.type}`,
+        label: `${index+1}. ${item.type}`,
       }));
       setOption(options);
     }

@@ -216,7 +216,7 @@ const SingleTrack = () => {
                             <button onClick={handleNext} className='bg-black mx-2 rounded-sm text-center   p-2 check-it-buttons'>
                                 <IoPlaySkipForwardSharp />
                             </button>
-                            <button onClick={addRemoveFavOnClick}>{getFavResponse?.result === 1 ? (<div className='bg-black text-white
+                            <button onClick={addRemoveFavOnClick}>{getFavResponse?.result !== 1 ? (<div className='bg-black text-white
                              p-[7px] rounded-md'><FaRegHeart /></div>): (<div className='bg-black text-red-400
                              p-[7px] rounded-md'><FaHeart /></div>)}</button>
                         </div>

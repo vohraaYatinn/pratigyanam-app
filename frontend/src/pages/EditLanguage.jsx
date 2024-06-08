@@ -8,11 +8,13 @@ import hindi from "../assets/images/hindi.png";
 import BottomNav from "../components/BottomNav";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { userData } from "../redux/reducers/functionalities.reducer";
+import { updateUser, userData } from "../redux/reducers/functionalities.reducer";
 import useAxios from "../network/useAxios";
 import { editProfileAndPreferencesService } from "../urls/urls";
+import { useDispatch } from "react-redux";
 
 const EditAddress = () => {
+  const dispatch = useDispatch();
   const [skeletontime, setSkeletonTime] = useState(true);
   const doFetchNewData = useRef(true);
   const loggedInUser = useSelector(userData);
@@ -50,6 +52,12 @@ const EditAddress = () => {
         isError: false,
         message: editResponse.message,
       });
+      dispatch(updateUser(editResponse?.result));
+
+
+
+
+
     }
 	editResponseRef.current = editResponse
   }, [editResponse]);

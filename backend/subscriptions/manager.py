@@ -23,6 +23,10 @@ class SubscriptionManager:
     @staticmethod
     def get_all_subscription(data):
 
+        return SubscriptionPlan.objects.filter()
+
+    @staticmethod
+    def get_all_subscription_users(data):
         return SubscriptionPlan.objects.filter(status="A")
 
     @staticmethod

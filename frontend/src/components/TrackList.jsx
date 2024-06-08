@@ -60,6 +60,8 @@ const TrackList = ({
       console.log("not");
       const searchParams = new URLSearchParams(location.search);
     const filterParam = searchParams.get('filter');
+    console.log("asNDIKASND")
+    console.log(filterParam)
     const filterName = searchParams.get('filterName');
       getFetch(
         getMusicService({

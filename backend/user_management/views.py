@@ -32,11 +32,12 @@ class NewUserSignup(APIView):
 
 
 class EditProfileDetails(APIView):
+    permission_classes = [CheckAuthUser]
     @staticmethod
     def post(request):
         try:
             data = request.data
-            details = UserManager.edit_profile_details(data)
+            details = UserManager.edit_profile_details(request, data)
             serialized_data = UserDetailsWithProfileAndPreferencesSerializer(details).data
             return Response({"result": serialized_data, "message": "Welcome"}, 200)
         except Exception as err:

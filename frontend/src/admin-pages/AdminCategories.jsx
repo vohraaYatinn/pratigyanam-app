@@ -157,7 +157,7 @@ const AdminCategories = () => {
       <div className="mt-5 mb-20">
         <h1 className="text-2xl text-center my-2 font-bold">Total Categories</h1>
         <div style={{ paddingBottom: "10rem", marginTop: "2rem" }}>
-          {categories?.map((item) => {
+          {categories?.map((item, index) => {
             return (
               <div
                 className="text-xl flex ml-5 gap-4"
@@ -167,7 +167,7 @@ const AdminCategories = () => {
                 }}
               >
                 <p>
-                  {item.id}. {item.type}
+                  {index+1}. {item.type}
                 </p>
                 <button
                   className="btn btn-danger"

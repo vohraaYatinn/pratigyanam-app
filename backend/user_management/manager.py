@@ -1,3 +1,5 @@
+import random
+
 from django.db import transaction
 from django.db.models import Q
 
@@ -33,7 +35,13 @@ class UserManager:
         audio_gender = data.get('audioGender', None)
         date_of_birth = data.get('dateOfBirth', None)
         language = data.get('language', None)
+        referral = data.get('referral', None)
         query = Q()
+        if referral:
+            referral_check = UserDetails.objects.filter(referral_code=referral)
+            if len(referral_check) == 0:
+                raise Exception("Referral code does not exists!")
+
         if email:
             query |= Q(email=email)
         if phone_number:
@@ -47,17 +55,20 @@ class UserManager:
         # if existing_email:
         #     raise Exception("User with same email number exists")
         with transaction.atomic():
-            user_data = UserDetails.objects.create(email=email, phone=phone_number, password = password)
+            user_data = UserDetails.objects.create(email=email, phone=phone_number, password = password, referral_code=email[0:2]+str(random.randint(20,90))+password[0:2])
             subscription = SubscriptionPlan.objects.filter(name="TRIAL")
             if not subscription:
                 raise Exception("There is a issue with subscription plan")
             seven_days_from_now = datetime.now() + timedelta(days=subscription[0].duration)
-            Profile.objects.create(name=full_name, user=user_data, gender=gender, date_of_birth=date_of_birth, subscription=subscription[0], sub_active_till=seven_days_from_now)
+            profile = Profile.objects.create(name=full_name, user=user_data, gender=gender, date_of_birth=date_of_birth, subscription=subscription[0], sub_active_till=seven_days_from_now)
+            if referral:
+                profile.applied_referral_code = referral
+                profile.save()
             UserPreferences.objects.create(user=user_data, gender=audio_gender, language=language)
         return UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(id=user_data.id)
 
     @staticmethod
-    def edit_profile_details(data):
+    def edit_profile_details(request, data):
         full_name = data.get('fullName', None)
         email = data.get('email', None)
         phone_number = data.get('phoneNumber', None)
@@ -67,7 +78,7 @@ class UserManager:
         date_of_birth = data.get('dob', None)
         language = data.get('language', None)
         edit_type = data.get('editType', None)
-        user_id = data.get('userId')
+        user_id = request.user.id
 
 
         existing_email = UserDetails.objects.filter(email=email).exclude(id=user_id)
@@ -83,7 +94,7 @@ class UserManager:
 
         elif edit_type == ProfileEditType.PREFERENCE:
             preference_data = UserPreferences.objects.get(user_id=user_id)
-            preference_data.audio_gender = audio_gender
+            preference_data.gender = audio_gender
             preference_data.language = language
             preference_data.save()
 

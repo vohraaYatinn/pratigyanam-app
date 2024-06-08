@@ -7,7 +7,7 @@ import BottomNav from "../components/BottomNav";
 import { Skeleton } from "antd";
 import { useSelector } from "react-redux";
 import { userData } from "../redux/reducers/functionalities.reducer";
-import { buySubscriptionService, getAllSubscriptionService } from "../urls/urls";
+import { buySubscriptionService, getAllSubscriptionService, getAllSubscriptionServiceUsers } from "../urls/urls";
 import useAxios from "../network/useAxios";
 
 const EditSubscriptions = () => {
@@ -24,7 +24,7 @@ const EditSubscriptions = () => {
   });
 
   useEffect(() => {
-    getSubsFetch(getAllSubscriptionService());
+    getSubsFetch(getAllSubscriptionServiceUsers());
   }, []);
 
   useEffect(() => {

@@ -19,9 +19,6 @@ const RefreshToken = () => {
       else if(adminToken){
         getRefreshFetch(getRefershToken({token:adminToken, role:"admin"}))
       }
-      else{
-        window.location.href = "/";
-      }
     
     }
   },[])

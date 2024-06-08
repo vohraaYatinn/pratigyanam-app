@@ -15,6 +15,7 @@ const AudioPreferences = () => {
   const { email, password, gender, userName, phoneNumber } = location.state;
   const [audioGender, setAudioGender] = useState("");
   const [language, setLanguage] = useState(""); 
+  const [addReferral, setAddReferral] = useState("")
   const handleGenderChange = (e) => {
     const { name, value } = e.target;
     if (name === "audioGender") {
@@ -44,7 +45,8 @@ const AudioPreferences = () => {
       gender: gender,
       audioGender: audioGender,
       language: language,
-      phoneNumber:phoneNumber
+      phoneNumber:phoneNumber,
+      referral:addReferral
     }
     signupFetch(signupUserService(payload))
     // navigate("/music");
@@ -114,7 +116,20 @@ const onChange = (e) => {
                 </div>
 
                 {error && <div className="text-red-600">{error}</div>}
-
+                <div className="w-full flex items-center justify-center text-xl text-gray-600 text-center">
+                  <p className="h-[1px] bg-gray-300 w-full"></p>
+                  <p className="h-[1px] bg-gray-300 w-full"></p>
+                </div>
+                <input
+										type="text"
+										name="Full Name"
+										id="userName"
+										value={addReferral}
+										onChange={(e) => setAddReferral(e.target.value)}
+										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+										placeholder="Would you be able to provide any referrals?"
+										required=""
+									/>
                 <div className="flex items-center justify-center">
                   <button
                     type="submit"

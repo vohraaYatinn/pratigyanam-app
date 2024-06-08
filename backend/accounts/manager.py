@@ -1,7 +1,10 @@
+import random
+from django.utils import timezone
+
 import jwt
 from django.db.models import Prefetch
 
-from accounts.models import Profile, UserFavorites, RecentMusic
+from accounts.models import Profile, UserFavorites, RecentMusic, otpVerify
 from backend import settings
 from music.models import MusicCategory, MusicCategoryMapping
 from user_management.manager import UserManager
@@ -89,6 +92,59 @@ class CustomManager:
         }
         return stats
 
+
+    @staticmethod
+    def set_otp_for_user(request, data):
+        phoneNumber = data.get("phone", False)
+        otp = random.randint(22121,99892)
+        if not phoneNumber:
+            raise Exception("Phone number is required")
+        user = UserDetails.objects.filter(phone=phoneNumber)
+        if user:
+            check_user_otp = otpVerify.objects.filter(phone=phoneNumber)
+            if check_user_otp:
+                check_user_otp[0].otp=otp
+                check_user_otp[0].save()
+            else:
+                otpVerify.objects.create(phone=phoneNumber, otp=otp)
+            return True
+
+        else:
+            return "new login"
+
+    @staticmethod
+    def set_otp_verify(request, data):
+        phoneNumber = data.get("phone", False)
+        firstDigit = data.get("firstDigit", False)
+        secondDigit = data.get("secondDigit", False)
+        thirdDigit = data.get("thirdDigit", False)
+        fourthDigit = data.get("fourthDigit", False)
+        fifthDigit = data.get("fifthDigit", False)
+        otp = firstDigit + secondDigit + thirdDigit + fourthDigit + fifthDigit
+        check_otp = otpVerify.objects.filter(phone=phoneNumber, otp=otp)
+        if not check_otp:
+            raise Exception("otp entered is Invalid")
+        check_login = UserDetails.objects.filter(phone=phoneNumber).select_related('user_profile').prefetch_related('user_preferences')
+        user_profile = check_login[0].user_profile
+        if user_profile:
+            effective_till = user_profile.sub_active_till
+            today = timezone.now()
+            if effective_till and today > effective_till and user_profile.subscription:
+                user_profile.is_subscription_activated = False
+                user_profile.subscription = None
+                user_profile.save()
+                check_login = UserDetails.objects.filter(phone=phoneNumber).select_related(
+                    'user_profile').prefetch_related('user_preferences')
+
+        token = ""
+        if check_login:
+            token = UserManager.generate_jwt({
+                'id': check_login[0].id,
+                'email': check_login[0].email,
+                'role': check_login[0].role,
+            })
+            return check_login[0], True, token
+        return False, False, False
 
     @staticmethod
     def get_refresh_token(request, data):

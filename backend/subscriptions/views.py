@@ -18,21 +18,21 @@ class AddGetSubscriptions(APIView):
         except Exception as err:
             return Response(str(err), 500)
 
-class AddGetSubscriptionsUser(APIView):
-    @staticmethod
-    def post(request):
-        try:
-            data = request.data
-            SubscriptionManager.add_new_subscription(data)
-            return Response({"result": data, "message": "Plan added"}, 200)
-        except Exception as err:
-            return Response(str(err), 500)
-
     @staticmethod
     def get(request):
         try:
             data = request.query_params
             subs_data = SubscriptionManager.get_all_subscription(data)
+            serialized_data = SubscriptionSerializer(subs_data, many=True).data
+            return Response({"result": serialized_data, "message": "Success"}, 200)
+        except Exception as err:
+            return Response(str(err), 500)
+class AddGetSubscriptionsUsers(APIView):
+    @staticmethod
+    def get(request):
+        try:
+            data = request.query_params
+            subs_data = SubscriptionManager.get_all_subscription_users(data)
             serialized_data = SubscriptionSerializer(subs_data, many=True).data
             return Response({"result": serialized_data, "message": "Success"}, 200)
         except Exception as err:

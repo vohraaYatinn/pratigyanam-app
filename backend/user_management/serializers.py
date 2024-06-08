@@ -28,7 +28,7 @@ class UserPreferencesSerializer(serializers.ModelSerializer):
 
 
 class UserDetailsWithProfileAndPreferencesSerializer(serializers.ModelSerializer):
-    user_profile = UserProfileSerializer()  # Nested serializer for user_profile
+    user_profile = UserProfileSerializer()
     user_preferences = UserPreferencesSerializer(many=True)
 
     class Meta:

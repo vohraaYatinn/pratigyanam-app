@@ -13,9 +13,7 @@ export const emailSignIn = (payload_data) => {
 export const phoneNumberOtp = (payload_data) => {
   return project.post(Urls.PHONE_NUMBER_OTP, payload_data);
 };
-export const verifyOtpUrl = (payload_data) => {
-  return project.post(Urls.VERIFY_OTP, payload_data);
-};
+
 
 export const signupUserService= (payload_data) => {
   return project.post(Urls.SIGN_UP_USER, payload_data);
@@ -33,6 +31,9 @@ export const editProfileAndPreferencesService= (payload_data) => {
 
 export const getAllSubscriptionService= (payload_data) => {
   return project.get(Urls.GET_ALL_SUBSCRIPTION, payload_data);
+};
+export const getAllSubscriptionServiceUsers= (payload_data) => {
+  return project.get(Urls.GET_ALL_SUBSCRIPTION_USERS, payload_data);
 };
 export const getAllSubscriptionPost= (payload_data) => {
   return project.post(Urls.GET_ALL_SUBSCRIPTION, payload_data);
@@ -106,4 +107,10 @@ export const addMusicWithCategory= (payload_data) => {
 };
 export const getRefershToken= (payload_data) => {
   return project.post(Urls.GET_REFRESH_TOKEN, payload_data);
+};
+export const PhoneOtpSend= (payload_data) => {
+  return project.post(Urls.LOGIN_USING_PHONE_NUMBER, payload_data);
+};
+export const VerifyOtp= (payload_data) => {
+  return project.post(Urls.VERIFY_OTP, payload_data);
 };

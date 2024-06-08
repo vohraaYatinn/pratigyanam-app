@@ -5,9 +5,12 @@ import { FaFacebookF, FaWhatsapp } from "react-icons/fa6";
 import TopNav from "../components/TopNav";
 import BottomNav from "../components/BottomNav";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { userData } from "../redux/reducers/functionalities.reducer";
 
 
 const Refer = () => {
+	const loggedInUser = useSelector(userData);
 
 			  return (
 				<>
@@ -35,7 +38,7 @@ const Refer = () => {
 <div className="border-2 border-dashed border-black flex text-sm mx-5 my-4 px-2 justify-center py-2 gap-4">
 <div className="text-center  pr-2">
   <p>your refferal code</p>
-  <p className="uppercase font-bold text-xl">abcgde234</p>
+  <p className="uppercase font-bold text-xl">{loggedInUser?.referral_code}</p>
   <button className="mt-1 bg-gray-500/30 text-sm px-3 py-1 text-black rounded-md">Copy</button>
 </div>
 </div>
