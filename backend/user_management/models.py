@@ -15,3 +15,11 @@ class UserDetails(models.Model):
         managed = True
         db_table = "user_details"
 
+class deviceLoginCheck(models.Model):
+    user = models.OneToOneField(UserDetails, on_delete=models.CASCADE, related_name='user_details_device')
+    json_token = models.CharField(max_length=255)
+
+    class Meta:
+        managed = True
+        db_table = "user_device_login"
+

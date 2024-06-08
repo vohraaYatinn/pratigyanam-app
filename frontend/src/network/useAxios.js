@@ -40,6 +40,7 @@ const useAxios = () => {
             }
             if (err?.response?.status === 403) {
                 localStorage.removeItem("storedToken")
+                localStorage.removeItem("adminToken")
                 router.push("/")
             }
             else{

@@ -70,6 +70,9 @@ export const deleteMusicCategory= (payload_data) => {
 export const getNewCategoryService= (payload_data) => {
   return project.get(Urls.ADD_GET_CATEGORIES, payload_data);
 };
+export const singleDeviceLoginCheck= (payload_data) => {
+  return project.get(Urls.SINGLE_DEVICE_LOGIN_CHECK, payload_data);
+};
 
 export const getUserRecentService= (payload_data) => {
   return project.get(Urls.ADD_GET_RECENT, payload_data);

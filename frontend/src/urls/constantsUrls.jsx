@@ -16,6 +16,7 @@ export class Urls {
 
     static FETCH_MUSIC_BY_CATEGORY = Urls.MPHRMS_API_PREFIX + 'music/fetch-music-by-category/';
     static ADD_GET_CATEGORIES = Urls.MPHRMS_API_PREFIX + 'music/get-post-category/';
+    static SINGLE_DEVICE_LOGIN_CHECK = Urls.MPHRMS_API_PREFIX + 'users/single-device-login-check/';
     static DELETE_CATEGORIES = Urls.MPHRMS_API_PREFIX + 'music/delete-categories/';
     static DELETE_MUSIC = Urls.MPHRMS_API_PREFIX + 'music/delete-music/';
     static ADD_GET_RECENT = Urls.MPHRMS_API_PREFIX + 'accounts/user-recent-music/';

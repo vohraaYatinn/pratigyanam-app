@@ -16,7 +16,7 @@ import po3 from "../assets/images/po3.png";
 import { useSelector } from "react-redux";
 import { userData } from "../redux/reducers/functionalities.reducer";
 import useAxios from "../network/useAxios";
-import { getNewCategoryService } from "../urls/urls";
+import { getNewCategoryService, singleDeviceLoginCheck } from "../urls/urls";
 import { test_url_images } from "../config/environment";
 
 const Home = () => {
@@ -31,6 +31,12 @@ const Home = () => {
     getCategoriesError,
     getCategoriesLoading,
     getCategoriesFetch,
+  ] = useAxios();
+  const [
+    singleDeviceLoginResponse,
+    singleDeviceLoginError,
+    singleDeviceLoginLoading,
+    singleDeviceLoginFetch,
   ] = useAxios();
 
   const [categories, setCategories] = useState([]);
@@ -99,6 +105,9 @@ const Home = () => {
 
     getCategoriesFetch(getNewCategoryService());
   }, []);
+  useEffect(()=>{
+    singleDeviceLoginFetch(singleDeviceLoginCheck());
+  },[])
 
   useEffect(() => {
     if (getCategoriesResponse?.result) {
