@@ -70,7 +70,7 @@ class deleteCategory(APIView):
         try:
             data = request.data
             delete_music = MusicManager.delete_category(data)
-            return Response({"result":"success", "message": "Success"}, 200)
+            return Response({"result": "success", "message": "Category Deleted Successfully"}, 200)
         except Exception as err:
             return Response(str(err), 500)
 

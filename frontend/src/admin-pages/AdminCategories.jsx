@@ -7,6 +7,7 @@ import { Alert } from "antd";
 
 const AdminCategories = () => {
   const [addResponse, addError, addLoading, addFetch] = useAxios();
+  const [deleteResponse, deleteError, deleteLoading, deleteFetch] = useAxios();
   const [getResponse, getError, getLoading, getFetch] = useAxios();
   const [categories, setCategories] = useState([]);
   const [formValues, setFormValues] = useState({
@@ -21,7 +22,7 @@ const AdminCategories = () => {
   });
 
   const deleteFunction = (id) => {
-    addFetch(deleteNewCategoryServices({ id: id }));
+    deleteFetch(deleteNewCategoryServices({ id: id }));
   };
 
   const handleUpload = (e) => {
@@ -88,7 +89,22 @@ const AdminCategories = () => {
         message: "Failed to add category!",
       });
     }
-  }, [addResponse, addError]);
+    if (deleteResponse?.result === "success") {
+      setMessage({
+        showMessage: true,
+        isError: false,
+        message: "Category deleted successfully!",
+      });
+      // getFetch(getNewCategoryService());
+      // setFormValues({ type: "", image: "" });
+    } else if (deleteError) {
+      setMessage({
+        showMessage: true,
+        isError: true,
+        message: "Failed to delete category!",
+      });
+    }
+  }, [addResponse, addError, deleteResponse, deleteError]);
 
   return (
     <>
