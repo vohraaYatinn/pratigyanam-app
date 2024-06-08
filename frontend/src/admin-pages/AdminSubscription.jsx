@@ -10,6 +10,7 @@ const AdminSubscription = () => {
   const [subResponse, subError, subLoading, subFetch] = useAxios();
   const [fetchSubscriptionResponse, fetchSubscriptionError, fetchSubscriptionLoading, fetchSubscriptionFetch] = useAxios();
   const ref = useRef(null);
+  const [isEdit, setIsEdit] = useState(false);
   const [formValues, setFormValues] = useState({
     name: "",
     description: "",
@@ -38,8 +39,10 @@ const AdminSubscription = () => {
   };
 
   const subResponseRef = useRef(subResponse);
+  const subErrorRef = useRef(subError);
   useEffect(() => {
     fetchSubscriptionFetch(getAllSubscriptionService());
+    setIsEdit(false)
   }, []);
   
   const [subscriptionData, setSubscriptionData] = useState([]);
@@ -65,8 +68,27 @@ const AdminSubscription = () => {
         duration: "",
       });
     }
+    if (subErrorRef.current !== subError) {
+      setMessage({
+        showMessage: true,
+        isError: true,
+        message: subError.message || subError.response,
+      });
+      // fetchSubscriptionFetch(getAllSubscriptionService());
+      setSelectedId(false);
+      setFormValues({
+        name: "",
+        description: "",
+        price: "",
+        duration: "",
+      });
+    }
     subResponseRef.current = subResponse;
-  }, [subResponse]);
+    subErrorRef.current = subError
+    setIsEdit(false)
+  }, [subResponse, subError]);
+
+  
 
   const validate = () => {
     const errors = {};
@@ -122,6 +144,7 @@ const AdminSubscription = () => {
                   type="text"
                   placeholder="Name of the Subscription"
                   value={formValues.name}
+                  disabled={isEdit}
                   onChange={(e) => {
                     setFormValues({ ...formValues, name: e.target.value });
                   }}
@@ -211,6 +234,7 @@ const AdminSubscription = () => {
                     className="btn btn-warning"
                     onClick={() => {
                       setSelectedId(item.id);
+                      setIsEdit(true);
                       setFormValues({
                         name: item.name,
                         description: item.description,

@@ -14,6 +14,9 @@ class MusicManager:
         audio = data.get('audio', None)
         image = data.get('image', None)
         category = data.get('category', None)
+        old_music = MusicCategoryMapping.objects.filter(music__title__iexact=title, category_id=category)
+        if old_music:
+            raise Exception("Music title in the same category already exists")
         with(transaction.atomic()):
             music_obj = MusicAudio.objects.create(title=title, description=description,
                                   language=language, gender=gender, path=audio, image=image)

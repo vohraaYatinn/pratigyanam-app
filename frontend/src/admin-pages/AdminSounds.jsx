@@ -69,15 +69,15 @@ const AdminSounds = () => {
 
   }, [addResponse]);
 
-  useEffect(() => {
-    if (addResponse.message) {
-      setMessage({
-        showMessage: true,
-        isError: true,
-        message: addResponse.message,
-      });
-    }
-  }, [addResponse]);
+  // useEffect(() => {
+  //   if (addResponse.message) {
+  //     setMessage({
+  //       showMessage: true,
+  //       isError: true,
+  //       message: addResponse.message,
+  //     });
+  //   }
+  // }, [addResponse]);
 
   return (
     <>

@@ -145,6 +145,7 @@ const AdminUpload = () => {
       setGenderValue("Male");
       setLanguageValue("English");
     }
+    console.log(postMusicResponse)
   }, [postMusicResponse]);
 
   useEffect(() => {

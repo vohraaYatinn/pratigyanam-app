@@ -45,7 +45,7 @@ class BuySubscriptionByUser(APIView):
         try:
             data = request.data
             SubscriptionManager.buy_subscription(data)
-            return Response({"result": data, "message": "Plan added"}, 200)
+            return Response({"result": data, "message": "Plan added successfully"}, 200)
         except Exception as err:
             return Response(str(err), 500)
 
