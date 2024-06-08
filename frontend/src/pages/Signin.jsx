@@ -17,6 +17,11 @@ const Signin = () => {
 			phone:phone
 		}))
 	}
+	useEffect(()=>{
+		if(localStorage.getItem("storedToken")){
+		  navigate('/home')
+		}
+	  },[])
 	const handleSignIn = (e) => {
 		e.preventDefault();
 			const errors = validate(phoneNumber);

@@ -6,7 +6,7 @@ from django.db.models import Q
 from accounts.models import Profile, UserPreferences
 from subscriptions.models import SubscriptionPlan
 from user_management.constants import ProfileEditType, UserMessages
-from user_management.models import UserDetails
+from user_management.models import UserDetails, deviceLoginCheck
 import jwt
 from django.conf import settings
 from datetime import datetime, timedelta
@@ -144,3 +144,16 @@ class UserManager:
             })
             return check_login[0], True, token
         return False, False, False
+
+
+
+    @staticmethod
+    def single_device_login(request, data):
+        token = request.headers.get("jwtToken", False)
+        user = request.user.id
+        device_check = deviceLoginCheck.objects.filter(user=user)
+        if not device_check:
+            deviceLoginCheck.objects.create(user=user, json_token=token)
+            return True
+        if device_check[0].json_token != token:
+            raise Exception("logout")

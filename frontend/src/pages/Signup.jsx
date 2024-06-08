@@ -10,7 +10,11 @@ const Signup = () => {
 	const [errors, setErrors] = useState({});
 	const [gender, setGender] = useState("M");
 	const [phoneNumber, setPhoneNumber] = useState("");
-
+	useEffect(()=>{
+		if(localStorage.getItem("storedToken")){
+		  navigate('/home')
+		}
+	  },[])
 	const navigate = useNavigate();
 
 	const handleSignUp = (e) => {

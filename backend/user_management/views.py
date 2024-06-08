@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 
 from user_management.custom_permissions import CheckAuthUser
 from user_management.manager import UserManager
+from user_management.models import deviceLoginCheck
 from user_management.serializers import UserDetailsWithProfileAndPreferencesSerializer, UserDetailsSerializer
 
 
@@ -43,6 +44,19 @@ class EditProfileDetails(APIView):
         except Exception as err:
             return Response(str(err), 500)
 
+class singleDeviceLoginCheck(APIView):
+    permission_classes = [CheckAuthUser]
+    @staticmethod
+    def get(request):
+        try:
+            data = request.query_params
+            details = UserManager.single_device_login(request, data)
+            return Response({"result": "success", "message": "Welcome"}, 200)
+        except Exception as err:
+            if str(err) == "logout":
+                return Response(str(err), 403)
+            return Response(str(err), 500)
+
 class signInUser(APIView):
     permission_classes = []
     @staticmethod
@@ -53,7 +67,12 @@ class signInUser(APIView):
             serialized_data = False
             if token:
                 serialized_data = UserDetailsWithProfileAndPreferencesSerializer(user).data
-
+                check_prev = deviceLoginCheck.objects.filter(user=user)
+                if check_prev:
+                    check_prev[0].json_token = token
+                    check_prev[0].save()
+                else:
+                    deviceLoginCheck.objects.create(user=user, json_token=token)
             return Response({"result": "success", "login_check": login_check,"token":token, "user": serialized_data}, 200)
         except Exception as err:
             return Response(str(err), 500)

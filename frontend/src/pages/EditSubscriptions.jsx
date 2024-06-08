@@ -161,7 +161,7 @@ const EditSubscriptions = () => {
                     </p>
                     <a
                       href="#"
-                      class="btn btn-center-m btn-m gradient-blue rounded-s font-700 text-uppercase"
+                      class="btn btn-center-m btn-m gradient-blue rounded-s font-700 text-uppercase mt-4"
                       onClick={() => manageBuySubscription(sub?.id)}
                     >
                       {loggedInUser?.user_profile?.is_subscription_activated ? "Extend" : " Subscribe"}
