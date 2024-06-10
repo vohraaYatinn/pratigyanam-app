@@ -19,13 +19,24 @@ const SigninWithEmail = () => {
 
   const loginFunction = () => {
     console.log("hiiii");
-    LoginFetch(emailSignIn({ email: email, password:password }));
+    LoginFetch(emailSignIn({ email: email, password:password, deviceId:getDeviceDetails }));
   };
   useEffect(()=>{
     if(localStorage.getItem("storedToken")){
       navigate('/home')
     }
   },[])
+  const [getDeviceDetails, setDeviceDetails] = useState(false)
+
+	const logDeviceInfo = async () => {
+		const info = await Device.getId();
+		console.log(info?.identifier)
+		setDeviceDetails(info?.identifier)
+	  };
+	  useEffect(() => {
+		logDeviceInfo()
+	  });
+	
   useEffect(() => {
     if (LoginResponse?.result && LoginResponse?.login_check) {
       if(LoginResponse?.user?.role == "admin"){

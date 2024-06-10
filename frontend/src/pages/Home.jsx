@@ -48,7 +48,7 @@ const Home = () => {
     setDeviceDetails(info?.identifier)
   };
   useEffect(() => {
-    logDeviceInfo()
+    // logDeviceInfo()
 
     setTimeout(() => {
       setSkeletonTime(false);

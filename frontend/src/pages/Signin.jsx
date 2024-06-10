@@ -17,6 +17,18 @@ const Signin = () => {
 			phone:phone
 		}))
 	}
+
+	const [getDeviceDetails, setDeviceDetails] = useState(false)
+
+	const logDeviceInfo = async () => {
+		const info = await Device.getId();
+		console.log(info?.identifier)
+		setDeviceDetails(info?.identifier)
+	  };
+	  useEffect(() => {
+		logDeviceInfo()
+	  });
+	
 	useEffect(()=>{
 		if(localStorage.getItem("storedToken")){
 		  navigate('/home')

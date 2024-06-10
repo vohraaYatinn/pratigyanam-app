@@ -68,11 +68,14 @@ class signInUser(APIView):
             if token:
                 serialized_data = UserDetailsWithProfileAndPreferencesSerializer(user).data
                 check_prev = deviceLoginCheck.objects.filter(user=user)
+                device_id = data.get("deviceId", None)
+
                 if check_prev:
                     check_prev[0].json_token = token
+                    check_prev[0].device_id = device_id
                     check_prev[0].save()
                 else:
-                    deviceLoginCheck.objects.create(user=user, json_token=token)
+                    deviceLoginCheck.objects.create(user=user, json_token=token, device_id=device_id)
             return Response({"result": "success", "login_check": login_check,"token":token, "user": serialized_data}, 200)
         except Exception as err:
             return Response(str(err), 500)
