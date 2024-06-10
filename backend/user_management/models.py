@@ -18,6 +18,7 @@ class UserDetails(models.Model):
 class deviceLoginCheck(models.Model):
     user = models.OneToOneField(UserDetails, on_delete=models.CASCADE, related_name='user_details_device')
     json_token = models.CharField(max_length=255)
+    device_id = models.CharField(max_length=255)
 
     class Meta:
         managed = True

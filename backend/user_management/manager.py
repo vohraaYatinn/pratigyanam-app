@@ -151,9 +151,10 @@ class UserManager:
     def single_device_login(request, data):
         token = request.headers.get("jwtToken", False)
         user = request.user.id
+        device_id = data.get("device_id", False)
         device_check = deviceLoginCheck.objects.filter(user=user)
         if not device_check:
-            deviceLoginCheck.objects.create(user=user, json_token=token)
+            deviceLoginCheck.objects.create(user=user, json_token=token, device_id=device_id)
             return True
-        if device_check[0].json_token != token:
+        if device_check[0].device_id != device_id:
             raise Exception("logout")

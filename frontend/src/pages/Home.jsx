@@ -18,6 +18,7 @@ import { userData } from "../redux/reducers/functionalities.reducer";
 import useAxios from "../network/useAxios";
 import { getNewCategoryService, singleDeviceLoginCheck } from "../urls/urls";
 import { test_url_images } from "../config/environment";
+import { Device } from '@capacitor/device';
 
 const Home = () => {
   const loggedInUser = useSelector(userData);
@@ -40,8 +41,15 @@ const Home = () => {
   ] = useAxios();
 
   const [categories, setCategories] = useState([]);
-
+  const [getDeviceDetails, setDeviceDetails] = useState(false)
+  const logDeviceInfo = async () => {
+    const info = await Device.getId();
+    console.log(info?.identifier)
+    setDeviceDetails(info?.identifier)
+  };
   useEffect(() => {
+    logDeviceInfo()
+
     setTimeout(() => {
       setSkeletonTime(false);
     }, 1500);
@@ -105,9 +113,16 @@ const Home = () => {
 
     getCategoriesFetch(getNewCategoryService());
   }, []);
+
   useEffect(()=>{
-    singleDeviceLoginFetch(singleDeviceLoginCheck());
-  },[])
+
+    if(getDeviceDetails){
+      singleDeviceLoginFetch(singleDeviceLoginCheck({
+        deviceId:getDeviceDetails
+      }));
+
+    }
+  },[getDeviceDetails])
 
   useEffect(() => {
     if (getCategoriesResponse?.result) {

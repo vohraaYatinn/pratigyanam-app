@@ -1,5 +1,13 @@
 {
   "appId": "com.example.app",
   "appName": "Pratigyanam",
-  "webDir": "dist"
+  "webDir": "dist",
+  "plugins": {
+    "Filesystem": {
+      "webDir": "www"
+    }
+  },
+  "server":{
+    "androidScheme":"http"
+  }
 }
