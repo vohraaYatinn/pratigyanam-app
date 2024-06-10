@@ -7,6 +7,7 @@ import useAxios from "../network/useAxios";
 import { emailSignIn, phoneNumberOtp } from "../urls/urls";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/reducers/functionalities.reducer";
+import { Spin } from "antd";
 
 const SigninWithEmail = () => {
   const dispatch = useDispatch();
@@ -53,10 +54,19 @@ const SigninWithEmail = () => {
     }
     else if(LoginResponse?.result && !LoginResponse?.login_check){
       setErrors({
-        "logincheck": "Email or Password is invalid"
+        "logincheck": "Login failed. Please check your email and password."
       })
     }
   }, [LoginResponse]);
+	
+  useEffect(() => {
+    if(LoginError){
+      setErrors({
+        "logincheck": "Login failed. Please check your email and password."
+      })
+    }
+
+  }, [LoginError]);
 
   const validate = (email, password) => {
     const errors = {};
@@ -79,8 +89,7 @@ const SigninWithEmail = () => {
     if (Object.keys(errors).length !== 0) {
       setErrors(errors);
     } else {
-      console.log("email: ", email, "password: ", password);
-      navigate("/home");
+      loginFunction();
     }
   };
 
@@ -149,11 +158,12 @@ const SigninWithEmail = () => {
                 <button
                   type="submit"
                   onClick={() => {
-					loginFunction();
-				  }}
+
+                    submitValues()	
+                  			  }}
                   className="w-full  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center send-otp-button"
                 >
-                  Login
+                  {LoginLoading ? <Spin /> : "Login" }
                 </button>
                 {errors.logincheck && (
                     <div className="text-red-500" style={{marginTop:"0.5rem"}}>{errors.logincheck}</div>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png"
 import { PhoneOtpSend  } from "../urls/urls";
 import useAxios from "../network/useAxios";
+import { Spin } from "antd";
 
 
 const Signin = () => {
@@ -86,11 +87,18 @@ const Signin = () => {
 										Phone Number
 									</label>
 									<input
-										type="phone"
+										type="number"
 										name="phone"
 										id="phone"
+										maxLength={10}
 										value={phoneNumber}
-										onChange={(e) => setPhoneNumber(e.target.value)}
+										onChange={(e) => {
+											if(e.target.value.length <=10){
+												setPhoneNumber(e.target.value)
+
+											}
+
+										}}
 										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
 										placeholder="Enter 10 digits phone number"
 										required=""
@@ -106,7 +114,7 @@ const Signin = () => {
 									className="w-full  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center send-otp-button"
 								
 									>
-									Send Otp
+									  {phoneOtpsLoading ? <Spin /> : "Login" }
 								</button>
 								
 							</form>
