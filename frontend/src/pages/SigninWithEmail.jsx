@@ -8,6 +8,7 @@ import { emailSignIn, phoneNumberOtp } from "../urls/urls";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/reducers/functionalities.reducer";
 import { Spin } from "antd";
+import { Device } from '@capacitor/device';
 
 const SigninWithEmail = () => {
   const dispatch = useDispatch();
@@ -18,10 +19,6 @@ const SigninWithEmail = () => {
   localStorage.setItem("toast", true);
   const [LoginResponse, LoginError, LoginLoading, LoginFetch] = useAxios();
 
-  const loginFunction = () => {
-    console.log("hiiii");
-    LoginFetch(emailSignIn({ email: email, password:password, deviceId:getDeviceDetails }));
-  };
   useEffect(()=>{
     if(localStorage.getItem("storedToken")){
       navigate('/home')
@@ -29,14 +26,19 @@ const SigninWithEmail = () => {
   },[])
   const [getDeviceDetails, setDeviceDetails] = useState(false)
 
+  const loginFunction = () => {
+    console.log("hiiii");
+    if(getDeviceDetails){
+      LoginFetch(emailSignIn({ email: email, password:password, deviceId:getDeviceDetails }));
+    }
+  };
 	const logDeviceInfo = async () => {
 		const info = await Device.getId();
-		console.log(info?.identifier)
 		setDeviceDetails(info?.identifier)
 	  };
 	  useEffect(() => {
 		logDeviceInfo()
-	  });
+	  },[]);
 	
   useEffect(() => {
     if (LoginResponse?.result && LoginResponse?.login_check) {

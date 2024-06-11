@@ -30,5 +30,7 @@ export class Urls {
     static IS_MUSIC_USER_FAV = Urls.MPHRMS_API_PREFIX + 'accounts/is-music-user-fav/';
     static LOGIN_USING_PHONE_NUMBER = Urls.MPHRMS_API_PREFIX + 'accounts/login-using-phone-number/';
     static VERIFY_OTP = Urls.MPHRMS_API_PREFIX + 'accounts/verify-otp/';
+    static PAYMENT_ORDER_GATEWAY = Urls.MPHRMS_API_PREFIX + 'accounts/payment-order-fetch/';
+    static CONFIRM_PAYMENT = Urls.MPHRMS_API_PREFIX + 'accounts/confirm-payment/';
 
 }

@@ -9,6 +9,9 @@ from backend import settings
 from music.models import MusicCategory, MusicCategoryMapping
 from user_management.manager import UserManager
 from user_management.models import UserDetails
+import razorpay
+import json
+
 
 
 class CustomManager:
@@ -168,3 +171,39 @@ class CustomManager:
             return False, False, False
         except Exception:
             return False, False, False
+
+    @staticmethod
+    def fetch_payment_razorpay(request, data):
+        try:
+            amount = data.get("amount")
+            client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+            DATA = {
+                "amount": int(float(amount)) * 100,
+                "currency": "INR",
+                "receipt": "receipt#1",
+            }
+            req_order = client.order.create(data=DATA)
+            return req_order
+        except:
+            raise Exception("Something went wrong")
+
+    @staticmethod
+    def verify_payment_check(request, data):
+        try:
+            data = data['data']
+            json_string = json.loads(data)
+            razorpay_order_id = json_string['response'].get("razorpay_order_id")
+            razorpay_payment_id = json_string['response'].get("razorpay_payment_id")
+            razorpay_signature = json_string['response'].get("razorpay_signature")
+            client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+            try:
+                verify_payment = client.utility.verify_payment_signature({
+                    'razorpay_order_id': razorpay_order_id,
+                    'razorpay_payment_id': razorpay_payment_id,
+                    'razorpay_signature': razorpay_signature
+                })
+            except:
+                verify_payment = False
+            return verify_payment
+        except:
+            raise Exception("Something went wrong")

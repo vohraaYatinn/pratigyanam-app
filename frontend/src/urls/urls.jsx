@@ -117,3 +117,9 @@ export const PhoneOtpSend= (payload_data) => {
 export const VerifyOtp= (payload_data) => {
   return project.post(Urls.VERIFY_OTP, payload_data);
 };
+export const paymentOrder = (payload_data) => {
+  return project.post(Urls.PAYMENT_ORDER_GATEWAY, payload_data);
+};
+export const confirmPayment = (payload_data) => {
+  return project.post(Urls.CONFIRM_PAYMENT, payload_data);
+};

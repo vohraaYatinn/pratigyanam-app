@@ -172,3 +172,5 @@ JWT_SECRET_KEY = 'secret_key_hash_3434checking'
 JWT_ALGORITHM = 'HS256'  # You can use other algorithms like 'RS256'
 JWT_EXP_DELTA_SECONDS = 3600
 
+RAZOR_KEY_ID = "rzp_test_ziVvoUDwLLfxAW"
+RAZOR_KEY_SECRET = "ICoRLfQHDSfaxFF0rnJIdNeP"

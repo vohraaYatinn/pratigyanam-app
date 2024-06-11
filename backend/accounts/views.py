@@ -148,3 +148,26 @@ class verifyOtpPhoneNumber(APIView):
         except Exception as err:
             return Response(str(err), 500)
 
+class fetchPaymentDetails(APIView):
+    permission_classes = [CheckAuthUser]
+
+    @staticmethod
+    def post(request):
+        try:
+            data = request.data
+            req_order = CustomManager.fetch_payment_razorpay(request, data)
+            return Response({"result" : "success", "data": req_order}, 200)
+        except Exception as e:
+            return Response({"result" : "failure", "message":str(e)}, 500)
+
+class paymentVerifyCheck(APIView):
+    permission_classes = [CheckAuthUser]
+
+    @staticmethod
+    def post(request):
+        try:
+            data = request.data
+            req_order = CustomManager.verify_payment_check(request, data)
+            return Response({"result" : "success", "data": req_order}, 200)
+        except Exception as e:
+            return Response({"result" : "failure", "message":str(e)}, 500)

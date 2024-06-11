@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .views import GetProfileData, UserFavouriteMusic, UserRecentMusic, CheckUserFavouriteOrNot, adminDashboard, \
-    adminRefreshToken, LoginUsingPhoneNumber, verifyOtpPhoneNumber
+    adminRefreshToken, LoginUsingPhoneNumber, verifyOtpPhoneNumber, fetchPaymentDetails, paymentVerifyCheck
 
 urlpatterns = [
     path('get-profile/',  GetProfileData.as_view(), name='get-profile'),
@@ -12,4 +12,6 @@ urlpatterns = [
     path('get-refresh-token/', adminRefreshToken.as_view(), name='get-refresh-token'),
     path('login-using-phone-number/', LoginUsingPhoneNumber.as_view(), name='login-using-phone-number'),
     path('verify-otp/', verifyOtpPhoneNumber.as_view(), name='verify-otp-phone-number'),
+    path(r'payment-order-fetch/', fetchPaymentDetails.as_view(), name="payment-order-fetch"),
+    path(r'confirm-payment/', paymentVerifyCheck.as_view(), name="payment-verify-check"),
 ]
