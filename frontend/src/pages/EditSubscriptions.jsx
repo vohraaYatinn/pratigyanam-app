@@ -6,12 +6,15 @@ import TopNav from "../components/TopNav";
 import BottomNav from "../components/BottomNav";
 import { Skeleton } from "antd";
 import { useSelector } from "react-redux";
-import { userData } from "../redux/reducers/functionalities.reducer";
+import { updateUser, userData } from "../redux/reducers/functionalities.reducer";
 import { buySubscriptionService, confirmPayment, getAllSubscriptionService, getAllSubscriptionServiceUsers, paymentOrder } from "../urls/urls";
 import useAxios from "../network/useAxios";
 import PaymentComponent from "../components/PaymentGateway";
+import { useDispatch } from "react-redux";
 
 const EditSubscriptions = () => {
+  const dispatch = useDispatch();
+
   const [skeletontime, setSkeletonTime] = useState(true);
   const loggedInUser = useSelector(userData);
   const [subId, setSelectedSubId] = useState(false)
@@ -53,18 +56,22 @@ const EditSubscriptions = () => {
     console.log(getSubsResponse?.result);
   }, [getSubsResponse]);
 
-  const manageBuySubscription = (sub_id) => {
+  const manageBuySubscription = () => {
     subscribeFetch(buySubscriptionService({
       userId:loggedInUser?.id,
-      subscription_id :sub_id
+      subscription_id :subId
     }))
-    console.log(sub_id);
   };
   useEffect(()=>{
     if(data){
        confirmPaymentFetch(confirmPayment({data:data}));
     }
  },[data])
+  useEffect(()=>{
+    if(subscribeResponse?.success == "true" ){
+      dispatch(updateUser(subscribeResponse?.data));
+    }
+ },[subscribeResponse])
  useEffect(() => {
   if (confirmPaymentResponse?.result == "success" && confirmPaymentResponse?.data ) {
     manageBuySubscription()
@@ -155,7 +162,7 @@ const EditSubscriptions = () => {
               </p>
               {!loggedInUser?.user_profile?.is_subscription_activated ? (
                 <>
-                <h1>You Dont Have a active plan</h1>
+                <h1>You don't Have a active plan</h1>
                 </>
               ) : (
                 <div>

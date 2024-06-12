@@ -3,6 +3,8 @@ from datetime import timedelta
 
 from accounts.models import Profile
 from subscriptions.models import SubscriptionPlan
+from user_management.models import UserDetails
+from django.db import transaction
 
 
 class SubscriptionManager:
@@ -30,23 +32,34 @@ class SubscriptionManager:
         return SubscriptionPlan.objects.filter(status="A")
 
     @staticmethod
-    def buy_subscription(data):
-        user_id = data.get('userId')
+    @transaction.atomic
+    def buy_subscription(request, data):
+        subscription_id = data.get('subscription_id', False)
+        user_id = request.user.id
+        if not subscription_id:
+            raise Exception("")
         profile_data = Profile.objects.get(user_id=user_id)
-        subscription_id = data.get('subscription_id')
         get_sub_obj = SubscriptionPlan.objects.get(id=subscription_id)
-
-        current_datetime = datetime.now()
-
-        if not profile_data.is_subscription_activated:
-            profile_data.sub_active_till = current_datetime+timedelta(days=get_sub_obj.duration)
-
-        else:
-            profile_data.sub_active_till += timedelta(days=get_sub_obj.duration)
-
+        new_extended_time = profile_data.sub_active_till + timedelta(days=get_sub_obj.duration)
+        profile_data.sub_active_till = new_extended_time
         profile_data.subscription = get_sub_obj
         profile_data.is_subscription_activated = True
+        applied_referral_code = profile_data.applied_referral_code
+        if applied_referral_code:
+            get_users = UserDetails.objects.filter(referral_code=applied_referral_code)
+            if get_users:
+                profile_data_referral = Profile.objects.get(user_id=get_users[0].id)
+                get_sub_obj = SubscriptionPlan.objects.filter(name__icontains="referral")
+                if get_sub_obj:
+                    get_sub_obj = get_sub_obj[0]
+                    new_extended_time_for_referral = profile_data_referral.sub_active_till + timedelta(days=get_sub_obj.duration)
+                    profile_data_referral.sub_active_till = new_extended_time_for_referral
+                    profile_data_referral.subscription = get_sub_obj
+                    profile_data_referral.is_subscription_activated = True
+                    profile_data_referral.save()
         profile_data.save()
+        return UserDetails.objects.filter(id=user_id).select_related(
+                    'user_profile').prefetch_related('user_preferences')
 
 
     @staticmethod

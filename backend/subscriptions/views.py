@@ -6,6 +6,8 @@ from rest_framework.views import APIView
 
 from subscriptions.manager import SubscriptionManager
 from subscriptions.serializers import SubscriptionSerializer
+from user_management.custom_permissions import CheckAuthUser
+from user_management.serializers import UserDetailsWithProfileAndPreferencesSerializer
 
 
 class AddGetSubscriptions(APIView):
@@ -40,12 +42,14 @@ class AddGetSubscriptionsUsers(APIView):
 
 
 class BuySubscriptionByUser(APIView):
+    permission_classes = [CheckAuthUser]
     @staticmethod
     def post(request):
         try:
             data = request.data
-            SubscriptionManager.buy_subscription(data)
-            return Response({"result": data, "message": "Plan added successfully"}, 200)
+            user = SubscriptionManager.buy_subscription(request, data)
+            serialized_data = UserDetailsWithProfileAndPreferencesSerializer(user[0]).data
+            return Response({"result": data, "message": "Plan added successfully", "data":serialized_data, "success":"true"}, 200)
         except Exception as err:
             return Response(str(err), 500)
 

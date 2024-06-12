@@ -36,6 +36,7 @@ class UserManager:
         date_of_birth = data.get('dateOfBirth', None)
         language = data.get('language', None)
         referral = data.get('referral', None)
+        deviceId = data.get('deviceId', None)
         query = Q()
         if referral:
             referral_check = UserDetails.objects.filter(referral_code=referral)
@@ -65,7 +66,15 @@ class UserManager:
                 profile.applied_referral_code = referral
                 profile.save()
             UserPreferences.objects.create(user=user_data, gender=audio_gender, language=language)
-        return UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(id=user_data.id)
+            user = UserDetails.objects.select_related('user_profile').prefetch_related('user_preferences').get(id=user_data.id)
+            token = UserManager.generate_jwt({
+                'id': user.id,
+                'email': user.email,
+                'role': user.role,
+            })
+            if deviceId:
+                deviceLoginCheck.objects.create(user=user, json_token=token, device_id=deviceId)
+        return user, token
 
     @staticmethod
     def edit_profile_details(request, data):

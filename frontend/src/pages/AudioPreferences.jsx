@@ -6,6 +6,7 @@ import useAxios from "../network/useAxios";
 import { Radio, Space, Spin } from "antd";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/reducers/functionalities.reducer";
+import { Device } from '@capacitor/device';
 
 
 
@@ -24,6 +25,12 @@ const AudioPreferences = () => {
       setLanguage(value); 
     }
   };
+  const [
+    singleDeviceLoginResponse,
+    singleDeviceLoginError,
+    singleDeviceLoginLoading,
+    singleDeviceLoginFetch,
+  ] = useAxios();
 
   const [signupResponse, signupError, signupLoading,signupFetch] =
     useAxios();
@@ -35,7 +42,14 @@ const AudioPreferences = () => {
     e.preventDefault();
     navigate("/signup");
   };
-
+  const [getDeviceDetails, setDeviceDetails] = useState(false)
+  const logDeviceInfo = async () => {
+    const info = await Device.getId();
+    setDeviceDetails(info?.identifier)
+  };
+  useEffect(()=>{
+    logDeviceInfo()
+  },[])
   const handleGoogleAuth = (e) => {
     e.preventDefault();
     let payload={
@@ -46,7 +60,8 @@ const AudioPreferences = () => {
       audioGender: audioGender,
       language: language,
       phoneNumber:phoneNumber,
-      referral:addReferral
+      referral:addReferral,
+      deviceId:getDeviceDetails
     }
     signupFetch(signupUserService(payload))
     // navigate("/music");
@@ -64,6 +79,7 @@ const AudioPreferences = () => {
     if(signupResponse?.message=="Welcome" && signupResponse?.result)
       {
         const userProfileData = {email:email, user_id:"" };
+        localStorage.setItem("storedToken",signupResponse?.token)
         dispatch(updateUser(signupResponse?.result));
         navigate("/home");
       }

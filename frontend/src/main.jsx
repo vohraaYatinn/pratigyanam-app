@@ -31,7 +31,23 @@ import { Provider } from "react-redux";
 import Store from './redux/Store';
 import AdminSounds from "./admin-pages/AdminSounds.jsx";
 import RefreshToken from "./RefreshToken.jsx";
+import { LocalNotifications } from '@capacitor/local-notifications';
+import { PushNotifications } from '@capacitor/push-notifications';
 
+PushNotifications.requestPermissions().then(result => {
+	if (result.receive === 'granted') {
+	  PushNotifications.register();
+	} else {
+	  // Handle the case where permission was not granted
+	}
+  });
+LocalNotifications.requestPermissions().then(permission => {
+  if (permission.display === 'granted') {
+    console.log('Permission granted for local notifications');
+  } else {
+    console.log('Permission not granted for local notifications');
+  }
+});
 
 const router = createBrowserRouter([
 	{

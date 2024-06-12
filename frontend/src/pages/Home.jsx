@@ -104,11 +104,14 @@ const Home = () => {
       if(days < 0){
         navigate("/manage-subscriptions");
       }
-      setMessage({
-        showMessage: true,
-        isError: false,
-        message: `You are currently using free trail, ${days} days left`,
-      });
+      if(!(loggedInUser?.user_profile?.is_subscription_activated)){
+        setMessage({
+          showMessage: true,
+          isError: false,
+          message: `You are currently using free trail, ${days} days left`,
+        });
+      }
+
     }
 
     getCategoriesFetch(getNewCategoryService());
@@ -217,8 +220,9 @@ const Home = () => {
         <BottomNav path={"home"} />
         <TopNav />
         <div className="page-title-clear" />
-        <div style={{ padding: "10px" }}>
+        
           {message.showMessage ? (
+            <div style={{ padding: "10px" }}>
             <Alert
               closable
               type="warning"
@@ -231,8 +235,9 @@ const Home = () => {
               }}
               isError={message.isError}
             />
+            </div>
           ) : null}
-        </div>
+        
         <div
           id="menu-main"
           className="menu menu-box-left rounded-0"
@@ -255,11 +260,21 @@ const Home = () => {
           data-menu-height={480}
         />
         <div className="page-content text-center">
-          <div style={{
-            minHeight:"6rem", background:"red", marginBottom:"1rem"
-          }}>
-            Chakras Healing
-          </div>
+        <div class="card card-style morning-affirmation-chakra-div" onClick={()=>{
+          navigate("/sub-sound")
+        }} style={{
+					minHeight:"13rem",
+					display:"flex",
+					alignItems:"center",
+					justifyContent:"center",
+          marginBottom:"1rem"
+				  }}>
+<div class="content">
+{/* <h3 style={{textAlign:"center", fontSize:"1.3rem"}}>CHAKRA HEALING
+</h3> */}
+
+</div>
+</div>
 
           <div className="card card-style shadow-xl">
             {skeletontime ? (
@@ -386,39 +401,7 @@ const Home = () => {
               )}
             </div>
           </div>
-          {skeletontime ? (
-            <Skeleton active={true} className="px-4 my-4" title={false} />
-          ) : (
-            <div className="row mb-0">
-              {/* <a href="" className="col-6 pe-0" onClick={()=>recentOnClick(loggedInUser)}> */}
-              <Link
-                className="text-black"
-                to={{
-                  pathname: "/recent-music",
-                  state: { user: loggedInUser, type: "recent" },
-                }}
-              >
-                <div className="card mr-0 card-style">
-                  <div className="d-flex pt-3 pb-3">
-                    <div className="align-self-center">
-                      <i className="fa fa-history color-green-light ms-3 font-34 mt-1" />
-                    </div>
-                    <div className="align-self-center">
-                      <h5 className="ps-2 ms-1 mb-0">
-                        Recently <br /> Played
-                      </h5>
-                    </div>
-                  </div>
-                  <p className="px-3 pb-3">
-                    Reconnect with your favorite healing sessions and tracks
-                    with ease.
-                  </p>
-                </div>
-                {/* </a> */}
-              </Link>
-              
-            </div>
-          )}
+         
           {/* <a href="" data-toggle-theme></a> */}
           <div data-menu-load="menu-footer.html" />
         </div>

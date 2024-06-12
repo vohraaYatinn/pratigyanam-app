@@ -7,7 +7,7 @@ const PaymentComponent = ({orderDetails, payButtonRef, setData}) => {
 
   const payWithRazorpay = async () => {
     const options = {
-      key: 'rzp_test_mVj5vQrJLrX9Mm',
+      key: 'rzp_test_ziVvoUDwLLfxAW',
       amount: orderDetails?.amount,
       description: 'Great offers',
       image: 'https://i.imgur.com/3g7nmJC.jpg',

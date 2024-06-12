@@ -25,9 +25,9 @@ class NewUserSignup(APIView):
     def post(request):
         try:
             data = request.data
-            user_data = UserManager.signup_new_user(data)
+            user_data, token = UserManager.signup_new_user(data)
             serialized_data = UserDetailsWithProfileAndPreferencesSerializer(user_data).data
-            return Response({"result": serialized_data, "message": "Welcome"}, 200)
+            return Response({"result": serialized_data, "message": "Welcome", "token":token}, 200)
         except Exception as err:
             return Response(str(err), 500)
 
