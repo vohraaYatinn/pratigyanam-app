@@ -11,7 +11,7 @@ from user_management.manager import UserManager
 from user_management.models import UserDetails
 import razorpay
 import json
-
+import requests
 
 
 class CustomManager:
@@ -94,6 +94,21 @@ class CustomManager:
             "yearly_sub": yearly_sub,
         }
         return stats
+    @staticmethod
+    def fetch_morning_evening_category(data):
+        morning = MusicCategory.objects.filter(type__icontains="morning")
+        night = MusicCategory.objects.filter(type__icontains="night")
+        req_data = {
+            "morning": {
+                "id":morning[0].id,
+                "name":morning[0].type
+            },
+            "evening": {
+                "id":night[0].id,
+                "name":night[0].type
+            },
+        }
+        return req_data
 
 
     @staticmethod
@@ -108,8 +123,21 @@ class CustomManager:
             if check_user_otp:
                 check_user_otp[0].otp=otp
                 check_user_otp[0].save()
+
+
             else:
                 otpVerify.objects.create(phone=phoneNumber, otp=otp)
+
+            url = (
+                "https://www.fast2sms.com/dev/bulkV2?authorization=qPHJG9kF0ACvby7lVLgu8QND4xRTmjpKiIWU3BMr5sfzohXeY2vdcRNstkUbM5Ioz1g6mYGl4fj3uqDE"
+                "&route=q"
+                f"&message=Your%20OTP%20for%20login%20in%20Pratigyanam%20app%20is%20{otp}.%20Please%20use%20this%20code%20within%2010%20minutes%20to%20complete%20your%20login.%20If%20you%20did%20not%20request%20this,%20please%20ignore%20this%20message."
+                "&flash=0"
+                f"&numbers={phoneNumber}"
+            )
+            response = requests.get(url)
+            if response.status_code != 200:
+                raise Exception("We are currently experiencing issues with sending OTP")
             return True
 
         else:
@@ -129,17 +157,20 @@ class CustomManager:
             raise Exception("otp entered is Invalid")
         check_login = UserDetails.objects.filter(phone=phoneNumber).select_related('user_profile').prefetch_related('user_preferences')
         user_profile = check_login[0].user_profile
-        if user_profile:
-            effective_till = user_profile.sub_active_till
-            today = timezone.now()
-            if effective_till and today > effective_till and user_profile.subscription:
-                user_profile.is_subscription_activated = False
-                user_profile.subscription = None
-                user_profile.save()
-                check_login = UserDetails.objects.filter(phone=phoneNumber).select_related(
-                    'user_profile').prefetch_related('user_preferences')
+        if check_login[0].status == "inactive":
+            check_login[0].status = "active"
+            check_login[0].save()
+        else:
+            if user_profile:
+                effective_till = user_profile.sub_active_till
+                today = timezone.now()
+                if effective_till and today > effective_till and user_profile.subscription:
+                    user_profile.is_subscription_activated = False
+                    user_profile.subscription = None
+                    user_profile.save()
+                    check_login = UserDetails.objects.filter(phone=phoneNumber).select_related(
+                        'user_profile').prefetch_related('user_preferences')
 
-        token = ""
         if check_login:
             token = UserManager.generate_jwt({
                 'id': check_login[0].id,

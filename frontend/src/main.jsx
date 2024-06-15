@@ -33,6 +33,7 @@ import AdminSounds from "./admin-pages/AdminSounds.jsx";
 import RefreshToken from "./RefreshToken.jsx";
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { PushNotifications } from '@capacitor/push-notifications';
+import SigninInactivate from "./pages/SigninInactivate.jsx";
 
 PushNotifications.requestPermissions().then(result => {
 	if (result.receive === 'granted') {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
 			{
 				path: "/phoneLogin",
 				element: <Signin />,
+			},
+			{
+				path: "/phoneLoginInactive",
+				element: <SigninInactivate />,
 			},
 			{
 				path: "/otp",

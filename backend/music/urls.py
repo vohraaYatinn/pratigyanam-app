@@ -8,6 +8,7 @@ urlpatterns = [
     path('get-music-by-id/', GetMusicById.as_view(), name='get-music-by-id'),
     path('delete-categories/', deleteCategory.as_view(), name='delete-categories'),
     path('fetch-music-by-category/', fetchMusicByCategory.as_view(), name='fetch-music-by-category'),
-    path('delete-music/', deleteMusic.as_view(), name='delete-music')
+    path('delete-music/', deleteMusic.as_view(), name='delete-music'),
+    path('search-music/', deleteMusic.as_view(), name='delete-music')
 
 ]

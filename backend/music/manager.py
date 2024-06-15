@@ -91,7 +91,7 @@ class MusicManager:
         if search_text:
             query &= Q(type__icontains=search_text)
 
-        return MusicCategory.objects.filter(query)
+        return MusicCategory.objects.filter(query).exclude(type__icontains="morning").exclude(type__icontains="night")
 
 
 
@@ -120,3 +120,22 @@ class MusicManager:
 
 
 
+    @staticmethod
+    def get_search_music(data):
+        language = data.get('language', None)
+        gender = data.get('gender', None)
+        search_text = data.get('searchText', None)
+        query = Q()
+
+        if gender:
+            query &= Q(gender=gender)
+
+        if language:
+            query &= Q(language=language)
+
+        if search_text:
+            query &= Q(title__icontains=search_text)
+
+        category = MusicCategory.objects.filter(type__icontains=search_text)
+        music = MusicAudio.objects.filter(query)
+        return category, music

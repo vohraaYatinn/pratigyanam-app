@@ -143,3 +143,7 @@ opacity: 70%;
 .check-it-buttons{
 	color: white;
 }
+.full-input-errors{
+	border: 1px solid red !important;
+    border-radius: 0px;
+}

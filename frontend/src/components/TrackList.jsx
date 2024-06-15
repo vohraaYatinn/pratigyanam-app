@@ -162,7 +162,7 @@ const TrackList = ({
               {lastString === "recent-music" ? (
                 ""
               ) : (
-                (category && music) && 
+       
                 <div
                   className="content mt-3"
                   style={{

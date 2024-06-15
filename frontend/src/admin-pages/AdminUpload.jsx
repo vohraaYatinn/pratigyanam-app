@@ -20,12 +20,12 @@ const AdminUpload = () => {
 
   const [option, setOption] = useState([]);
   const optionsWithGender = [
-    { label: 'Male', value: 'Male' },
-    { label: 'Female', value: 'Female' }
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' }
   ];
   const optionsWithLanguage = [
-    { label: 'English', value: 'English' },
-    { label: 'Hindi', value: 'Hindi' }
+    { label: 'English', value: 'english' },
+    { label: 'Hindi', value: 'hindi' }
   ];
 
   const handleUpload = (e, name) => {
@@ -43,8 +43,8 @@ const AdminUpload = () => {
     }
   }, [getResponse]);
 
-  const [genderValues, setGenderValue] = useState('Male');
-  const [languageValue, setLanguageValue] = useState('English');
+  const [genderValues, setGenderValue] = useState('male');
+  const [languageValue, setLanguageValue] = useState('english');
 
   const changeGender = ({ target: { value } }) => {
     setGenderValue(value);
@@ -94,8 +94,8 @@ const AdminUpload = () => {
     description: "",
     image: "",
     audio: "",
-    gender: "Male",
-    language: "English",
+    gender: "male",
+    language: "english",
     category: "",
   });
 
@@ -138,12 +138,12 @@ const AdminUpload = () => {
         description: "",
         image: "",
         audio: "",
-        gender: "Male",
-        language: "English",
+        gender: "male",
+        language: "english",
         category: "",
       });
       setGenderValue("Male");
-      setLanguageValue("English");
+      setLanguageValue("english");
     }
     console.log(postMusicResponse)
   }, [postMusicResponse]);

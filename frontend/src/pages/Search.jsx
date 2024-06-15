@@ -23,7 +23,10 @@ const SearchComponent = () => {
   const [skeletontime, setSkeletonTime] = useState(true);
   const [searchValue, setSearchValue] = useState("");
 
-  const [musicList, setMusicList] = useState([]);
+  const [musicList, setMusicList] = useState({
+    category:[],
+    music:[]
+  });
 
   const [searchResponse, searchError, searchLoading, searchFetch] = useAxios();
   useEffect(() => {
@@ -77,7 +80,7 @@ const SearchComponent = () => {
 
   useEffect(() => {
     if (searchResponse?.result) {
-      setMusicList(searchResponse.result);
+      setMusicList(searchResponse.data);
     }
   }, [searchResponse]);
 
@@ -167,24 +170,47 @@ const SearchComponent = () => {
                     className="mt-5 mx-8"
                   />
                 ) : (
-                  musicList.map((data, index) => (
+                  <>
+                  {
+                  musicList?.category.map((data, index) => (
                     <div className="list-group list-custom-large">
                       <Link
                         data-trigger-switch="switch-1"
                         className="border-0"
-                        // to="/single-track/2"
-                        to={`/single-track/${data?.music?.id}`}
+                        onClick={()=>{
+                          navigate(`/music?filter=${data.id}&filterName=${data.type}`, { state: { category: data.id } });
+                        }}
                       >
                         <div>
                           
-                          <span>{data.music.title}</span>
-                          <strong>{data.category.type}</strong>
+                          <span>{data.type}</span>
+                          <strong>Category</strong>
                         </div>
                         {/* <span className="badge bg-blue-dark font-11 color-white">Category</span> */}
                         <i className="fa fa-angle-right" />
                       </Link>
                     </div>
-                  ))
+                  ))}
+                  {
+                  musicList?.music.map((data, index) => (
+                    <div className="list-group list-custom-large">
+                      <Link
+                        data-trigger-switch="switch-1"
+                        className="border-0"
+                        to={`/single-track/${data?.id}`}
+                      >
+                        <div>
+                          
+                          <span>{data.title}</span>
+                          <strong>Audio</strong>
+                        </div>
+                        {/* <span className="badge bg-blue-dark font-11 color-white">Category</span> */}
+                        <i className="fa fa-angle-right" />
+                      </Link>
+                    </div>
+                  ))}
+                  
+                  </>
                 )}
               </div>
             </div>

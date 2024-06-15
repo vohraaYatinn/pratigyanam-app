@@ -3,7 +3,7 @@ import random
 from django.db import transaction
 from django.db.models import Q
 
-from accounts.models import Profile, UserPreferences
+from accounts.models import Profile, UserPreferences, otpVerify
 from subscriptions.models import SubscriptionPlan
 from user_management.constants import ProfileEditType, UserMessages
 from user_management.models import UserDetails, deviceLoginCheck
@@ -11,6 +11,7 @@ import jwt
 from django.conf import settings
 from datetime import datetime, timedelta
 from django.utils import timezone
+import requests
 
 
 class UserManager:
@@ -52,7 +53,7 @@ class UserManager:
         existing_value = UserDetails.objects.filter(query)
 
         if existing_value:
-            raise Exception("User with same phone/email number exists")
+            raise Exception("User with same phone/email exists")
         # if existing_email:
         #     raise Exception("User with same email number exists")
         with transaction.atomic():
@@ -72,6 +73,19 @@ class UserManager:
                 'email': user.email,
                 'role': user.role,
             })
+            otp = random.randint(12321,98993)
+            otpVerify.objects.create(phone=phone_number, otp=otp)
+
+            url = (
+                "https://www.fast2sms.com/dev/bulkV2?authorization=qPHJG9kF0ACvby7lVLgu8QND4xRTmjpKiIWU3BMr5sfzohXeY2vdcRNstkUbM5Ioz1g6mYGl4fj3uqDE"
+                "&route=q"
+                f"&message=Your%20OTP%20for%20login%20in%20Pratigyanam%20app%20is%20{otp}.%20Please%20use%20this%20code%20within%2010%20minutes%20to%20complete%20your%20login.%20If%20you%20did%20not%20request%20this,%20please%20ignore%20this%20message."
+                "&flash=0"
+                f"&numbers={phone_number}"
+            )
+            response = requests.get(url)
+            if response.status_code != 200:
+                raise Exception("We are currently experiencing issues with sending OTP")
             if deviceId:
                 deviceLoginCheck.objects.create(user=user, json_token=token, device_id=deviceId)
         return user, token
@@ -133,6 +147,8 @@ class UserManager:
         email = data.get('email', None)
         password = data.get('password', None)
         check_login = UserDetails.objects.filter(email=email, password=password).select_related('user_profile').prefetch_related('user_preferences')
+        if check_login[0].status == "inactive":
+            raise Exception("Inactive user")
         user_profile = check_login[0].user_profile
         if user_profile:
             effective_till = user_profile.sub_active_till

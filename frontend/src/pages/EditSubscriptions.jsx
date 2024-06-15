@@ -68,7 +68,7 @@ const EditSubscriptions = () => {
     }
  },[data])
   useEffect(()=>{
-    if(subscribeResponse?.success == "true" ){
+    if(subscribeResponse?.smauccess == "true" ){
       dispatch(updateUser(subscribeResponse?.data));
     }
  },[subscribeResponse])

@@ -12,6 +12,8 @@ import { AudioOutlined } from '@ant-design/icons';
 import { Input, Skeleton } from 'antd';
 const { Search } = Input;
 import { Button, SearchBar, Space } from 'antd-mobile'
+import { fetchMorningEveningCategoryService, getNewCategoryService } from "../urls/urls";
+import useAxios from "../network/useAxios";
 
 
 
@@ -19,12 +21,24 @@ import { Button, SearchBar, Space } from 'antd-mobile'
 const AffirmationComponent = () => {
 	const [selectedTrack, setSelectedTrack] = useState(tracksFav[0]);
 	const [skeletontime, setSkeletonTime] = useState(true);
-
+	const [selectedCategories, setSelectedCategories] = useState({})
+	const [
+		fetchCategoryResponse,
+		fetchCategoryError,
+		fetchCategoryLoading,
+		fetchCategoryFetch,
+	  ] = useAxios();
 	useEffect(()=>{
+		fetchCategoryFetch(fetchMorningEveningCategoryService());
 		setTimeout(() => {
 			setSkeletonTime(false)
 		}, 1500);
 	},[])
+	useEffect(()=>{
+		if(fetchCategoryResponse?.result == "success"){
+			setSelectedCategories(fetchCategoryResponse?.data)
+		}
+	},[fetchCategoryResponse])
 	const navigate = useNavigate();
 
 	const handleTrackClick = (track) => {
@@ -81,8 +95,12 @@ const AffirmationComponent = () => {
 					display:"flex",
 					alignItems:"center",
 					justifyContent:"center"
-				  }}>
-<div class="content">
+				  }}
+				  onClick={()=>{
+					navigate(`/music?filter=${selectedCategories?.morning?.id}&filterName=${selectedCategories?.morning?.name}`, { state: { category: selectedCategories?.morning?.id } });
+				}}
+				  >
+<div class="content" >
 <h3 style={{textAlign:"center", fontSize:"1.3rem"}}>Morning Affirmations
 </h3>
 
@@ -97,7 +115,12 @@ const AffirmationComponent = () => {
 					display:"flex",
 					alignItems:"center",
 					justifyContent:"center"
-				  }}>
+				  }}
+				  onClick={()=>{
+					navigate(`/music?filter=${selectedCategories?.evening?.id}&filterName=${selectedCategories?.evening?.name}`, { state: { category: selectedCategories?.evening?.id } });
+
+				  }}
+				  >
 <div class="content">
 <h3 style={{textAlign:"center", fontSize:"1.3rem"}}>Night Affirmations
 </h3>

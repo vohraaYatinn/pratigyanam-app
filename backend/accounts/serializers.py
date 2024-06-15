@@ -21,7 +21,7 @@ class UserPreferencesSerializer(serializers.ModelSerializer):
 
 
 class UserFavouritesSerializer(serializers.ModelSerializer):
-    # user = UserDetailsSerializer()
+    user = UserDetailsSerializer()
     track = MusicAudioCategorySerializer()
 
     class Meta:

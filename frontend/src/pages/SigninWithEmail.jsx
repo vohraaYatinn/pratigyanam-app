@@ -63,6 +63,9 @@ const SigninWithEmail = () => {
 	
   useEffect(() => {
     if(LoginError){
+      if(LoginError?.response?.data == "Inactive user"){
+       navigate("/phoneLoginInactive")
+      }
       setErrors({
         "logincheck": "Login failed. Please check your email and password."
       })
@@ -117,6 +120,7 @@ const SigninWithEmail = () => {
                 <div>
                   <label
                     htmlFor="email"
+                    
                     className="block mb-2 text-sm font-medium text-gray-900 "
                   >
                     Email
@@ -126,8 +130,13 @@ const SigninWithEmail = () => {
                     name="email"
                     id="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    onChange={(e) => {
+                      setErrors({})
+                      setEmail(e.target.value)}
+                    }
+                    className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ${
+											errors.email ? "full-input-errors" : ""
+										  }`}
                     placeholder="Enter your mail here"
                     required=""
                   />
@@ -148,9 +157,14 @@ const SigninWithEmail = () => {
                     name="password"
                     id="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                    placeholder="Enter your password here"
+                    onChange={(e) =>{
+                      setErrors({})
+                      setPassword(e.target.value)
+                    }}
+                    className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ${
+											errors.password ? "full-input-errors" : ""
+										  }`}                    
+                      placeholder="Enter your password here"
                     required=""
                   />
                   {errors.password && (

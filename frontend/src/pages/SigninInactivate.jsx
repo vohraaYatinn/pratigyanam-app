@@ -3,10 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png"
 import { PhoneOtpSend  } from "../urls/urls";
 import useAxios from "../network/useAxios";
-import { Spin } from "antd";
+import { Spin, Alert } from "antd";
 
-
-const Signin = () => {
+const SigninInactivate = () => {
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const [phoneOtpsResponse, phoneOtpsError, phoneOtpsLoading, phoneOtpsFetch] =
     useAxios();
@@ -77,9 +76,18 @@ const Signin = () => {
 							<h1 className="text-xl font-bold text-center leading-tight tracking-tight text-gray-900 md:text-2xl "  style={{
 								marginBottom:"3rem"
 							}}>
-								Login
+								Login 
 							</h1>
 							<form className="space-y-4 md:space-y-6">
+							{true ? (
+            <div >
+            <Alert
+              closable
+              type="warning"
+              message={"Complete your account by verifying your phone number"}
+            />
+            </div>
+          ) : null}
 								<div>
 									<label
 										htmlFor="phone"
@@ -130,4 +138,4 @@ const Signin = () => {
 	);
 };
 
-export default Signin;
+export default SigninInactivate;

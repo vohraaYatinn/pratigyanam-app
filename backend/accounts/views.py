@@ -171,3 +171,15 @@ class paymentVerifyCheck(APIView):
             return Response({"result" : "success", "data": req_order}, 200)
         except Exception as e:
             return Response({"result" : "failure", "message":str(e)}, 500)
+
+class fetchMorningEveningCategory(APIView):
+    permission_classes = [CheckAuthUser]
+
+    @staticmethod
+    def get(request):
+        try:
+            data = request.data
+            req_order = CustomManager.fetch_morning_evening_category(data)
+            return Response({"result" : "success", "data": req_order}, 200)
+        except Exception as e:
+            return Response({"result" : "failure", "message":str(e)}, 500)

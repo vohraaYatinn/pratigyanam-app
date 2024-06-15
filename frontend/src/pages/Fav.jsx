@@ -195,6 +195,10 @@ const FavComponent = () => {
                       //   href="#"
                       // >
                       <Link
+                      onClick={()=>{
+                        navigate(`/music?filter=${item.id}&filterName=${item.name}`, { state: { category: item.id } });
+
+                      }}
                         // to={{
                         //   pathname: `/music`,
                         //   search: `?filter=${item.id}&filterName=${item.name}`,

@@ -236,7 +236,7 @@ const EditAddress = () => {
                       </div>
 
                       <Radio.Group
-                        defaultValue={formValues.language}
+                        value={formValues.language}
                         onChange={onChangeLanguage}
                         buttonStyle="solid"
                         size="large"

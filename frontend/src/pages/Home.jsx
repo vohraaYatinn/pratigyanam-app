@@ -171,15 +171,7 @@ const Home = () => {
     message: "",
   });
 
-  const recentOnClick = (user) => {
-    navigate("/recent-music", {
-      state: { user: loggedInUser, type: "recent" },
-    });
-  };
 
-  const randomOnClick = (user) => {
-    navigate("/music", { state: { user: loggedInUser, type: "random" } });
-  };
 
   return (
     <div>

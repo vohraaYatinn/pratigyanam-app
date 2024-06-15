@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation  } from "react-router-dom";
 import { PhoneOtpSend, VerifyOtp } from "../urls/urls";
 import useAxios from "../network/useAxios";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/reducers/functionalities.reducer";
+import { Spin } from "antd";
 
 const OtpEnter = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const [errors, setErrors] = useState({})
 
 	const handleSignIn = (e) => {
 		e.preventDefault();
 		navigate("/home");
 	};
+
 	const { phoneNumber } = location.state;
 	const [verifyOtpResponse, verifyOtpError, verifyOtpLoading, verifyOtpFetch] =
     useAxios();
@@ -44,6 +47,18 @@ const OtpEnter = () => {
 			  }
 		}
 	},[verifyOtpResponse])
+	useEffect(()=>{
+		if(verifyOtpError){
+			setErrors({
+				phoneNumber:"The OTP code you entered is not recognized"
+			})
+		}
+	},[verifyOtpError])
+	const ref1 = useRef()
+	const ref2 = useRef()
+	const ref3 = useRef()
+	const ref4 = useRef()
+	const ref5 = useRef()
   
 
 	return (
@@ -68,75 +83,141 @@ const OtpEnter = () => {
 									<div className="d-flex gap-1 mb-2 otp-boxes">
       <div className="col">
         <input
-          type="text"
-          className="form-control form-control-lg text-center py-3"
-          value={formValues?.firstDigit}
+          type="number"
+
+          className={`form-control form-control-lg text-center py-3 ${
+			errors.phoneNumber ? "full-input-errors" : ""
+		  }`}          value={formValues?.firstDigit}
+		  ref={ref1}
+
           maxLength={1}
           onChange={(e)=>{
+			if (e.target.value.length < 2){
+
+			setErrors({})
             setFormValues((prev)=>({...prev, firstDigit:e.target.value}))
-          }}
+			if(e.target.value){
+				ref2.current.focus()
+			}
+          }}}
         />
       </div>
       <div className="col">
         <input
-          type="text"
-          className="form-control form-control-lg text-center py-3"
-          value={formValues?.secondDigit}
+          type="number"
+
+          className={`form-control form-control-lg text-center py-3 ${
+			errors.phoneNumber ? "full-input-errors" : ""
+		  }`}          value={formValues?.secondDigit}
           maxLength={1}
+		  ref={ref2}
+
           onChange={(e)=>{
+			if (e.target.value.length < 2){
+
+			setErrors({})
+
             setFormValues((prev)=>({...prev, secondDigit:e.target.value}))
-          }}
+			if(e.target.value){
+				ref3.current.focus()
+			}
+			else{
+				ref1.current.focus()
+			}
+			
+          }}}
         />
       </div>
       <div className="col">
         <input
-          type="text"
-          className="form-control form-control-lg text-center py-3"
-          value={formValues?.thirdDigit}
+          type="number"
+          className={`form-control form-control-lg text-center py-3 ${
+			errors.phoneNumber ? "full-input-errors" : ""
+		  }`}          value={formValues?.thirdDigit}
           maxLength={1}
+		  ref={ref3}
+
           onChange={(e)=>{
+			if (e.target.value.length < 2){
+			setErrors({})
+
+
+	
             setFormValues((prev)=>({...prev, thirdDigit:e.target.value}))
+			if(e.target.value){
+				ref4.current.focus()
+			}
+			else{
+				ref2.current.focus()
+
+			}
           }}
+		}
         />
       </div>
       <div className="col">
         <input
-          type="text"
-          className="form-control form-control-lg text-center py-3"
-          value={formValues?.fourthDigit}
+          type="number"
+		  ref={ref4}
+
+          className={`form-control form-control-lg text-center py-3 ${
+			errors.phoneNumber ? "full-input-errors" : ""
+		  }`}          value={formValues?.fourthDigit}
           maxLength={1}
           onChange={(e)=>{
+			if (e.target.value.length < 2){
+
+			setErrors({})
+
             setFormValues((prev)=>({...prev, fourthDigit:e.target.value}))
-          }}
+			if(e.target.value){
+				ref5.current.focus()
+			}
+			else{
+				ref3.current.focus()
+
+			}
+			
+
+          }}}
         />
       </div>
       <div className="col">
         <input
-          type="text"
-          className="form-control form-control-lg text-center py-3"
+          type="number"
+		  ref={ref5}
+
+          className={`form-control form-control-lg text-center py-3 ${
+			errors.phoneNumber ? "full-input-errors" : ""
+		  }`}
           value={formValues?.fifthDigit}
           maxLength={1}
           onChange={(e)=>{
+			if (e.target.value.length < 2){
+
+			setErrors({})
+
             setFormValues((prev)=>({...prev, fifthDigit:e.target.value}))
-          }}
+			if(!e.target.value){
+				ref4.current.focus()
+			}
+          }}}
         />
+			
       </div>
     </div>
 						</div>
+						{errors.phoneNumber && (
+                        <div className="text-red-500">{errors.phoneNumber}</div>
+                      )}
 								<button
 									type="submit"
 									onClick={handleOtp}
 									className="w-full  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
-									Sign In
+																		  {verifyOtpLoading ? <Spin /> : "Login" }
+
 								</button>
-								<p className="text-sm font-light text-gray-500 ">
-									don't have an account?{" "}
-									<Link
-										to={"/signup"}
-										className="font-medium text-primary-600 hover:underline ">
-										sign up
-									</Link>
-								</p>
+							
 						</div>
 					</div>
 				</div>
