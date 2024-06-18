@@ -14,6 +14,9 @@ class MusicManager:
         audio = data.get('audio', None)
         image = data.get('image', None)
         category = data.get('category', None)
+        old_music = MusicCategoryMapping.objects.filter(music__title__iexact=title, category_id=category)
+        if old_music:
+            raise Exception("Music title in the same category already exists")
         with(transaction.atomic()):
             music_obj = MusicAudio.objects.create(title=title, description=description,
                                   language=language, gender=gender, path=audio, image=image)
@@ -88,7 +91,7 @@ class MusicManager:
         if search_text:
             query &= Q(type__icontains=search_text)
 
-        return MusicCategory.objects.filter(query)
+        return MusicCategory.objects.filter(query).exclude(type__icontains="morning").exclude(type__icontains="night")
 
 
 
@@ -117,3 +120,22 @@ class MusicManager:
 
 
 
+    @staticmethod
+    def get_search_music(data):
+        language = data.get('language', None)
+        gender = data.get('gender', None)
+        search_text = data.get('searchText', None)
+        query = Q()
+
+        if gender:
+            query &= Q(gender=gender)
+
+        if language:
+            query &= Q(language=language)
+
+        if search_text:
+            query &= Q(title__icontains=search_text)
+
+        category = MusicCategory.objects.filter(type__icontains=search_text)
+        music = MusicAudio.objects.filter(query)
+        return category, music

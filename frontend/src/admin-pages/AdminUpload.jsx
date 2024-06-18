@@ -20,12 +20,12 @@ const AdminUpload = () => {
 
   const [option, setOption] = useState([]);
   const optionsWithGender = [
-    { label: 'Male', value: 'Male' },
-    { label: 'Female', value: 'Female' }
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' }
   ];
   const optionsWithLanguage = [
-    { label: 'English', value: 'English' },
-    { label: 'Hindi', value: 'Hindi' }
+    { label: 'English', value: 'english' },
+    { label: 'Hindi', value: 'hindi' }
   ];
 
   const handleUpload = (e, name) => {
@@ -35,16 +35,16 @@ const AdminUpload = () => {
   useEffect(() => {
     if (getResponse?.message === "success") {
       setCategories(getResponse?.result);
-      const options = getResponse.result.map((item) => ({
+      const options = getResponse.result.map((item, index) => ({
         value: item.id,
-        label: `${item.id}. ${item.type}`,
+        label: `${index+1}. ${item.type}`,
       }));
       setOption(options);
     }
   }, [getResponse]);
 
-  const [genderValues, setGenderValue] = useState('Male');
-  const [languageValue, setLanguageValue] = useState('English');
+  const [genderValues, setGenderValue] = useState('male');
+  const [languageValue, setLanguageValue] = useState('english');
 
   const changeGender = ({ target: { value } }) => {
     setGenderValue(value);
@@ -94,8 +94,8 @@ const AdminUpload = () => {
     description: "",
     image: "",
     audio: "",
-    gender: "Male",
-    language: "English",
+    gender: "male",
+    language: "english",
     category: "",
   });
 
@@ -138,13 +138,14 @@ const AdminUpload = () => {
         description: "",
         image: "",
         audio: "",
-        gender: "Male",
-        language: "English",
+        gender: "male",
+        language: "english",
         category: "",
       });
       setGenderValue("Male");
-      setLanguageValue("English");
+      setLanguageValue("english");
     }
+    console.log(postMusicResponse)
   }, [postMusicResponse]);
 
   useEffect(() => {
@@ -160,7 +161,7 @@ const AdminUpload = () => {
   return (
     <>
       <TopNav />
-      <BottomNav />
+      <BottomNav path={"admin-upload"}/>
       <div className="pt-20">
         <h1 className="text-2xl font-bold text-center">Upload Sound</h1>
 

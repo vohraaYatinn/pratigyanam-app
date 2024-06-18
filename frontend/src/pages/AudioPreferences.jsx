@@ -3,9 +3,10 @@ import { useNavigate, useLocation  } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import { signupUserService } from "../urls/urls";
 import useAxios from "../network/useAxios";
-import { Radio, Space, Spin } from "antd";
+import { Alert, Radio, Space, Spin } from "antd";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/reducers/functionalities.reducer";
+import { Device } from '@capacitor/device';
 
 
 
@@ -15,6 +16,7 @@ const AudioPreferences = () => {
   const { email, password, gender, userName, phoneNumber } = location.state;
   const [audioGender, setAudioGender] = useState("");
   const [language, setLanguage] = useState(""); 
+  const [addReferral, setAddReferral] = useState("")
   const handleGenderChange = (e) => {
     const { name, value } = e.target;
     if (name === "audioGender") {
@@ -23,6 +25,12 @@ const AudioPreferences = () => {
       setLanguage(value); 
     }
   };
+  const [
+    singleDeviceLoginResponse,
+    singleDeviceLoginError,
+    singleDeviceLoginLoading,
+    singleDeviceLoginFetch,
+  ] = useAxios();
 
   const [signupResponse, signupError, signupLoading,signupFetch] =
     useAxios();
@@ -34,7 +42,20 @@ const AudioPreferences = () => {
     e.preventDefault();
     navigate("/signup");
   };
+  const [message, setMessage] = useState({
+    showMessage: false,
+    isError: true,
+    message: "",
+  });
 
+  const [getDeviceDetails, setDeviceDetails] = useState(false)
+  const logDeviceInfo = async () => {
+    const info = await Device.getId();
+    setDeviceDetails(info?.identifier)
+  };
+  useEffect(()=>{
+    logDeviceInfo()
+  },[])
   const handleGoogleAuth = (e) => {
     e.preventDefault();
     let payload={
@@ -44,7 +65,9 @@ const AudioPreferences = () => {
       gender: gender,
       audioGender: audioGender,
       language: language,
-      phoneNumber:phoneNumber
+      phoneNumber:phoneNumber,
+      referral:addReferral,
+      deviceId:getDeviceDetails
     }
     signupFetch(signupUserService(payload))
     // navigate("/music");
@@ -52,18 +75,24 @@ const AudioPreferences = () => {
   };
 
   useEffect(()=>{
-      if(signupError?.data)
+      if(signupError)
         {
-         console.log(signupError.data)
+          setMessage((prev)=>({...prev,
+            message:signupError?.response?.data,
+            showMessage:true,
+            isError:true
+          }))
+          console.log(signupError)
+         
         }
   },[signupError])
 
   useEffect(()=>{
-    if(signupResponse?.message=="Welcome" && signupResponse?.result)
+    if(signupResponse?.result=="success" )
       {
-        const userProfileData = {email:email, user_id:"" };
-        dispatch(updateUser(signupResponse?.result));
-        navigate("/home");
+        navigate("/otp", {
+          state: { phoneNumber },
+        });      
       }
 },[signupResponse])
 
@@ -80,7 +109,24 @@ const onChange = (e) => {
               <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                 Audio Preferences
               </h1>
+              
               <form className="space-y-4 md:space-y-6" onSubmit={handleGoogleAuth}>
+              {message.showMessage ? (
+            <div >
+            <Alert
+              closable
+              type="error"
+              message={message.message}
+              dismiss={() => {
+                setMessage((prevState) => ({
+                  ...prevState,
+                  showMessage: false,
+                }));
+              }}
+              isError={message.isError}
+            />
+            </div>
+          ) : null}
                 <div>
                   <label htmlFor="audioGender" className="block mb-2 text-sm font-medium text-gray-900">
                     Audio Gender
@@ -106,21 +152,34 @@ const onChange = (e) => {
 									</label>
 									<Radio.Group onChange={onChange} value={language}>
 										<Space direction="horizontal">
-											<Radio value={"English"}>English</Radio>
-											<Radio value={"Hindi"}>Hindi</Radio>
+											<Radio value={"english"}>English</Radio>
+											<Radio value={"hindi"}>Hindi</Radio>
 										</Space>
 									</Radio.Group>
 								</div>
                 </div>
 
                 {error && <div className="text-red-600">{error}</div>}
-
+                <div className="w-full flex items-center justify-center text-xl text-gray-600 text-center">
+                  <p className="h-[1px] bg-gray-300 w-full"></p>
+                  <p className="h-[1px] bg-gray-300 w-full"></p>
+                </div>
+                <input
+										type="text"
+										name="Full Name"
+										id="userName"
+										value={addReferral}
+										onChange={(e) => setAddReferral(e.target.value)}
+										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+										placeholder="Would you be able to provide any referrals?"
+										required=""
+									/>
                 <div className="flex items-center justify-center">
                   <button
                     type="submit"
                     className="w-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center send-otp-button"
                     // onClick={handleGoogleAuth}
-                  > {signupLoading ? <Spin/> :  "Create an account"}
+                  > {signupLoading ? <Spin/> :  "Send OTP"}
                   </button>
                 </div>
               </form>

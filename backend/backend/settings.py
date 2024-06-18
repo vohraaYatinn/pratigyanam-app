@@ -92,7 +92,7 @@ DATABASES = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-        "http://127.0.0.1:5174"
+        "http://127.0.0.1:5173"
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -172,3 +172,5 @@ JWT_SECRET_KEY = 'secret_key_hash_3434checking'
 JWT_ALGORITHM = 'HS256'  # You can use other algorithms like 'RS256'
 JWT_EXP_DELTA_SECONDS = 3600
 
+RAZOR_KEY_ID = "rzp_test_ziVvoUDwLLfxAW"
+RAZOR_KEY_SECRET = "ICoRLfQHDSfaxFF0rnJIdNeP"

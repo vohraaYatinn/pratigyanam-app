@@ -7,6 +7,8 @@ import useAxios from "../network/useAxios";
 import { emailSignIn, phoneNumberOtp } from "../urls/urls";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/reducers/functionalities.reducer";
+import { Spin } from "antd";
+import { Device } from '@capacitor/device';
 
 const SigninWithEmail = () => {
   const dispatch = useDispatch();
@@ -17,15 +19,27 @@ const SigninWithEmail = () => {
   localStorage.setItem("toast", true);
   const [LoginResponse, LoginError, LoginLoading, LoginFetch] = useAxios();
 
-  const loginFunction = () => {
-    console.log("hiiii");
-    LoginFetch(emailSignIn({ email: email, password:password }));
-  };
   useEffect(()=>{
     if(localStorage.getItem("storedToken")){
       navigate('/home')
     }
   },[])
+  const [getDeviceDetails, setDeviceDetails] = useState(false)
+
+  const loginFunction = () => {
+    console.log("hiiii");
+    if(getDeviceDetails){
+      LoginFetch(emailSignIn({ email: email, password:password, deviceId:getDeviceDetails }));
+    }
+  };
+	const logDeviceInfo = async () => {
+		const info = await Device.getId();
+		setDeviceDetails(info?.identifier)
+	  };
+	  useEffect(() => {
+		logDeviceInfo()
+	  },[]);
+	
   useEffect(() => {
     if (LoginResponse?.result && LoginResponse?.login_check) {
       if(LoginResponse?.user?.role == "admin"){
@@ -42,10 +56,22 @@ const SigninWithEmail = () => {
     }
     else if(LoginResponse?.result && !LoginResponse?.login_check){
       setErrors({
-        "logincheck": "Email or Password is invalid"
+        "logincheck": "Login failed. Please check your email and password."
       })
     }
   }, [LoginResponse]);
+	
+  useEffect(() => {
+    if(LoginError){
+      if(LoginError?.response?.data == "Inactive user"){
+       navigate("/phoneLoginInactive")
+      }
+      setErrors({
+        "logincheck": "Login failed. Please check your email and password."
+      })
+    }
+
+  }, [LoginError]);
 
   const validate = (email, password) => {
     const errors = {};
@@ -68,8 +94,7 @@ const SigninWithEmail = () => {
     if (Object.keys(errors).length !== 0) {
       setErrors(errors);
     } else {
-      console.log("email: ", email, "password: ", password);
-      navigate("/home");
+      loginFunction();
     }
   };
 
@@ -95,6 +120,7 @@ const SigninWithEmail = () => {
                 <div>
                   <label
                     htmlFor="email"
+                    
                     className="block mb-2 text-sm font-medium text-gray-900 "
                   >
                     Email
@@ -104,8 +130,13 @@ const SigninWithEmail = () => {
                     name="email"
                     id="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    onChange={(e) => {
+                      setErrors({})
+                      setEmail(e.target.value)}
+                    }
+                    className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ${
+											errors.email ? "full-input-errors" : ""
+										  }`}
                     placeholder="Enter your mail here"
                     required=""
                   />
@@ -126,9 +157,14 @@ const SigninWithEmail = () => {
                     name="password"
                     id="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                    placeholder="Enter your password here"
+                    onChange={(e) =>{
+                      setErrors({})
+                      setPassword(e.target.value)
+                    }}
+                    className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ${
+											errors.password ? "full-input-errors" : ""
+										  }`}                    
+                      placeholder="Enter your password here"
                     required=""
                   />
                   {errors.password && (
@@ -138,11 +174,12 @@ const SigninWithEmail = () => {
                 <button
                   type="submit"
                   onClick={() => {
-					loginFunction();
-				  }}
+
+                    submitValues()	
+                  			  }}
                   className="w-full  text-white bg-gradient-to-r from-orange-500 to-yellow-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center send-otp-button"
                 >
-                  Login
+                  {LoginLoading ? <Spin /> : "Login" }
                 </button>
                 {errors.logincheck && (
                     <div className="text-red-500" style={{marginTop:"0.5rem"}}>{errors.logincheck}</div>

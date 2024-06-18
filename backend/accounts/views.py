@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from user_management.custom_permissions import CheckAuthUser
+from user_management.serializers import UserDetailsWithProfileAndPreferencesSerializer
 from .constants import AccountMessages
 from .manager import CustomManager
 
@@ -103,3 +104,82 @@ class adminDashboard(APIView):
         except Exception as err:
             return Response(str(err), 500)
 
+class adminRefreshToken(APIView):
+
+    @staticmethod
+    def post(request):
+        try:
+            data = request.data
+            user, login_check, token = CustomManager.get_refresh_token(request , data)
+            serialized_data = False
+            if token:
+                serialized_data = UserDetailsWithProfileAndPreferencesSerializer(user).data
+            return Response({"result": "success", "login_check": login_check,"token":token, "user": serialized_data}, 200)
+
+        except Exception as err:
+            return Response(str(err), 500)
+
+class LoginUsingPhoneNumber(APIView):
+
+    @staticmethod
+    def post(request):
+        try:
+            data = request.data
+            user = CustomManager.set_otp_for_user(request , data)
+            result = "success"
+            if user == "new login":
+                result = "new_login"
+            return Response({"result": result}, 200)
+
+        except Exception as err:
+            return Response(str(err), 500)
+
+class verifyOtpPhoneNumber(APIView):
+
+    @staticmethod
+    def post(request):
+        try:
+            data = request.data
+            user, login_check, token = CustomManager.set_otp_verify(request , data)
+            serialized_data = False
+            if token:
+                serialized_data = UserDetailsWithProfileAndPreferencesSerializer(user).data
+            return Response({"result": "success", "login_check": login_check,"token":token, "user": serialized_data}, 200)
+        except Exception as err:
+            return Response(str(err), 500)
+
+class fetchPaymentDetails(APIView):
+    permission_classes = [CheckAuthUser]
+
+    @staticmethod
+    def post(request):
+        try:
+            data = request.data
+            req_order = CustomManager.fetch_payment_razorpay(request, data)
+            return Response({"result" : "success", "data": req_order}, 200)
+        except Exception as e:
+            return Response({"result" : "failure", "message":str(e)}, 500)
+
+class paymentVerifyCheck(APIView):
+    permission_classes = [CheckAuthUser]
+
+    @staticmethod
+    def post(request):
+        try:
+            data = request.data
+            req_order = CustomManager.verify_payment_check(request, data)
+            return Response({"result" : "success", "data": req_order}, 200)
+        except Exception as e:
+            return Response({"result" : "failure", "message":str(e)}, 500)
+
+class fetchMorningEveningCategory(APIView):
+    permission_classes = [CheckAuthUser]
+
+    @staticmethod
+    def get(request):
+        try:
+            data = request.data
+            req_order = CustomManager.fetch_morning_evening_category(data)
+            return Response({"result" : "success", "data": req_order}, 200)
+        except Exception as e:
+            return Response({"result" : "failure", "message":str(e)}, 500)

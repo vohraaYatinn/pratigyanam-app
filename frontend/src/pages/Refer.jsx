@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 
 import refer from "../assets/refer.png";
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa6";
 import TopNav from "../components/TopNav";
 import BottomNav from "../components/BottomNav";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { userData } from "../redux/reducers/functionalities.reducer";
 
 
 const Refer = () => {
+	const loggedInUser = useSelector(userData);
+	const [copySuccess, setCopySuccess] = useState('');
 
+	const copyToClipboard = () => {
+	  navigator.clipboard.writeText(loggedInUser?.referral_code).then(() => {
+		setCopySuccess('Referral code copied!');
+		setTimeout(() => setCopySuccess(''), 2000); // Clear the message after 2 seconds
+	  }, () => {
+		setCopySuccess('Failed to copy the referral code');
+	  });
+	};
 			  return (
 				<>
 			<div>
@@ -35,16 +47,20 @@ const Refer = () => {
 <div className="border-2 border-dashed border-black flex text-sm mx-5 my-4 px-2 justify-center py-2 gap-4">
 <div className="text-center  pr-2">
   <p>your refferal code</p>
-  <p className="uppercase font-bold text-xl">abcgde234</p>
-  <button className="mt-1 bg-gray-500/30 text-sm px-3 py-1 text-black rounded-md">Copy</button>
+  <p className="uppercase font-bold text-xl">{loggedInUser?.referral_code}</p>
+  <button className="mt-1 bg-gray-500/30 text-sm px-3 py-1 text-black rounded-md"
+  onClick={copyToClipboard}
+  >Copy</button>
+{copySuccess && <p className="text-sm text-green-500 mt-2">{copySuccess}</p>}
+
 </div>
 </div>
 
 <div className="text-center mb-4">
   <p className="mb-3  font-medium">Share your Refferal code via</p>
-  <a href="#" className="icon icon-xs rounded-sm shadow-l mr-1 bg-facebook"><i className="fab fa-facebook-f" /></a>
-  <a href="#" className="icon icon-xs rounded-sm shadow-l mr-1 bg-twitter"><i className="fab fa-twitter" /></a>
-  <a href="#" className="icon icon-xs rounded-sm shadow-l mr-1 bg-phone"><i className=" fa-whatsapp fa-brands" /></a>
+  <a href={`https://wa.me/?text=Check%20out%20this%20amazing%20app!%20Use%20my%20referral%20code:%20${loggedInUser?.referral_code}`} className="icon icon-xs rounded-sm shadow-l mr-1 bg-phone">
+<i className=" fa-whatsapp fa-brands" />
+  </a>
 </div>
 <div className="divider mb-0" />
 <div className="row text-center mb-3 pl-3 pr-3">

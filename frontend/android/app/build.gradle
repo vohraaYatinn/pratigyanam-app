@@ -40,11 +40,14 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
+    implementation platform('com.google.firebase:firebase-bom:33.1.0')
+
 }
 
 apply from: 'capacitor.build.gradle'
 
 try {
+    apply plugin: 'com.android.application'
     def servicesJSON = file('google-services.json')
     if (servicesJSON.text) {
         apply plugin: 'com.google.gms.google-services'

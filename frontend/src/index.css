@@ -109,6 +109,18 @@ opacity: 70%;
 .morning-affirmation-div{
 	background-image: url("./assets/affir/1.png");
 }
+.morning-affirmation-chakra-div{
+	background-image: url("./assets/affir/chakra.jpeg");
+
+}
+.morning-affirmation-chakra-div h3{
+	position: absolute;
+	bottom: 0.4rem;
+	left: 0rem;
+	color: white;
+	font-weight: 700;
+	width: 100%;
+}
 .morning-affirmation-div h3{
 	color: white;
 	font-weight: 700;
@@ -130,4 +142,8 @@ opacity: 70%;
 }
 .check-it-buttons{
 	color: white;
+}
+.full-input-errors{
+	border: 1px solid red !important;
+    border-radius: 0px;
 }

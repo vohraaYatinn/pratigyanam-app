@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import vector from "../data/vector.jpeg";
 import music from "../assets/music.png";
-
-import image1 from "../assets/images/banners/1.png";
-import image2 from "../assets/images/banners/2.png";
-import image3 from "../assets/images/banners/3.png";
-import image4 from "../assets/images/banners/4.png";
 import { IoMdSearch } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import BottomNav from "../components/BottomNav";
@@ -21,8 +16,9 @@ import po3 from "../assets/images/po3.png";
 import { useSelector } from "react-redux";
 import { userData } from "../redux/reducers/functionalities.reducer";
 import useAxios from "../network/useAxios";
-import { getNewCategoryService } from "../urls/urls";
+import { getNewCategoryService, singleDeviceLoginCheck } from "../urls/urls";
 import { test_url_images } from "../config/environment";
+import { Device } from '@capacitor/device';
 
 const Home = () => {
   const loggedInUser = useSelector(userData);
@@ -37,13 +33,26 @@ const Home = () => {
     getCategoriesLoading,
     getCategoriesFetch,
   ] = useAxios();
+  const [
+    singleDeviceLoginResponse,
+    singleDeviceLoginError,
+    singleDeviceLoginLoading,
+    singleDeviceLoginFetch,
+  ] = useAxios();
 
   const [categories, setCategories] = useState([]);
-
+  const [getDeviceDetails, setDeviceDetails] = useState(false)
+  const logDeviceInfo = async () => {
+    const info = await Device.getId();
+    console.log(info?.identifier)
+    setDeviceDetails(info?.identifier)
+  };
   useEffect(() => {
+    logDeviceInfo()
+
     setTimeout(() => {
       setSkeletonTime(false);
-    }, 1500);
+    }, 200);
   });
 
   const navigateTo = (catId, catName) => {
@@ -51,11 +60,7 @@ const Home = () => {
   };
   const colors = ["#ace0ff", "#bcffbd", "#e4fabd", "#ffcfac"];
 
-  const items = colors.map((color, index) => (
-    <Swiper.Item key={index}>
-      <div style={{ background: color }}>{index + 1}</div>
-    </Swiper.Item>
-  ));
+
 
   useEffect(() => {
     const updateSlideSize = () => {
@@ -81,9 +86,7 @@ const Home = () => {
     };
   }, []);
 
-  const onClose = () => {
-    console.log("I was closed.");
-  };
+
 
   useEffect(() => {
     const toast = localStorage.getItem("toast");
@@ -92,26 +95,37 @@ const Home = () => {
     }
     setLoggedInUserData(loggedInUser);
     console.log(loggedInUser);
-    if (!loggedInUser?.user_profile?.is_subscription_activated) {
-      const start = new Date(loggedInUser?.user_profile?.created_at);
+    if (loggedInUser?.user_profile?.sub_active_till) {
+      const subActiveTill = loggedInUser?.user_profile?.sub_active_till;
+      const subActiveTillDate = new Date(subActiveTill.split('T')[0]);
       const today = new Date();
-      start.setHours(0, 0, 0, 0);
-      today.setHours(0, 0, 0, 0);
-      const differenceInTime = today.getTime() - start.getTime();
-      const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-      let days = Math.round(differenceInDays);
-      setMessage({
-        showMessage: true,
-        isError: false,
-        message: `You are currently using free trail, ${7 - days} days left`,
-      });
-      if (7 - days == 0) {
+      const timeDiff = subActiveTillDate - today;
+      const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      if(days < 0){
         navigate("/manage-subscriptions");
       }
+      if(!(loggedInUser?.user_profile?.is_subscription_activated)){
+        setMessage({
+          showMessage: true,
+          isError: false,
+          message: `You are currently using free trail, ${days} days left`,
+        });
+      }
+
     }
 
     getCategoriesFetch(getNewCategoryService());
   }, []);
+
+  useEffect(()=>{
+
+    if(getDeviceDetails){
+      singleDeviceLoginFetch(singleDeviceLoginCheck({
+        deviceId:getDeviceDetails
+      }));
+
+    }
+  },[getDeviceDetails])
 
   useEffect(() => {
     if (getCategoriesResponse?.result) {
@@ -157,15 +171,7 @@ const Home = () => {
     message: "",
   });
 
-  const recentOnClick = (user) => {
-    navigate("/recent-music", {
-      state: { user: loggedInUser, type: "recent" },
-    });
-  };
 
-  const randomOnClick = (user) => {
-    navigate("/music", { state: { user: loggedInUser, type: "random" } });
-  };
 
   return (
     <div>
@@ -206,8 +212,9 @@ const Home = () => {
         <BottomNav path={"home"} />
         <TopNav />
         <div className="page-title-clear" />
-        <div style={{ padding: "10px" }}>
+        
           {message.showMessage ? (
+            <div style={{ padding: "10px" }}>
             <Alert
               closable
               type="warning"
@@ -220,8 +227,9 @@ const Home = () => {
               }}
               isError={message.isError}
             />
+            </div>
           ) : null}
-        </div>
+        
         <div
           id="menu-main"
           className="menu menu-box-left rounded-0"
@@ -244,22 +252,21 @@ const Home = () => {
           data-menu-height={480}
         />
         <div className="page-content text-center">
-          {skeletontime ? (
-            <Skeleton.Image
-              active={true}
-              style={{ width: "300px", height: "300px" }}
-            />
-          ) : (
-            <Swiper
-              slideSize={slideSize1}
-              trackOffset={15}
-              loop
-              stuckAtBoundary={false}
-              style={{ marginBottom: "1.5rem" }}
-            >
-              {topDoctors}
-            </Swiper>
-          )}
+        <div class="card card-style morning-affirmation-chakra-div" onClick={()=>{
+          navigate("/sub-sound")
+        }} style={{
+					minHeight:"13rem",
+					display:"flex",
+					alignItems:"center",
+					justifyContent:"center",
+          marginBottom:"1rem"
+				  }}>
+<div class="content">
+{/* <h3 style={{textAlign:"center", fontSize:"1.3rem"}}>CHAKRA HEALING
+</h3> */}
+
+</div>
+</div>
 
           <div className="card card-style shadow-xl">
             {skeletontime ? (
@@ -281,6 +288,22 @@ const Home = () => {
               </div>
             )}
           </div>
+          {skeletontime ? (
+            <Skeleton.Button
+              active={true}
+              style={{ width: "200px", height: "200px" }}
+            />
+          ) : (
+            <Swiper
+              slideSize={slideSize1}
+              trackOffset={15}
+              loop
+              stuckAtBoundary={false}
+              style={{ marginBottom: "1.5rem" }}
+            >
+              {topDoctors}
+            </Swiper>
+          )}
 
           <div className="card card-full-left card-style">
             <div className="content">
@@ -370,39 +393,7 @@ const Home = () => {
               )}
             </div>
           </div>
-          {skeletontime ? (
-            <Skeleton active={true} className="px-4 my-4" title={false} />
-          ) : (
-            <div className="row mb-0">
-              {/* <a href="" className="col-6 pe-0" onClick={()=>recentOnClick(loggedInUser)}> */}
-              <Link
-                className="text-black"
-                to={{
-                  pathname: "/recent-music",
-                  state: { user: loggedInUser, type: "recent" },
-                }}
-              >
-                <div className="card mr-0 card-style">
-                  <div className="d-flex pt-3 pb-3">
-                    <div className="align-self-center">
-                      <i className="fa fa-history color-green-light ms-3 font-34 mt-1" />
-                    </div>
-                    <div className="align-self-center">
-                      <h5 className="ps-2 ms-1 mb-0">
-                        Recently <br /> Played
-                      </h5>
-                    </div>
-                  </div>
-                  <p className="px-3 pb-3">
-                    Reconnect with your favorite healing sessions and tracks
-                    with ease.
-                  </p>
-                </div>
-                {/* </a> */}
-              </Link>
-              
-            </div>
-          )}
+         
           {/* <a href="" data-toggle-theme></a> */}
           <div data-menu-load="menu-footer.html" />
         </div>

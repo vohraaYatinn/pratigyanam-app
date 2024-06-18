@@ -30,7 +30,25 @@ import AdminSubscription from './admin-pages/AdminSubscription.jsx'
 import { Provider } from "react-redux";
 import Store from './redux/Store';
 import AdminSounds from "./admin-pages/AdminSounds.jsx";
+import RefreshToken from "./RefreshToken.jsx";
+import { LocalNotifications } from '@capacitor/local-notifications';
+import { PushNotifications } from '@capacitor/push-notifications';
+import SigninInactivate from "./pages/SigninInactivate.jsx";
 
+PushNotifications.requestPermissions().then(result => {
+	if (result.receive === 'granted') {
+	  PushNotifications.register();
+	} else {
+	  // Handle the case where permission was not granted
+	}
+  });
+LocalNotifications.requestPermissions().then(permission => {
+  if (permission.display === 'granted') {
+    console.log('Permission granted for local notifications');
+  } else {
+    console.log('Permission not granted for local notifications');
+  }
+});
 
 const router = createBrowserRouter([
 	{
@@ -59,6 +77,10 @@ const router = createBrowserRouter([
 			{
 				path: "/phoneLogin",
 				element: <Signin />,
+			},
+			{
+				path: "/phoneLoginInactive",
+				element: <SigninInactivate />,
 			},
 			{
 				path: "/otp",
@@ -139,6 +161,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 	<Provider store={Store}>
 
 	<React.StrictMode>
+	<RefreshToken />
+
 		<RouterProvider router={router} />
 	</React.StrictMode>
 	</Provider>

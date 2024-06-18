@@ -8,11 +8,13 @@ import hindi from "../assets/images/hindi.png";
 import BottomNav from "../components/BottomNav";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { userData } from "../redux/reducers/functionalities.reducer";
+import { updateUser, userData } from "../redux/reducers/functionalities.reducer";
 import useAxios from "../network/useAxios";
 import { editProfileAndPreferencesService } from "../urls/urls";
+import { useDispatch } from "react-redux";
 
 const EditAddress = () => {
+  const dispatch = useDispatch();
   const [skeletontime, setSkeletonTime] = useState(true);
   const doFetchNewData = useRef(true);
   const loggedInUser = useSelector(userData);
@@ -22,7 +24,7 @@ const EditAddress = () => {
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);
-    }, 1500);
+    }, 200);
   });
 
   const [formValues, setFormValues] = useState({
@@ -50,6 +52,12 @@ const EditAddress = () => {
         isError: false,
         message: editResponse.message,
       });
+      dispatch(updateUser(editResponse?.result));
+
+
+
+
+
     }
 	editResponseRef.current = editResponse
   }, [editResponse]);
@@ -135,12 +143,12 @@ const EditAddress = () => {
               {skeletontime ? (
                 <>
                   <div className="text-center ">
-                    <Skeleton.Image
+                    <Skeleton.Button
                       active={true}
                       style={{ width: "120px", height: "130px" }}
                       className=""
                     />
-                    <Skeleton.Image
+                    <Skeleton.Button
                       active={true}
                       style={{ width: "120px", height: "130px" }}
                       className="ml-5"
@@ -153,12 +161,12 @@ const EditAddress = () => {
                     />
                   </div>
                   <div className="text-center mt-4">
-                    <Skeleton.Image
+                    <Skeleton.Button
                       active={true}
                       style={{ width: "120px", height: "130px" }}
                       className=""
                     />
-                    <Skeleton.Image
+                    <Skeleton.Button
                       active={true}
                       style={{ width: "120px", height: "130px" }}
                       className="ml-5"
@@ -228,7 +236,7 @@ const EditAddress = () => {
                       </div>
 
                       <Radio.Group
-                        defaultValue={formValues.language}
+                        value={formValues.language}
                         onChange={onChangeLanguage}
                         buttonStyle="solid"
                         size="large"

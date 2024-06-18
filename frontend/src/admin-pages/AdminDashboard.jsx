@@ -22,7 +22,7 @@ const AdminDashboard = () => {
 	return (
 		<>
 			<TopNav />
-			<BottomNav />
+			<BottomNav path={"admin-dashboard"}/>
 			<div className="pt-[75px] mx-4 flex justify-between items-center">
 				<div>
 					<span className="text-sm font-semibold">welcome back</span>

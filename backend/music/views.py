@@ -70,7 +70,7 @@ class deleteCategory(APIView):
         try:
             data = request.data
             delete_music = MusicManager.delete_category(data)
-            return Response({"result":"success", "message": "Success"}, 200)
+            return Response({"result": "success", "message": "Category Deleted Successfully"}, 200)
         except Exception as err:
             return Response(str(err), 500)
 
@@ -94,6 +94,22 @@ class deleteMusic(APIView):
             data = request.data
             required_music = MusicManager.delete_music(data)
             return Response({"result":"success", "message": "Audio Deleted Successfully"}, 200)
+        except Exception as err:
+            return Response(str(err), 500)
+
+
+
+class searchMusic(APIView):
+    @staticmethod
+    def get(request):
+        try:
+            data = request.query_params
+            category, music = MusicManager.get_search_music(data)
+            music_serializer = MusicAudioSerializer(music, many=True).data
+            category_serializer = MusicCategorySerializer(category, many=True).data
+            return Response({"result": "success", "message": "Success", "data":{
+                "category": category_serializer, "music":music_serializer
+            }}, 200)
         except Exception as err:
             return Response(str(err), 500)
 

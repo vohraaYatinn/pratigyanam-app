@@ -11,8 +11,7 @@ import { Dialog, List, SwipeAction, Toast, Image } from "antd-mobile";
 import { AudioOutlined } from "@ant-design/icons";
 import { Input, Skeleton } from "antd";
 const { Search } = Input;
-import { Button, SearchBar, Space } from "antd-mobile";
-import { getMusicService } from "../urls/urls";
+import { getMusicSearchService } from "../urls/urls";
 import useAxios from "../network/useAxios";
 import { useSelector } from "react-redux";
 import { userData } from "../redux/reducers/functionalities.reducer";
@@ -23,14 +22,28 @@ const SearchComponent = () => {
   const [skeletontime, setSkeletonTime] = useState(true);
   const [searchValue, setSearchValue] = useState("");
 
-  const [musicList, setMusicList] = useState([]);
+  const [musicList, setMusicList] = useState({
+    category:[],
+    music:[]
+  });
 
   const [searchResponse, searchError, searchLoading, searchFetch] = useAxios();
-
+  useEffect(() => {
+    if (loggedInUser?.user_profile?.sub_active_till) {
+      const subActiveTill = loggedInUser?.user_profile?.sub_active_till;
+      const subActiveTillDate = new Date(subActiveTill.split('T')[0]);
+      const today = new Date();
+      const timeDiff = subActiveTillDate - today;
+      const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      if(days < 0){
+        navigate("/manage-subscriptions");
+      }
+    }
+  }, []);
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);
-    }, 1500);
+    }, 200);
   });
 
   const navigate = useNavigate();
@@ -53,7 +66,7 @@ const SearchComponent = () => {
         language:loggedInUser?.user_preferences[0]?.language,
         gender: loggedInUser?.user_preferences[0]?.gender
       };
-      searchFetch(getMusicService(payloadData));
+      searchFetch(getMusicSearchService(payloadData));
     }, 500);
     // setTimer(delayDebounceFn)
   };
@@ -66,7 +79,7 @@ const SearchComponent = () => {
 
   useEffect(() => {
     if (searchResponse?.result) {
-      setMusicList(searchResponse.result);
+      setMusicList(searchResponse.data);
     }
   }, [searchResponse]);
 
@@ -156,24 +169,47 @@ const SearchComponent = () => {
                     className="mt-5 mx-8"
                   />
                 ) : (
-                  musicList.map((data, index) => (
+                  <>
+                  {
+                  musicList?.category.map((data, index) => (
                     <div className="list-group list-custom-large">
                       <Link
                         data-trigger-switch="switch-1"
                         className="border-0"
-                        // to="/single-track/2"
-                        to={`/single-track/${data?.music?.id}`}
+                        onClick={()=>{
+                          navigate(`/music?filter=${data.id}&filterName=${data.type}`, { state: { category: data.id } });
+                        }}
                       >
                         <div>
                           
-                          <span>{data.music.title}</span>
-                          <strong>{data.category.type}</strong>
+                          <span>{data.type}</span>
+                          <strong>Category</strong>
                         </div>
                         {/* <span className="badge bg-blue-dark font-11 color-white">Category</span> */}
                         <i className="fa fa-angle-right" />
                       </Link>
                     </div>
-                  ))
+                  ))}
+                  {
+                  musicList?.music.map((data, index) => (
+                    <div className="list-group list-custom-large">
+                      <Link
+                        data-trigger-switch="switch-1"
+                        className="border-0"
+                        to={`/single-track/${data?.id}`}
+                      >
+                        <div>
+                          
+                          <span>{data.title}</span>
+                          <strong>Audio</strong>
+                        </div>
+                        {/* <span className="badge bg-blue-dark font-11 color-white">Category</span> */}
+                        <i className="fa fa-angle-right" />
+                      </Link>
+                    </div>
+                  ))}
+                  
+                  </>
                 )}
               </div>
             </div>

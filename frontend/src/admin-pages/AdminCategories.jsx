@@ -7,6 +7,7 @@ import { Alert } from "antd";
 
 const AdminCategories = () => {
   const [addResponse, addError, addLoading, addFetch] = useAxios();
+  const [deleteResponse, deleteError, deleteLoading, deleteFetch] = useAxios();
   const [getResponse, getError, getLoading, getFetch] = useAxios();
   const [categories, setCategories] = useState([]);
   const [formValues, setFormValues] = useState({
@@ -21,7 +22,7 @@ const AdminCategories = () => {
   });
 
   const deleteFunction = (id) => {
-    addFetch(deleteNewCategoryServices({ id: id }));
+    deleteFetch(deleteNewCategoryServices({ id: id }));
   };
 
   const handleUpload = (e) => {
@@ -88,12 +89,27 @@ const AdminCategories = () => {
         message: "Failed to add category!",
       });
     }
-  }, [addResponse, addError]);
+    if (deleteResponse?.result === "success") {
+      setMessage({
+        showMessage: true,
+        isError: false,
+        message: "Category deleted successfully!",
+      });
+      // getFetch(getNewCategoryService());
+      // setFormValues({ type: "", image: "" });
+    } else if (deleteError) {
+      setMessage({
+        showMessage: true,
+        isError: true,
+        message: "Failed to delete category!",
+      });
+    }
+  }, [addResponse, addError, deleteResponse, deleteError]);
 
   return (
     <>
       <TopNav />
-      <BottomNav />
+      <BottomNav path={"admin-categories"}/>
       <div className="w-full px-3 ">
         <div className="pt-20">
           <h1 className="font-bold text-center text-3xl mb-4">Categories</h1>
@@ -157,7 +173,7 @@ const AdminCategories = () => {
       <div className="mt-5 mb-20">
         <h1 className="text-2xl text-center my-2 font-bold">Total Categories</h1>
         <div style={{ paddingBottom: "10rem", marginTop: "2rem" }}>
-          {categories?.map((item) => {
+          {categories?.map((item, index) => {
             return (
               <div
                 className="text-xl flex ml-5 gap-4"
@@ -167,7 +183,7 @@ const AdminCategories = () => {
                 }}
               >
                 <p>
-                  {item.id}. {item.type}
+                  {index+1}. {item.type}
                 </p>
                 <button
                   className="btn btn-danger"

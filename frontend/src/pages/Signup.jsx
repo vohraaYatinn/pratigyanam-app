@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Input, Radio, Space } from "antd";
 
@@ -10,7 +10,11 @@ const Signup = () => {
 	const [errors, setErrors] = useState({});
 	const [gender, setGender] = useState("M");
 	const [phoneNumber, setPhoneNumber] = useState("");
-
+	useEffect(()=>{
+		if(localStorage.getItem("storedToken")){
+		  navigate('/home')
+		}
+	  },[])
 	const navigate = useNavigate();
 
 	const handleSignUp = (e) => {
@@ -60,6 +64,10 @@ const Signup = () => {
 		if (!phone) {
 			errors.phone = "Phone Number is required!";
 		}
+		else if(phone.length !=10){
+			errors.phone = "Phone Number is invalid!";
+
+		}
 		return errors;
 	};
 
@@ -99,9 +107,14 @@ const Signup = () => {
 										name="Full Name"
 										id="userName"
 										value={userName}
-										onChange={(e) => setUsername(e.target.value)}
-										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-										placeholder="Your Full Name"
+										onChange={(e) =>{
+											setErrors((prev)=>({...prev, userName:false}))
+											setUsername(e.target.value)
+										} }
+										className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ${
+											errors.userName ? "full-input-errors" : ""
+										  }`} 
+										  										placeholder="Your Full Name"
 										required=""
 									/>
 									{errors.userName && (
@@ -115,14 +128,23 @@ const Signup = () => {
 										Your Phone Number
 									</label>
 									<input
-										type="tel"
+										type="number"
 										name="phone"
 										id="phone"
 										maxLength={10}
 										value={phoneNumber}
-										onChange={(e) => setPhoneNumber(e.target.value)}
-										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-										placeholder="Enter your Phone Number"
+										onChange={(e) => {
+											if(e.target.value.length <=10){
+												setErrors((prev)=>({...prev, phone:false}))
+												setPhoneNumber(e.target.value)
+
+											}
+
+										}}
+										className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ${
+											errors.phone ? "full-input-errors" : ""
+										  }`} 
+										  										placeholder="Enter your Phone Number"
 										required=""
 									/>
 									{errors.phone && (
@@ -140,9 +162,14 @@ const Signup = () => {
 										name="email"
 										id="email"
 										value={email}
-										onChange={(e) => setEmail(e.target.value)}
-										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-										placeholder="name@company.com"
+										onChange={(e) =>{
+											setErrors((prev)=>({...prev, email:false}))
+											setEmail(e.target.value)
+										}}
+										className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ${
+											errors.email ? "full-input-errors" : ""
+										  }`} 
+										  										placeholder="name@company.com"
 										required=""
 									/>
 									{errors.email && (
@@ -160,10 +187,18 @@ const Signup = () => {
 										name="password"
 										id="password"
 										value={password}
-										onChange={(e) => setPassword(e.target.value)}
+										onChange={(e) => {
+											setPassword(e.target.value)
+											setErrors((prev)=>({...prev, password:false}))
+
+										}
+										
+										}
 										placeholder="••••••••"
-										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-										required=""
+										className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ${
+											errors.password ? "full-input-errors" : ""
+										  }`} 
+										  										required=""
 									/>
 									{errors.password && (
 										<div className="text-red-500">{errors.password}</div>
@@ -180,10 +215,17 @@ const Signup = () => {
 										name="confirm-password"
 										id="confirm-password"
 										value={confirmPassword}
-										onChange={(e) => setConfirmPassword(e.target.value)}
+										onChange={(e) => {
+											setErrors((prev)=>({...prev, confirmPassword:false}))
+
+											setConfirmPassword(e.target.value)
+										
+										}}
 										placeholder="••••••••"
-										className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 0"
-										required=""
+										className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ${
+											errors.confirmPassword ? "full-input-errors" : ""
+										  }`} 
+										  										required=""
 									/>
 									{errors.confirmPassword && (
 										<div className="text-red-500">{errors.confirmPassword}</div>

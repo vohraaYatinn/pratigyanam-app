@@ -12,6 +12,8 @@ import { AudioOutlined } from '@ant-design/icons';
 import { Input, Skeleton } from 'antd';
 const { Search } = Input;
 import { Button, SearchBar, Space } from 'antd-mobile'
+import { fetchMorningEveningCategoryService, getNewCategoryService } from "../urls/urls";
+import useAxios from "../network/useAxios";
 
 
 
@@ -19,12 +21,24 @@ import { Button, SearchBar, Space } from 'antd-mobile'
 const AffirmationComponent = () => {
 	const [selectedTrack, setSelectedTrack] = useState(tracksFav[0]);
 	const [skeletontime, setSkeletonTime] = useState(true);
-
+	const [selectedCategories, setSelectedCategories] = useState({})
+	const [
+		fetchCategoryResponse,
+		fetchCategoryError,
+		fetchCategoryLoading,
+		fetchCategoryFetch,
+	  ] = useAxios();
 	useEffect(()=>{
+		fetchCategoryFetch(fetchMorningEveningCategoryService());
 		setTimeout(() => {
 			setSkeletonTime(false)
-		}, 1500);
+		}, 200);
 	},[])
+	useEffect(()=>{
+		if(fetchCategoryResponse?.result == "success"){
+			setSelectedCategories(fetchCategoryResponse?.data)
+		}
+	},[fetchCategoryResponse])
 	const navigate = useNavigate();
 
 	const handleTrackClick = (track) => {
@@ -76,96 +90,41 @@ const AffirmationComponent = () => {
       rows: 6,
     }}/>:
 
-				  <div class="card card-style morning-affirmation-div">
-<div class="content">
-<h3 style={{textAlign:"center", fontSize:"1.3rem", marginBottom:"2rem"}}>Morning Affirmations
+				  <div class="card card-style morning-affirmation-div" style={{
+					minHeight:"10rem",
+					display:"flex",
+					alignItems:"center",
+					justifyContent:"center"
+				  }}
+				  onClick={()=>{
+					navigate(`/music?filter=${selectedCategories?.morning?.id}&filterName=${selectedCategories?.morning?.name}`, { state: { category: selectedCategories?.morning?.id } });
+				}}
+				  >
+<div class="content" >
+<h3 style={{textAlign:"center", fontSize:"1.3rem"}}>Morning Affirmations
 </h3>
-<p>
 
-<div className="content mb-0 mt-3">
-					<div className="row mb-0">
-					  <div className="col-6 pe-1" onClick={()=>{
-						navigate("/single-track/01")
-					  }}>
-						<div className="card card-style mx-0 mb-2 p-3">
-						  <h6 className="font-14">Male - Hindi</h6>
-						  {/* <h3 className="color-green-dark mb-0">+31.2%</h3> */}
-						</div>
-					  </div>
-					  <div className="col-6 ps-1" onClick={()=>{
-						navigate("/single-track/01")
-					  }}>
-						<div className="card card-style mx-0 mb-2 p-3">
-						  <h6 className="font-14">Male - English</h6>
-						  {/* <h3 className="color-red-dark mb-0">-14.5%</h3> */}
-						</div>
-					  </div>
-					  <div className="col-6 pe-1" onClick={()=>{
-						navigate("/single-track/01")
-					  }}>
-						<div className="card card-style mx-0 p-3">
-						  <h6 className="font-14">Female - Hindi</h6>
-						  {/* <h3 className="color-brown-dark mb-0">+11.2%</h3> */}
-						</div>
-					  </div>
-					  <div className="col-6 ps-1" onClick={()=>{
-						navigate("/single-track/01")
-					  }}>
-						<div className="card card-style mx-0 p-3">
-						  <h6 className="font-14">Female - English</h6>
-						  {/* <h3 className="color-blue-dark mb-0">$14,500</h3> */}
-						</div>
-					  </div>
-					</div>
-				  </div></p>
 </div>
 </div>
 }
 {skeletontime? <Skeleton active={true} title={false} className="px-4 my-5" paragraph={{
       rows: 6,
     }}/>:
-				  <div class="card card-style night-affirmation-div">
-<div class="content">
-<h3 style={{textAlign:"center", fontSize:"1.3rem", marginBottom:"2rem"}}>Night Affirmations
-</h3>
-<p>
+				  <div class="card card-style night-affirmation-div"  style={{
+					minHeight:"10rem",
+					display:"flex",
+					alignItems:"center",
+					justifyContent:"center"
+				  }}
+				  onClick={()=>{
+					navigate(`/music?filter=${selectedCategories?.evening?.id}&filterName=${selectedCategories?.evening?.name}`, { state: { category: selectedCategories?.evening?.id } });
 
-<div className="content mb-0 mt-3">
-					<div className="row mb-0">
-					  <div className="col-6 pe-1" onClick={()=>{
-						navigate("/single-track/01")
-					  }}>
-						<div className="card card-style mx-0 mb-2 p-3">
-						  <h6 className="font-14">Male - Hindi</h6>
-						  {/* <h3 className="color-green-dark mb-0">+31.2%</h3> */}
-						</div>
-					  </div>
-					  <div className="col-6 ps-1" onClick={()=>{
-						navigate("/single-track/01")
-					  }}>
-						<div className="card card-style mx-0 mb-2 p-3">
-						  <h6 className="font-14">Male - English</h6>
-						  {/* <h3 className="color-red-dark mb-0">-14.5%</h3> */}
-						</div>
-					  </div>
-					  <div className="col-6 pe-1" onClick={()=>{
-						navigate("/single-track/01")
-					  }}>
-						<div className="card card-style mx-0 p-3">
-						  <h6 className="font-14">Female - Hindi</h6>
-						  {/* <h3 className="color-brown-dark mb-0">+11.2%</h3> */}
-						</div>
-					  </div>
-					  <div className="col-6 ps-1" onClick={()=>{
-						navigate("/single-track/01")
-					  }}>
-						<div className="card card-style mx-0 p-3">
-						  <h6 className="font-14">Female - English</h6>
-						  {/* <h3 className="color-blue-dark mb-0">$14,500</h3> */}
-						</div>
-					  </div>
-					</div>
-				  </div></p>
+				  }}
+				  >
+<div class="content">
+<h3 style={{textAlign:"center", fontSize:"1.3rem"}}>Night Affirmations
+</h3>
+
 </div>
 </div>
 }

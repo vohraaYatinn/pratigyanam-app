@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import vector from "../data/vector.jpeg";
 import { GoDot } from "react-icons/go";
@@ -6,25 +6,49 @@ import TopNav from "../components/TopNav";
 import BottomNav from "../components/BottomNav";
 import { Skeleton } from "antd";
 import { useSelector } from "react-redux";
-import { userData } from "../redux/reducers/functionalities.reducer";
-import { buySubscriptionService, getAllSubscriptionService } from "../urls/urls";
+import { updateUser, userData } from "../redux/reducers/functionalities.reducer";
+import { buySubscriptionService, confirmPayment, getAllSubscriptionService, getAllSubscriptionServiceUsers, paymentOrder } from "../urls/urls";
 import useAxios from "../network/useAxios";
+import PaymentComponent from "../components/PaymentGateway";
+import { useDispatch } from "react-redux";
 
 const EditSubscriptions = () => {
+  const dispatch = useDispatch();
+
   const [skeletontime, setSkeletonTime] = useState(true);
   const loggedInUser = useSelector(userData);
+  const [subId, setSelectedSubId] = useState(false)
+  const [orderDetails, setOrderDetails] = useState(false)
+  const [data, setData] = useState(null);
+  const [
+    confirmPaymentResponse,
+    confirmPaymentError,
+    confirmPaymentLoading,
+    confirmPaymentFetch,
+  ] = useAxios();
   const [getSubsResponse, getSubsError, getSubsLoading, getSubsFetch] =
     useAxios();
+    const [
+      paymentOrderResponse,
+      paymentOrderError,
+    paymentOrderLoading,
+      paymentOrderFetch,
+    ] = useAxios();
+    const paymentOrderFunction = (price) => {
+      paymentOrderFetch(paymentOrder({amount:price}))
+   }
   const [subscribeResponse, subscribeError, subscribeLoading, subscribeFetch] = useAxios();
   const [allSubs, setAllSubs] = useState([]);
+  const payButtonRef = useRef()
+
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);
-    }, 1500);
+    }, 200);
   });
 
   useEffect(() => {
-    getSubsFetch(getAllSubscriptionService());
+    getSubsFetch(getAllSubscriptionServiceUsers());
   }, []);
 
   useEffect(() => {
@@ -32,14 +56,27 @@ const EditSubscriptions = () => {
     console.log(getSubsResponse?.result);
   }, [getSubsResponse]);
 
-  const manageBuySubscription = (sub_id) => {
+  const manageBuySubscription = () => {
     subscribeFetch(buySubscriptionService({
       userId:loggedInUser?.id,
-      subscription_id :sub_id
+      subscription_id :subId
     }))
-    console.log(sub_id);
   };
-
+  useEffect(()=>{
+    if(data){
+       confirmPaymentFetch(confirmPayment({data:data}));
+    }
+ },[data])
+  useEffect(()=>{
+    if(subscribeResponse?.smauccess == "true" ){
+      dispatch(updateUser(subscribeResponse?.data));
+    }
+ },[subscribeResponse])
+ useEffect(() => {
+  if (confirmPaymentResponse?.result == "success" && confirmPaymentResponse?.data ) {
+    manageBuySubscription()
+  }
+}, [confirmPaymentResponse]);
   const getFormattedDate = (dateValue) =>{
     const date = new Date(dateValue);
 
@@ -53,6 +90,18 @@ const EditSubscriptions = () => {
     return formattedDate
     
   }
+  useEffect(() => {
+    if (orderDetails) {
+       payButtonRef.current.click()
+    }
+ }, [orderDetails]);
+
+  useEffect(() => {
+    if (paymentOrderResponse?.result == "success") {
+      console.log(paymentOrderResponse?.data)
+       setOrderDetails(paymentOrderResponse?.data)
+    }
+ }, [paymentOrderResponse]);
 
   return (
     <div>
@@ -112,7 +161,9 @@ const EditSubscriptions = () => {
                 Your Current Subscription plan
               </p>
               {!loggedInUser?.user_profile?.is_subscription_activated ? (
-                <h1>You Dont Have A active plan</h1>
+                <>
+                <h1>You don't Have a active plan</h1>
+                </>
               ) : (
                 <div>
                   <h1>{loggedInUser?.user_profile?.subscription?.name}</h1>
@@ -131,7 +182,7 @@ const EditSubscriptions = () => {
         )}
         <div style={{ marginBottom: "8rem" }}>
           {skeletontime ? (
-            <Skeleton.Image
+            <Skeleton.Button
               active={true}
               style={{ width: "350px", height: "300px" }}
               className="px-4 my-4"
@@ -159,8 +210,15 @@ const EditSubscriptions = () => {
                     </p>
                     <a
                       href="#"
-                      class="btn btn-center-m btn-m gradient-blue rounded-s font-700 text-uppercase"
-                      onClick={() => manageBuySubscription(sub?.id)}
+                      class="btn btn-center-m btn-m gradient-blue rounded-s font-700 text-uppercase mt-4"
+                      onClick={() =>{
+
+                 
+                        //  manageBuySubscription(sub?.id)
+                        setSelectedSubId(sub?.id)
+                         paymentOrderFunction(sub?.price)
+                        }
+                        }
                     >
                       {loggedInUser?.user_profile?.is_subscription_activated ? "Extend" : " Subscribe"}
                      
@@ -173,6 +231,7 @@ const EditSubscriptions = () => {
           )}
         </div>
       </div>
+      <PaymentComponent orderDetails={orderDetails} payButtonRef={payButtonRef} setData={setData}/>
     </div>
   );
 };

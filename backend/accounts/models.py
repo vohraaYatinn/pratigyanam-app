@@ -16,6 +16,7 @@ class Profile(models.Model):
     subscription = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE, related_name='user_subscription', null=True)
     is_subscription_activated = models.BooleanField(default=False)
     sub_active_till = models.DateTimeField(null=True)
+    applied_referral_code = models.CharField(max_length=20, null=True)
 
     class Meta:
         managed = True
@@ -44,6 +45,14 @@ class RecentMusic(models.Model):
         managed = True
         db_table = "recent_music"
 
+
+class otpVerify(models.Model):
+    phone = models.CharField(max_length=14)
+    otp = models.CharField(max_length=6)
+
+    class Meta:
+        managed = True
+        db_table = "otp_verify"
 
 class UserFavorites(models.Model):
     user = models.ForeignKey(UserDetails, on_delete=models.CASCADE, related_name='user_fav')
