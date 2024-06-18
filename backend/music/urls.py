@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from .views import GetPostMusic, GetPostCategory, GetMusicById, deleteCategory, fetchMusicByCategory, deleteMusic
+from .views import GetPostMusic, GetPostCategory, GetMusicById, deleteCategory, fetchMusicByCategory, deleteMusic, \
+    searchMusic
 
 urlpatterns = [
     path('get-post-music/', GetPostMusic.as_view(), name='get-post-music'),
@@ -9,6 +10,5 @@ urlpatterns = [
     path('delete-categories/', deleteCategory.as_view(), name='delete-categories'),
     path('fetch-music-by-category/', fetchMusicByCategory.as_view(), name='fetch-music-by-category'),
     path('delete-music/', deleteMusic.as_view(), name='delete-music'),
-    path('search-music/', deleteMusic.as_view(), name='delete-music')
-
+    path('search-music/', searchMusic.as_view(), name='delete-music')
 ]

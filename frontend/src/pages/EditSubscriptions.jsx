@@ -44,7 +44,7 @@ const EditSubscriptions = () => {
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);
-    }, 1500);
+    }, 200);
   });
 
   useEffect(() => {
@@ -182,7 +182,7 @@ const EditSubscriptions = () => {
         )}
         <div style={{ marginBottom: "8rem" }}>
           {skeletontime ? (
-            <Skeleton.Image
+            <Skeleton.Button
               active={true}
               style={{ width: "350px", height: "300px" }}
               className="px-4 my-4"

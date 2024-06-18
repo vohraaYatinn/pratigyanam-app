@@ -32,7 +32,7 @@ const AffirmationComponent = () => {
 		fetchCategoryFetch(fetchMorningEveningCategoryService());
 		setTimeout(() => {
 			setSkeletonTime(false)
-		}, 1500);
+		}, 200);
 	},[])
 	useEffect(()=>{
 		if(fetchCategoryResponse?.result == "success"){

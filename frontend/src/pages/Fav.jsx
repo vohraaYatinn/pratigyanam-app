@@ -48,7 +48,7 @@ const FavComponent = () => {
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);
-    }, 1500);
+    }, 200);
   });
   useEffect(() => {
     if (loggedInUser?.user_profile?.sub_active_till) {
@@ -101,6 +101,7 @@ const FavComponent = () => {
           console.log("categores", categoryList);
         });
     }
+   
     setUserCategories(categoryList);
     setUserFavourites(favResponse?.result ? favResponse?.result : []);
   }, [favResponse]);
@@ -177,6 +178,10 @@ const FavComponent = () => {
                       </Link>
                     );
                   })}
+                      { 
+      userFavourites.length == 0 && <span>No favorites have been added.
+      </span>
+    }
                 </>
               ) : (
                 <>
@@ -219,6 +224,9 @@ const FavComponent = () => {
                       </Link>
                     );
                   })}
+                  { 
+      userCategories.length == 0 && <span>No favorites have been added.</span>
+    }
                 </>
               )}
             </div>

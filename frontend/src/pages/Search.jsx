@@ -11,8 +11,7 @@ import { Dialog, List, SwipeAction, Toast, Image } from "antd-mobile";
 import { AudioOutlined } from "@ant-design/icons";
 import { Input, Skeleton } from "antd";
 const { Search } = Input;
-import { Button, SearchBar, Space } from "antd-mobile";
-import { getMusicService } from "../urls/urls";
+import { getMusicSearchService } from "../urls/urls";
 import useAxios from "../network/useAxios";
 import { useSelector } from "react-redux";
 import { userData } from "../redux/reducers/functionalities.reducer";
@@ -44,7 +43,7 @@ const SearchComponent = () => {
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);
-    }, 1500);
+    }, 200);
   });
 
   const navigate = useNavigate();
@@ -67,7 +66,7 @@ const SearchComponent = () => {
         language:loggedInUser?.user_preferences[0]?.language,
         gender: loggedInUser?.user_preferences[0]?.gender
       };
-      searchFetch(getMusicService(payloadData));
+      searchFetch(getMusicSearchService(payloadData));
     }, 500);
     // setTimer(delayDebounceFn)
   };

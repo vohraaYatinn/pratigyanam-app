@@ -52,7 +52,7 @@ const Home = () => {
 
     setTimeout(() => {
       setSkeletonTime(false);
-    }, 1500);
+    }, 200);
   });
 
   const navigateTo = (catId, catName) => {
@@ -289,9 +289,9 @@ const Home = () => {
             )}
           </div>
           {skeletontime ? (
-            <Skeleton.Image
+            <Skeleton.Button
               active={true}
-              style={{ width: "300px", height: "300px" }}
+              style={{ width: "200px", height: "200px" }}
             />
           ) : (
             <Swiper

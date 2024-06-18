@@ -15,6 +15,7 @@ import {
 } from "../urls/urls";
 import { userData } from "../redux/reducers/functionalities.reducer";
 import { useSelector } from "react-redux";
+import { test_url_images } from "../config/environment";
 
 const TrackList = ({
   loggedInUserData,
@@ -41,7 +42,7 @@ const TrackList = ({
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);
-    }, 1500);
+    }, 200);
   });
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -102,10 +103,21 @@ const TrackList = ({
         <Link
           to={`/single-track/${track?.music?.id}`}
           className="track-link"
+          style={{
+            display:"flex",
+            alignItems:"center",
+            justifyContent:"space-between"
+          }}
           onClick={() => addToRecent(track?.music?.id)}
         >
-          {/* <i className={track.iconClass} /> */}
-          <span> {track?.music?.title}</span>
+          <img src={test_url_images + track?.music?.image} 
+          style={{
+            objectFit:"cover",
+            border:"1px solid black",
+            borderRadius:"50px"
+          }}
+          />
+          <span style={{marginLeft:"3rem"}}> {track?.music?.title}</span>
           {lastString == "recent-music" &&
           <strong>{`${track?.music?.categories?.category?.type}`}</strong> }
           <i className="fa fa-angle-right" />
@@ -171,6 +183,7 @@ const TrackList = ({
                     alignItems: "center",
                   }}
                 >
+                  
                   <img src="https://t3.ftcdn.net/jpg/03/01/43/92/240_F_301439209_vpF837oCGM1lp0cnC7stzCBn3th0dQ6O.jpg" />
                   <p className="color-highlight font-500 mb-n1"> </p>
                   <h1 className="mt-4" style={{ fontSize: "1.2rem" }}>

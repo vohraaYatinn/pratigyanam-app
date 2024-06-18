@@ -13,6 +13,7 @@ export class Urls {
     static EDIT_SUBSCRIPTION_ADMIN = Urls.MPHRMS_API_PREFIX + 'subscriptions/edit-subscription-admin/';
     static FETCH_ALL_SUBSCRIPTION_ADMIN = Urls.MPHRMS_API_PREFIX + 'subscriptions/fetch-all-subscription-admin/';
     static GET_MUSIC = Urls.MPHRMS_API_PREFIX + 'music/get-post-music/';
+    static GET_SEARCH_MUSIC = Urls.MPHRMS_API_PREFIX + 'music/search-music/';
 
     static FETCH_MUSIC_BY_CATEGORY = Urls.MPHRMS_API_PREFIX + 'music/fetch-music-by-category/';
     static ADD_GET_CATEGORIES = Urls.MPHRMS_API_PREFIX + 'music/get-post-category/';

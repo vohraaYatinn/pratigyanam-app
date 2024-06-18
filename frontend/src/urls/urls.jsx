@@ -46,6 +46,9 @@ export const editSubscriptionPostAdmin= (payload_data) => {
 export const getMusicService= (payload_data) => {
   return project.get(Urls.GET_MUSIC, payload_data);
 };
+export const getMusicSearchService= (payload_data) => {
+  return project.get(Urls.GET_SEARCH_MUSIC, payload_data);
+};
 
 export const adddNewSubscriptionService= (payload_data) => {
   return project.post(Urls.GET_ALL_SUBSCRIPTION, payload_data);

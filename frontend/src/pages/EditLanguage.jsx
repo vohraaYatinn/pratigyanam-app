@@ -24,7 +24,7 @@ const EditAddress = () => {
   useEffect(() => {
     setTimeout(() => {
       setSkeletonTime(false);
-    }, 1500);
+    }, 200);
   });
 
   const [formValues, setFormValues] = useState({
@@ -143,12 +143,12 @@ const EditAddress = () => {
               {skeletontime ? (
                 <>
                   <div className="text-center ">
-                    <Skeleton.Image
+                    <Skeleton.Button
                       active={true}
                       style={{ width: "120px", height: "130px" }}
                       className=""
                     />
-                    <Skeleton.Image
+                    <Skeleton.Button
                       active={true}
                       style={{ width: "120px", height: "130px" }}
                       className="ml-5"
@@ -161,12 +161,12 @@ const EditAddress = () => {
                     />
                   </div>
                   <div className="text-center mt-4">
-                    <Skeleton.Image
+                    <Skeleton.Button
                       active={true}
                       style={{ width: "120px", height: "130px" }}
                       className=""
                     />
-                    <Skeleton.Image
+                    <Skeleton.Button
                       active={true}
                       style={{ width: "120px", height: "130px" }}
                       className="ml-5"
